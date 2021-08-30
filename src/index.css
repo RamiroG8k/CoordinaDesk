@@ -2,3 +2,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+  
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@layer components {
+    .input {
+        @apply py-2 px-4 transition focus:outline-none focus:ring focus:ring-offset-2 
+        w-full rounded-xl;
+    }
+    .btn {
+		@apply w-full tracking-wider font-semibold text-sm sm:text-base 
+        rounded-xl focus:outline-none;
+	}
+	.btn-animated {
+		@apply hover:scale-105 transform transition;
+	}
+}
+  
