@@ -1,8 +1,21 @@
-const Navbar = () => {
+import { ModeSwitcher } from 'components/shared';
+import { BiSidebar } from 'react-icons/bi';
+
+const Navbar = ({ className, toggleSidebar }) => {
     return (
-        <div>
-            <h1>Navbar</h1>
-        </div>
+        <section className={`${className} flex w-full items-center px-4`}>
+
+            <div className="flex w-full items-center justify-between">
+                <button onClick={toggleSidebar} className="h-auto transition hover:bg-blue-100 rounded-full">
+                    <p className="p-2 text-3xl text-gray-500">
+                        <BiSidebar/>
+                    </p>
+                </button>
+
+                <ModeSwitcher/>
+            </div>
+
+        </section>
     )
 }
 

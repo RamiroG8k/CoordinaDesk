@@ -1,11 +1,11 @@
 import { useForm } from 'react-hook-form';
 
-const Login = () => {
+const Login = ({ history }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = (data) => {
         console.log(data);
-        // history.push('/home');
+        history.push('/home');
     };
 
     return (
@@ -29,12 +29,12 @@ const Login = () => {
                         <div className="space-y-3 mb-4">
                             <div>
                                 <input {...register("email", { required: true })} className="input bg-blue-50 dark:bg-gray-700"
-                                    type="text" placeholder="Username" />
+                                    type="text" placeholder="Username" autoComplete="off" />
                                 {errors.email && <span className="ml-2 text-xs text-red-400">This field is required</span>}
                             </div>
                             <div>
                                 <input {...register("password", { required: true })} className="input bg-blue-50 dark:bg-gray-700"
-                                    type="password" placeholder="Password" />
+                                    type="password" placeholder="Password" autoComplete="off" />
                                 {errors.password && <span className="ml-2 text-xs text-red-400">This field is required</span>}
                             </div>
                         </div>

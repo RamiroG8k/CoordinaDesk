@@ -1,7 +1,11 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 // Screens
-import { Login } from 'screens/layout';
+import { Login, Dashboard } from 'screens/layout';
+// Components
+import { Home } from 'screens';
+// Util
+
 
 const html = document.getElementsByTagName('html')[0];
 
@@ -18,12 +22,44 @@ function App() {
         <BrowserRouter>
             <div className="App">
                 <Switch>
-                    <Route path="/" exact component={Login} />
-                    <Route path="/login" component={Login} />
+                    <PublicRoute path="/" exact component={Login} />
+                    <PrivateRoute path="/home" exact component={Home} />
+                    <Redirect path="/**" to="/" />
                 </Switch>
             </div>
         </BrowserRouter>
     );
 }
+
+
+const PrivateRoute = ({ component: Component, ...rest }) => {
+	return true ? (
+		<Route {...rest}
+			render={(props) => (
+				<Dashboard {...props}>
+					<Component {...props} />
+				</Dashboard>
+			)}
+		/>
+	) : (<Redirect to="/" />);
+};
+
+// Restricted
+// 		false meaning public route
+//		true meaning restricted route
+const PublicRoute = ({ component: Component, restricted, ...rest }) => {
+	return (
+		<Route {...rest} 
+			render={(props) =>
+				true && restricted ? (
+					<Redirect to="/home" />
+				) : (
+					<Component {...props} />
+				)
+			}
+		/>
+	);
+};
+
 
 export default App;
