@@ -1,22 +1,12 @@
-// import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-const Login = (props) => {
+const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const html = document.getElementsByTagName('html')[0];
 
     const onSubmit = (data) => {
         console.log(data);
         // history.push('/home');
     };
-
-    // useEffect(() => {
-    //     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    //         html.classList.add('scheme-dark');
-    //     } else {
-    //         html.classList.remove('scheme-dark');
-    //     }
-    // }, [])
 
     return (
         <section className="flex w-screen h-screen bg-gray-50 dark:bg-gray-800 sm:bg-blue-50 sm:dark:bg-gray-800 justify-center items-center">
@@ -28,9 +18,9 @@ const Login = (props) => {
                         src="https://tailwindcss.com/_next/static/media/tailwindcss-logotype.128b6e12eb85d013bc9f80a917f57efe.svg" />
                 </div>
 
-                <div className="h-1/2 sm:bg-white sm:shadow-md p-10 rounded-3xl mx-auto">
+                <div className="h-1/2 sm:bg-white sm:dark:bg-gray-600 sm:shadow-md p-10 rounded-3xl mx-auto">
                     <div className="text-center">
-                        <h3 className="text-gray-900 font-bold text-2xl">Welcome back</h3>
+                        <h3 className="text-gray-900 dark:text-gray-500 font-bold text-2xl">Welcome back</h3>
                         <h4 className="text-gray-500 text-xs">Enter your credentials to access to your account</h4>
                     </div>
 
@@ -38,12 +28,12 @@ const Login = (props) => {
                     <form id="form" onSubmit={handleSubmit(onSubmit)} className="my-6">
                         <div className="space-y-3 mb-4">
                             <div>
-                                <input {...register("email", { required: true })} className="input bg-blue-50"
+                                <input {...register("email", { required: true })} className="input bg-blue-50 dark:bg-gray-700"
                                     type="text" placeholder="Username" />
                                 {errors.email && <span className="ml-2 text-xs text-red-400">This field is required</span>}
                             </div>
                             <div>
-                                <input {...register("password", { required: true })} className="input bg-blue-50"
+                                <input {...register("password", { required: true })} className="input bg-blue-50 dark:bg-gray-700"
                                     type="password" placeholder="Password" />
                                 {errors.password && <span className="ml-2 text-xs text-red-400">This field is required</span>}
                             </div>
@@ -51,11 +41,11 @@ const Login = (props) => {
                     </form>
                     {/* END: Form Section */}
 
-                    <button form="form" type="submit" className="py-2 bg-blue-200 btn btn-animated hover:bg-blue-300 active:bg-blue-200">
-                        <p className="font-bold text-lg text-white">Log In</p>
+                    <button form="form" type="submit" className="py-2 bg-blue-200 dark:bg-gray-800 btn btn-animated hover:bg-blue-300 active:bg-blue-200">
+                        <p className="font-bold text-lg text-white dark:text-gray-400">Log In</p>
                     </button>
                 </div>
-                <p className="text-center mt-5">Powered by <a href="https://xifralifestyle.com" target="_blank" rel="noopener noreferrer" className="text-blue-700">Xifra</a></p>
+                <p className="text-center mt-5 dark:text-gray-300">Powered by <a href="https://xifralifestyle.com" target="_blank" rel="noopener noreferrer" className="text-blue-700 dark:text-blue-300">Xifra</a></p>
             </div>
         </section>
     );
