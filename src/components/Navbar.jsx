@@ -7,7 +7,7 @@ const Navbar = ({ className, toggleSidebar }) => {
 
             <div className="flex w-full items-center justify-between">
                 <button onClick={toggleSidebar} className="h-auto transition hover:bg-blue-100 rounded-full">
-                    <p className="p-2 text-3xl text-gray-500">
+                    <p className="p-2 text-3xl text-gray-500 dark:text-gray-400">
                         <BiSidebar/>
                     </p>
                 </button>

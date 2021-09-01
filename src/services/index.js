@@ -1,3 +1,3 @@
-import SidebarSections from './sidebar';
+import SidebarSections from './sidebar.data';
 
 export { SidebarSections };
