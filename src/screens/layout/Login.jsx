@@ -9,8 +9,8 @@ const Login = ({ history }) => {
     };
 
     return (
-        <section className="flex w-screen h-screen bg-gray-50 dark:bg-gray-800 sm:bg-blue-50 sm:dark:bg-gray-800 justify-center items-center">
-            <div className="w-full sm:w-96">
+        <section className="flex w-screen h-screen relative overflow-hidden bg-gray-50 dark:bg-gray-800 sm:bg-blue-50 sm:dark:bg-gray-800 justify-center items-center">
+            <div className="w-full sm:w-96 z-10">
                 <div className="flex justify-center mb-8">
                     <img className="block lg:hidden h-6 w-auto" alt="Workflow"
                         src="https://tailwindcss.com/_next/static/media/tailwindcss-mark.cb8046c163f77190406dfbf4dec89848.svg" />
@@ -28,12 +28,12 @@ const Login = ({ history }) => {
                     <form id="form" onSubmit={handleSubmit(onSubmit)} className="my-6">
                         <div className="space-y-3 mb-4">
                             <div>
-                                <input {...register("email", { required: true })} className="input bg-blue-50 dark:bg-gray-700"
+                                <input {...register("email", { required: true })} className="input bg-blue-100 bg-opacity-60 dark:bg-gray-700"
                                     type="text" placeholder="Username" autoComplete="off" />
                                 {errors.email && <span className="ml-2 text-xs text-red-400">This field is required</span>}
                             </div>
                             <div>
-                                <input {...register("password", { required: true })} className="input bg-blue-50 dark:bg-gray-700"
+                                <input {...register("password", { required: true })} className="input bg-blue-100 bg-opacity-60 dark:bg-gray-700"
                                     type="password" placeholder="Password" autoComplete="off" />
                                 {errors.password && <span className="ml-2 text-xs text-red-400">This field is required</span>}
                             </div>
@@ -41,12 +41,14 @@ const Login = ({ history }) => {
                     </form>
                     {/* END: Form Section */}
 
-                    <button form="form" type="submit" className="py-2 bg-blue-200 dark:bg-gray-800 btn btn-animated hover:bg-blue-300 active:bg-blue-200">
+                    <button form="form" type="submit" className="py-2 bg-blue-200 dark:bg-gray-900 btn btn-animated hover:bg-blue-300 active:bg-blue-200">
                         <p className="font-bold text-lg text-white dark:text-gray-400">Log In</p>
                     </button>
                 </div>
                 <p className="text-center mt-5 dark:text-gray-300">Powered by <a href="https://xifralifestyle.com" target="_blank" rel="noopener noreferrer" className="text-blue-700 dark:text-blue-300">Xifra</a></p>
             </div>
+
+            <div className="sm:hidden absolute -bottom-20 rounded-tl-full rounded-tr-full w-2/3 h-1/5 bg-blue-100 dark:bg-gray-700 z-0 opacity-75" />
         </section>
     );
 };

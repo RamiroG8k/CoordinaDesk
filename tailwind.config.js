@@ -28,7 +28,7 @@ module.exports = {
             outline: ['hover', 'focus', 'active'],
             fontSize: ['hover'],
             fontWeight: ['hover'],
-            width: ['hover']
+            width: ['hover'],
         },
     },
     plugins: [

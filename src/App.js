@@ -4,8 +4,6 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Login, Dashboard } from 'screens/layout';
 // Components
 import { Home } from 'screens';
-// Util
-
 
 const html = document.getElementsByTagName('html')[0];
 

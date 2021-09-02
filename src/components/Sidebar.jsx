@@ -1,19 +1,26 @@
 import { useState } from 'react';
 import { Disclosure } from '@headlessui/react';
-import { IoIosArrowUp, IoLogoGithub } from 'react-icons/io';
+import { IoIosArrowUp, IoLogoGithub, IoIosArrowForward } from 'react-icons/io';
 import { SidebarSections } from 'services';
 
-const Sidebar = ({ status, className }) => {
+const Sidebar = ({ status, className, visible, toggleView }) => {
     const [hover, setHover] = useState(false);
 
     return (
         <nav onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
-        className={`${className} flex flex-col ${status === 'min' ? 'w-20 hover:w-64' : 'w-64'} bg-white h-full transition-width duration-500 justify-between gap-2`}>
-            <section className="flex justify-center items-center w-full h-16 bg-blue-50 dark:bg-gray-800 rounded-2xl p-3">
-                {(status === 'min' && !hover) && <img className="h-full w-auto" alt="Workflow"
-                    src="https://tailwindcss.com/_next/static/media/tailwindcss-mark.cb8046c163f77190406dfbf4dec89848.svg" />}
-                {(status === 'max' || hover) && <img className="h-full w-auto" alt="Workflow"
-                    src="https://tailwindcss.com/_next/static/media/tailwindcss-logotype.128b6e12eb85d013bc9f80a917f57efe.svg" />}
+            className={`${className} flex flex-col ${status === 'min' ? 'w-20 hover:w-52' : 'w-64'} bg-white h-full transition-width duration-500 justify-between gap-2`}>
+
+            <section className="flex justify-center items-center w-full h-16">
+                <div className="flex w-full h-full p-3 bg-blue-50 dark:bg-gray-800 rounded-2xl">
+                    {(status === 'min' && !hover) && <img className="h-full w-auto" alt="Workflow"
+                        src="https://tailwindcss.com/_next/static/media/tailwindcss-mark.cb8046c163f77190406dfbf4dec89848.svg" />}
+                    {(status === 'max' || hover) && <img className="h-full w-auto" alt="Workflow"
+                        src="https://tailwindcss.com/_next/static/media/tailwindcss-logotype.128b6e12eb85d013bc9f80a917f57efe.svg" />}
+                </div>
+                <button onClick={toggleView}
+                    className="flex sm:hidden w-1/5 justify-center items-center text-2xl text-gray-600 dark:text-gray-900 h-full" >
+                    <IoIosArrowForward className={`${visible ? '' : 'transform rotate-180'}`} />
+                </button>
             </section>
 
             <section className="flex flex-col h-full bg-gray-50 rounded-2xl p-2 dark:bg-gray-800 space-y-2">
