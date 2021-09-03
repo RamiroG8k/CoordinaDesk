@@ -8,7 +8,7 @@ import Navbar from 'components/Navbar';
 
 const Dashboard = ({ children }) => {
     const [bar, setBar] = useState(['max', 'min']);
-    const [shown, setShown] = useState(true);
+    const [shown, setShown] = useState(false);
 
     const sidebarShifter = () => {
         bar.unshift(bar[1]);
