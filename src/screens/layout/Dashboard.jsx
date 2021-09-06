@@ -1,10 +1,7 @@
 // Common
 import { useState } from 'react';
 // Components
-// import { Sidebar, Navbar } from 'components';
-
-import Sidebar from 'components/Sidebar';
-import Navbar from 'components/Navbar';
+import { Sidebar, Navbar } from 'components';
 
 const Dashboard = ({ children }) => {
     const [bar, setBar] = useState(['max', 'min']);

@@ -3,14 +3,18 @@ import { Switch } from '@headlessui/react';
 import { FiMoon, FiSun } from 'react-icons/fi';
 
 const ModeSwitcher = () => {
-    const [enabled, setEnabled] = useState(false);
+    const [enabled, setEnabled] = useState(localStorage.getItem('darkMode') ?? false);
     const htmlClasses = document.getElementsByTagName('html')[0].classList;
 
     const toggleMode = () => {
+        localStorage.setItem('darkMode', !enabled);
         setEnabled(!enabled);
+
         htmlClasses.contains('scheme-dark') ?
             htmlClasses.remove('scheme-dark') :
             htmlClasses.add('scheme-dark');
+
+        console.log(htmlClasses);
     };
 
     return (

@@ -2,7 +2,6 @@ const plugin = require("tailwindcss/plugin");
 const selectorParser = require("postcss-selector-parser");
 
 module.exports = {
-    // mode: 'jit',
     purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
     darkMode: 'media', // or 'media' or 'class'
     theme: {
@@ -21,13 +20,8 @@ module.exports = {
     },
     variants: {
         extend: {
-            textColor: ['dark', 'responsive', 'hover', 'focus'],
-            backgroundColor: ['hover', 'active', 'dark', 'responsive', 'focus'],
-            borderColor: ['hover', 'focus', 'active'],
-            borderStyle: ['hover', 'focus', 'active'],
-            outline: ['hover', 'focus', 'active'],
-            fontSize: ['hover'],
-            fontWeight: ['hover'],
+            backgroundColor: ['dark', 'hover'],
+            dark: ['backgroundColor', 'hover'],
             width: ['hover'],
         },
     },

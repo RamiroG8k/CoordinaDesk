@@ -20,8 +20,8 @@ const Login = ({ history }) => {
 
                 <div className="h-1/2 sm:bg-white sm:dark:bg-gray-600 sm:shadow-md p-10 rounded-3xl mx-auto">
                     <div className="text-center">
-                        <h3 className="text-gray-900 dark:text-gray-500 font-bold text-2xl">Welcome back</h3>
-                        <h4 className="text-gray-500 text-xs">Enter your credentials to access to your account</h4>
+                        <h3 className="text-gray-900 dark:text-gray-900 font-bold text-2xl">Welcome back</h3>
+                        <h4 className="text-gray-500 dark:text-gray-800 text-xs">Enter your credentials to access to your account</h4>
                     </div>
 
                     {/* Form Section*/}
