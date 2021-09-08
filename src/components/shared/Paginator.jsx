@@ -35,14 +35,14 @@ const Paginator = ({ pages: { total = 0, from = 0, to = 0, current = 0, last = 0
                 </button>
             </div>
             <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-gray-700 dark:text-gray-400">
                     Listing <span className="font-medium">{from}</span> to <span className="font-medium">{to}</span> of{' '}
                     <span className="font-medium">{total}</span> items
                 </p>
-                <div className="flex rounded-xl overflow-hidden bg-gray-50 divide-x divide-gray-100 shadow">
+                <div className="flex rounded-xl overflow-hidden bg-gray-50 dark:bg-gray-800 divide-x divide-gray-100 dark:divide-gray-900 shadow">
                     {buttons.map((e, i) =>
                         <button key={i} onClick={() => handleChange(e.toPage)} disabled={e.disabled}
-                            className={`${e.icon ? 'px-2' : 'px-3'} py-2 hover:bg-gray-100`}>
+                            className={`${e.icon ? 'px-2 text-gray-500' : 'px-3 dark:text-gray-400'} py-2 hover:bg-black hover:bg-opacity-10`}>
                             <p className="text-sm">{e.icon ?? e.label}</p>
                         </button>
                     )}

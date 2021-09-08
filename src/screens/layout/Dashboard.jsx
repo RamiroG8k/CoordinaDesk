@@ -30,13 +30,13 @@ const Dashboard = ({ children }) => {
             {bar[0] === 'min' && <div className="hidden sm:flex h-full w-20" />}
 
             <Sidebar status={bar[0]} visible={shown} toggleView={mobileHandler}
-                className={`${classHandler()} ${bar[0] === 'min' ? 'absolute' : 'sm:relative'} p-2 dark:bg-gray-700 z-10 shadow-md`} />
+                className={`${classHandler()} ${bar[0] === 'min' ? 'absolute' : 'sm:relative'} p-2 dark:bg-gray-700 z-30 shadow-md`} />
 
             <div className="w-screen h-screen overflow-y-auto">
-                <Navbar className="h-14 sm:h-20 bg-white dark:bg-gray-700 shadow-md sticky top-0"
+                <Navbar className="z-20 h-14 sm:h-20 bg-white dark:bg-gray-700 shadow-md sticky top-0"
                     toggleSidebar={sidebarShifter} mobileSidebar={mobileHandler} />
 
-                <div className="flex flex-col w-full transition-width duration-500 ">
+                <div className="flex flex-col w-full transition-width duration-500">
                     <div className="max-w-screen-lg mx-auto p-5 sm:p-10 w-full">
                         {children}
                     </div>
