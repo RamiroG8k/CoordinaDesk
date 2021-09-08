@@ -1,60 +1,51 @@
 import { BsChevronLeft, BsChevronDoubleLeft, BsChevronRight, BsChevronDoubleRight } from 'react-icons/bs';
 
-const Paginator = ({ total, pages: { from, to, current, last }, onChange, className }) => {
+const Paginator = ({ pages: { total = 0, from = 0, to = 0, current = 0, last = 0 }, onChange, className }) => {
     const handleChange = (page) => {
-        onChange(page > last ? last : page < 1 ? 1 : page);
+        const goTo = page > last ? last : page < 1 ? 1 : page;
+        if (goTo > from && goTo < to) {
+            onChange(goTo);
+        }
     };
 
+    const buttons = [
+        { icon: <BsChevronDoubleLeft />, label: undefined, toPage: 1, disabled: false },
+        { icon: <BsChevronLeft />, label: undefined, toPage: current - 1, disabled: false },
+        { icon: undefined, label: current > 0 ? current - 1 : 0, toPage: undefined, disabled: true },
+        { icon: undefined, label: current, toPage: undefined, disabled: true },
+        { icon: undefined, label: '...', toPage: undefined, disabled: true },
+        { icon: undefined, label: last, toPage: undefined, disabled: true },
+        { icon: <BsChevronRight />, label: undefined, toPage: current + 1, disabled: false },
+        { icon: <BsChevronDoubleRight />, label: undefined, toPage: last, disabled: false },
+    ];
+
     return (
-        <div className={`${className} flex items-center justify-between sm:px-6`}>
-            <div className="flex-1 flex justify-between sm:hidden">
-                <button className="relative inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-xl text-gray-700 bg-white hover:bg-gray-50">
-                    Anterior
+        <div className={`${className} flex items-center justify-center sm:justify-between z-0`}>
+            <div className="flex justify-center sm:hidden shadow rounded-xl overflow-hidden">
+                <button onClick={() => handleChange(current - 1)}
+                    className="px-3 py-2 text-sm text-gray-500 bg-gray-50 dark:bg-gray-800">
+                    <BsChevronLeft />
                 </button>
-                <button className="ml-3 relative inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-xl text-gray-700 bg-white hover:bg-gray-50">
-                    Siguiente
+                <p className="px-3 py-2 text-sm text-gray-500">
+                    Page {current} of {last}
+                </p>
+                <button onClick={() => handleChange(current + 1)}
+                    className="px-3 py-2 text-sm text-gray-500 bg-gray-50 dark:bg-gray-800">
+                    <BsChevronRight />
                 </button>
             </div>
-            <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                <div>
-                    <p className="text-sm text-gray-700">
-                        Mostrando <span className="font-medium">{from}</span> a <span className="font-medium">{to}</span> de{' '}
-                        <span className="font-medium">{total}</span> resultados
-                    </p>
-                </div>
-                <div>
-                    <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                        <button onClick={() => handleChange(1)} className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                            <BsChevronDoubleLeft />
+            <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                <p className="text-sm text-gray-700">
+                    Listing <span className="font-medium">{from}</span> to <span className="font-medium">{to}</span> of{' '}
+                    <span className="font-medium">{total}</span> items
+                </p>
+                <div className="flex rounded-xl overflow-hidden bg-gray-50 divide-x divide-gray-100 shadow">
+                    {buttons.map((e, i) =>
+                        <button key={i} onClick={() => handleChange(e.toPage)} disabled={e.disabled}
+                            className={`${e.icon ? 'px-2' : 'px-3'} py-2 hover:bg-gray-100`}>
+                            <p className="text-sm">{e.icon ?? e.label}</p>
                         </button>
-                        <button onClick={() => handleChange(current - 1)}
-                            className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-3 py-2 border text-sm font-medium">
-                            <span className="sr-only">Previous</span>
-                            <BsChevronLeft />
-                        </button>
-
-                        {current > 1 && <button className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                            {current - 1}
-                        </button>}
-                        <button aria-current="page" className="z-10 bg-brand-50 border-brand-500 text-brand-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                            {current}
-                        </button>
-                        <span className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
-                            ...
-                        </span>
-                        {current < last && <button className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                            {last}
-                        </button>}
-
-                        <button onClick={() => handleChange(current + 1)}
-                            className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                            <span className="sr-only">Next</span>
-                            <BsChevronRight />
-                        </button>
-                        <button onClick={() => handleChange(last)} className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                            <BsChevronDoubleRight />
-                        </button>
-                    </nav>
+                    )}
                 </div>
             </div>
         </div>

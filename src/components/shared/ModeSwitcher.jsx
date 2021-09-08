@@ -14,7 +14,7 @@ const ModeSwitcher = () => {
             htmlClasses.remove('scheme-dark') :
             htmlClasses.add('scheme-dark');
 
-        console.log(htmlClasses);
+        // console.log(htmlClasses);
     };
 
     return (

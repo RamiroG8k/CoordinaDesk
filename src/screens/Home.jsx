@@ -39,7 +39,7 @@ const Home = () => {
             </div> */}
 
             
-            <div className="bg-white shadow-lg dark:bg-gray-700 w-full rounded-4xl p-4 sm:p-10 h-96 flex justify-center items-center" >
+            <div className="bg-white shadow-lg dark:bg-gray-700 w-full rounded-4xl p-4 sm:p-10 flex justify-center items-center" >
                 <Datatable />
             </div>
         </section>

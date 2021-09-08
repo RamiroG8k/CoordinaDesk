@@ -4,7 +4,7 @@ const Login = ({ history }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
+        // console.log(data);
         history.push('/home');
     };
 
