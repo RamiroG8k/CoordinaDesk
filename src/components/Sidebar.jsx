@@ -68,7 +68,7 @@ const Sidebar = ({ status, className, visible, toggleView }) => {
                 {(status === 'max' || hover) && <div className="uppercase font-light dark:text-gray-400 text-center text-xs">
                     <p>Powered by</p>
                     <a href="https://github.com/RamiroG8k" target="_blank" rel="noreferrer"
-                        className="font-normal bg-blue-200 dark:bg-gray-600 px-1 rounded-sm">RamiroG8k</a>
+                        className="font-normal bg-blue-200 dark:bg-gray-600 px-1 rounded-sm">Brand name</a>
                 </div>}
             </section>
         </nav>

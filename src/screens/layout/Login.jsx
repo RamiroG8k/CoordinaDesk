@@ -45,7 +45,7 @@ const Login = ({ history }) => {
                         <p className="font-bold text-lg text-white dark:text-gray-400">Log In</p>
                     </button>
                 </div>
-                <p className="text-center mt-5 dark:text-gray-300">Powered by <a href="https://xifralifestyle.com" target="_blank" rel="noopener noreferrer" className="text-blue-700 dark:text-blue-300">Xifra</a></p>
+                <p className="text-center mt-5 dark:text-gray-300">Powered by <a href="https://github.com/RamiroG8k" target="_blank" rel="noopener noreferrer" className="text-blue-700 dark:text-blue-300">Brand name</a></p>
             </div>
 
             <div className="sm:hidden absolute -bottom-20 rounded-tl-full rounded-tr-full w-2/3 h-1/5 bg-blue-100 dark:bg-gray-700 z-0 opacity-75" />

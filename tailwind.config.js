@@ -23,6 +23,7 @@ module.exports = {
             backgroundColor: ['dark', 'hover'],
             dark: ['backgroundColor', 'hover'],
             width: ['hover'],
+            fontWeight: ['hover'],
         },
     },
     plugins: [
