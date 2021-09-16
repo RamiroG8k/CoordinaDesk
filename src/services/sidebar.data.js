@@ -2,7 +2,7 @@ import { FiUsers, FiHome } from 'react-icons/fi';
 
 const sections = [
     {
-        title: 'Stock',
+        title: 'Home',
         icon: <FiHome/>,
         type: 'link',
         path: '/home',
