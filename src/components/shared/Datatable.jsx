@@ -19,10 +19,10 @@ const DataTable = ({ onSearch, columns = [], data = [], onEvent, onUpdate, place
         }, 500);
     }
 
-    const handleItem = ({ action, email, page }) => {
-        const item = (data.data.find(searched => searched.email === email));
-        onEvent({ action, item, page });
-    };
+    // const handleItem = ({ action, email, page }) => {
+    //     const item = (data.data.find(searched => searched.email === email));
+    //     onEvent({ action, item, page });
+    // };
 
     useEffect(() => {
         console.log('DATA', data);

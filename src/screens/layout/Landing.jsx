@@ -55,10 +55,9 @@ const Landing = () => {
                 </div>
                 <div className="hidden sm:flex gap-6 items-center">
                     {sections.map(({ name, goTo }) =>
-                        <a href={goTo}
+                        <a href={goTo} key={name}
                             className="font-medium hover:text-blue-800 transition transform hover:scale-105 hover:bg-blue-50">{name}</a>
                     )}
-
                     <Link to="/login"
                         className="bg-blue-200 hover:scale-105 hover:font-medium transform transition px-3 py-1 rounded-xl">
                         <div className="flex items-center gap-1 text-lg text-gray-700">
@@ -66,22 +65,23 @@ const Landing = () => {
                             <BiUserCircle />
                         </div>
                     </Link>
-
                 </div>
             </header>
 
             <section className="flex flex-col w-screen h-screen items-center bg-white pt-32">
                 <h1 className="text-4xl sm:text-6xl font-semibold p-2 sm:p-4">CoordinaDesk</h1>
-
-                <div className="w-full sm:w-1/2 p-4 text-center">
-                    <input type="text" pattern="[a-zA-Z0-9]" onChange={v => setCode(v.target.value.toUpperCase())} value={code}
+                <form action={`/ticket/id/${code}`} className="w-full sm:w-1/2 p-4 text-center">
+                    <input type="text" onChange={v => setCode(v.target.value.toUpperCase())} value={code}
                         placeholder="Start typing your ticket id" className="input text-2xl rounded-2xl bg-blue-50 border-2" />
-                </div>
+                    <button type="submit" disabled={!code}
+                    className="btn btn-animated disabled:opacity-50 bg-blue-200 w-auto px-4 p-2 mt-6 text-xl">
+                        Search
+                    </button>
+                </form>
             </section>
             {/* 
             <div className="z-10 w-full h-full flex justify-center items-center bg-white bg-opacity-10 backdrop-filter backdrop-blur-md">
             </div> */}
-
             <footer className="flex flex-col gap-6 bg-blue-50 p-10">
                 <div className="flex justify-between">
                     <div className="flex justify-center">
@@ -90,15 +90,13 @@ const Landing = () => {
                         <img className="hidden lg:block h-6 w-auto" alt="Workflow"
                             src="https://tailwindcss.com/_next/static/media/tailwindcss-logotype.128b6e12eb85d013bc9f80a917f57efe.svg" />
                     </div>
-
                     <div className="flex gap-2 flex-wrap justify-center">
                         {socialURLS}
                     </div>
-
                 </div>
                 <div className="flex flex-col sm:flex-row place-self-center text-center justify-between w-full sm:w-1/2">
                     {sections.map(({ name, goTo }) =>
-                        <a href={goTo}
+                        <a href={goTo} key={name}
                             className="font-medium hover:text-blue-800 transition transform hover:scale-105 p-1">{name}</a>
                     )}
                 </div>
@@ -108,12 +106,11 @@ const Landing = () => {
                         <p>2021 CoordinaDesk. All rights reserved</p>
                     </div>
 
-
                     <div className="flex justify-center">
                         <button onClick={scrollToTop}
-                        className="flex items-center gap-2 rounded-lg text-lg font-medium text-gray-700 px-4 hover:bg-white hover:scale-105 transition transform">
+                            className="flex items-center gap-2 rounded-lg text-lg font-medium text-gray-700 px-4 hover:bg-white hover:scale-105 transition transform">
                             <p>To the Top</p>
-                            <BiUpArrowAlt/>
+                            <BiUpArrowAlt />
                         </button>
                     </div>
 

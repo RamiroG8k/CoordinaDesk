@@ -1,12 +1,21 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { apiInstance } from 'services';
+import { saveCredentials } from 'utils';
 
 const Login = ({ history }) => {
+    const [hidden, setHidden] = useState(true);
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = (data) => {
-        // console.log(data);
-        history.push('/home');
-    };
+    const logIn = async (body) => {
+        await apiInstance.post('/auth/login', body)
+            .then(({ data }) => {
+                saveCredentials(data);
+                history.push('/home');
+            }).catch(({ response: { data: error } }) => {
+                console.log(error);
+            });
+    }
 
     return (
         <section className="flex w-screen h-screen relative overflow-hidden bg-gray-50 dark:bg-gray-800 sm:bg-blue-50 sm:dark:bg-gray-800 justify-center items-center">
@@ -25,16 +34,23 @@ const Login = ({ history }) => {
                     </div>
 
                     {/* Form Section*/}
-                    <form id="form" onSubmit={handleSubmit(onSubmit)} className="my-6">
+                    <form id="form" onSubmit={handleSubmit(logIn)} className="my-6">
                         <div className="space-y-3 mb-4">
                             <div>
-                                <input {...register("email", { required: true })} className="input bg-blue-100 bg-opacity-60 dark:bg-gray-700"
+                                <input {...register("email", { required: true })} className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700"
                                     type="text" placeholder="Username" autoComplete="off" />
                                 {errors.email && <span className="ml-2 text-xs text-red-400">This field is required</span>}
                             </div>
-                            <div>
-                                <input {...register("password", { required: true })} className="input bg-blue-100 bg-opacity-60 dark:bg-gray-700"
-                                    type="password" placeholder="Password" autoComplete="off" />
+                            <div className="">
+                                <div className="relative flex items-center">
+                                    <input {...register("password", { required: true })} className="input rounded-xl pr-14 bg-blue-100 bg-opacity-60 dark:bg-gray-700"
+                                        type={hidden ? 'password' : 'text'} placeholder="Password" autoComplete="off" />
+                                    <button onClick={() => setHidden(!hidden)} type="button" className="absolute right-2 p-2">
+                                        <p className="text-gray-600 dark:text-black text-xs font-medium uppercase">
+                                            {hidden ? 'show' : 'hide'}
+                                        </p>
+                                    </button>
+                                </div>
                                 {errors.password && <span className="ml-2 text-xs text-red-400">This field is required</span>}
                             </div>
                         </div>

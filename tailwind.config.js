@@ -24,6 +24,7 @@ module.exports = {
             dark: ['backgroundColor', 'hover'],
             width: ['hover'],
             fontWeight: ['hover'],
+            opacity: ['disabled'],
         },
     },
     plugins: [

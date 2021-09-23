@@ -35,7 +35,7 @@ html {
   }
   .input {
     @apply py-2 px-4 transition focus:outline-none focus:ring focus:ring-offset-2 
-        w-full rounded-xl;
+        w-full;
   }
   .btn {
     @apply w-full tracking-wider font-semibold text-sm sm:text-base 

@@ -6,7 +6,7 @@ import Axios from 'axios';
 
 const apiInstance = Axios.create(
     {
-        baseURL: 'https://ghibliapi.herokuapp.com',
+        baseURL: 'https://coordina-desk-api.herokuapp.com',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
