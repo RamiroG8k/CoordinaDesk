@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 // Screens
 import { Login, Dashboard, Landing, Ticket } from 'screens/layout';
 // Components
-import { Home } from 'screens';
+import { Home, Users } from 'screens';
 import { isLoggedIn } from 'utils';
 
 function App() {
@@ -16,6 +16,7 @@ function App() {
 					<PublicRoute path="/login" exact restricted component={Login} />
 					<PublicRoute path="/ticket/id/:id" exact component={Ticket} />
 					<PrivateRoute path="/home" exact component={Home} />
+					<PrivateRoute path="/users" exact component={Users} />
 					<Redirect path="/**" to="/" />
 				</Switch>
 			</div>

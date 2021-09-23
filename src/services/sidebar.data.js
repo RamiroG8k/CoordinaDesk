@@ -14,7 +14,7 @@ const sections = [
         path: '/users',
         children: [
             { path: '/users', title: 'All Users', type: 'link' },
-            { path: '/users/brand-partners', title: 'Brand Partners', type: 'link' }
+            // { path: '/users/brand-partners', title: 'Brand Partners', type: 'link' }
         ],
     },
     {
@@ -24,7 +24,7 @@ const sections = [
         path: '/users',
         children: [
             { path: '/users', title: 'All Users', type: 'link' },
-            { path: '/users/brand-partners', title: 'Brand Partners', type: 'link' }
+            // { path: '/users/brand-partners', title: 'Brand Partners', type: 'link' }
         ],
     },
 ];
