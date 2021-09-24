@@ -21,9 +21,9 @@ const sections = [
         title: 'Tickets',
         icon: <FiInbox/>,
         type: 'sub',
-        path: '/users',
+        path: '/tickets',
         children: [
-            { path: '/users', title: 'All Users', type: 'link' },
+            { path: '/tickets', title: 'All Tickets', type: 'link' },
             // { path: '/users/brand-partners', title: 'Brand Partners', type: 'link' }
         ],
     },

@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import { apiInstance } from 'services';
 import { saveCredentials } from 'utils';
+import { BsArrowLeftShort } from 'react-icons/bs';
 
 const Login = ({ history }) => {
     const [hidden, setHidden] = useState(true);
@@ -20,7 +22,14 @@ const Login = ({ history }) => {
     return (
         <section className="flex w-screen h-screen relative overflow-hidden bg-gray-50 dark:bg-gray-800 sm:bg-blue-50 sm:dark:bg-gray-800 justify-center items-center">
             <div className="w-full sm:w-96 z-10">
-                <div className="flex justify-center mb-8">
+
+                <div className="flex relative justify-center items-center mb-8">
+                    <Link to="/" className="absolute left-2">
+                        <BsArrowLeftShort />
+                        <p className="text-xs">
+                            Inicio
+                        </p>
+                    </Link>
                     <img className="block lg:hidden h-6 w-auto" alt="Workflow"
                         src="https://tailwindcss.com/_next/static/media/tailwindcss-mark.cb8046c163f77190406dfbf4dec89848.svg" />
                     <img className="hidden lg:block h-6 w-auto" alt="Workflow"

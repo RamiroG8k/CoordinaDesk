@@ -22,3 +22,14 @@ export const scrollToTop = () => {
         behavior: "smooth"
     });
 };
+
+export const shortDate = (date) => {
+    date = new Date(date) ?? new Date();
+    const dmy = [];
+    
+    dmy.push(date.getUTCDate());
+    dmy.push((date.getUTCMonth() + 1) < 10 ? `0${date.getUTCMonth() + 1}` : date.getUTCMonth());
+    dmy.push(date.getUTCFullYear());
+
+    return dmy;
+};

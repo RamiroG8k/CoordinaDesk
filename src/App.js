@@ -5,6 +5,7 @@ import { Login, Dashboard, Landing, Ticket } from 'screens/layout';
 // Components
 import { Home, Users } from 'screens';
 import { isLoggedIn } from 'utils';
+import Tickets from 'screens/Tickets';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
 					<PublicRoute path="/ticket/id/:id" exact component={Ticket} />
 					<PrivateRoute path="/home" exact component={Home} />
 					<PrivateRoute path="/users" exact component={Users} />
+					<PrivateRoute path="/tickets" exact component={Tickets} />
 					<Redirect path="/**" to="/" />
 				</Switch>
 			</div>
