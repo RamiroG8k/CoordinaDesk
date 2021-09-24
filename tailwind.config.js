@@ -25,6 +25,7 @@ module.exports = {
             width: ['hover'],
             fontWeight: ['hover'],
             opacity: ['disabled'],
+            scale: ['hover'],
         },
     },
     plugins: [

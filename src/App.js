@@ -24,7 +24,6 @@ function App() {
 	);
 }
 
-
 const PrivateRoute = ({ component: Component, ...rest }) => {
 	return isLoggedIn() ? (
 		<Route {...rest}

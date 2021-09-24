@@ -1,8 +1,22 @@
 import { Modal } from 'components/shared';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { apiInstance } from 'services';
 
 const Home = () => {
     const [modal, setModal] = useState(false);
+
+    useEffect(() => {
+        fetchSomething();
+    }, []);
+
+    const fetchSomething = async () => {
+        await apiInstance.get('/category/all')
+            .then(({ data }) => {
+                console.log(data);
+            }).catch(({ response: { data: error } }) => {
+                console.log(error);
+            });
+    };
 
     return (
         <section className="space-y-6">

@@ -37,14 +37,17 @@ const Login = ({ history }) => {
                     <form id="form" onSubmit={handleSubmit(logIn)} className="my-6">
                         <div className="space-y-3 mb-4">
                             <div>
-                                <input {...register("email", { required: true })} className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700"
-                                    type="text" placeholder="Username" autoComplete="off" />
+                                <label htmlFor="email" className="text-sm ml-2 mb-1">Email</label>
+                                <input id="email" {...register('email', { required: true })} type="text" autoComplete="off"
+                                    className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
                                 {errors.email && <span className="ml-2 text-xs text-red-400">This field is required</span>}
                             </div>
-                            <div className="">
+                            <div>
+                                <label htmlFor="password" className="text-sm ml-2 mb-1">Password</label>
                                 <div className="relative flex items-center">
-                                    <input {...register("password", { required: true })} className="input rounded-xl pr-14 bg-blue-100 bg-opacity-60 dark:bg-gray-700"
-                                        type={hidden ? 'password' : 'text'} placeholder="Password" autoComplete="off" />
+                                    <input id="password" {...register('password', { required: true })}
+                                        type={hidden ? 'password' : 'text'} autoComplete="off"
+                                        className="input rounded-xl pr-14 bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
                                     <button onClick={() => setHidden(!hidden)} type="button" className="absolute right-2 p-2">
                                         <p className="text-gray-600 dark:text-black text-xs font-medium uppercase">
                                             {hidden ? 'show' : 'hide'}

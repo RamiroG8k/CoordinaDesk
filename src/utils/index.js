@@ -1,5 +1,5 @@
 export const isLoggedIn = () => {
-    return true;
+    return (sessionStorage.getItem('token') ?? false);
 };
 
 export const toggleClasses = (...classes) => {
@@ -9,4 +9,16 @@ export const toggleClasses = (...classes) => {
 export const saveCredentials = ({ token, user }) => {
     sessionStorage.setItem('token', token);
     sessionStorage.setItem('user', JSON.stringify(user));
+};
+
+export const removeCredentials = () => {
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
+};
+
+export const scrollToTop = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 };
