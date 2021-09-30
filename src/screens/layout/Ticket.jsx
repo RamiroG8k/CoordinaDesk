@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 // import { Disclosure } from '@headlessui/react';
 import { apiInstance } from 'services';
 import { shortDate } from 'utils';
-import { GrStatusGood } from 'react-icons/gr';
+import { FaRegCheckCircle } from 'react-icons/fa';
 import { Disclosure } from 'components/shared';
 
 const Ticket = () => {
@@ -41,8 +41,8 @@ const Ticket = () => {
                     </div>
 
                     <div className={data.status === 'RESOLVE' ? 'text-green-200' : 'text-black'}>
-                        <p className="text-4xl text-red-500">
-                            <GrStatusGood />
+                        <p className="text-4xl text-green-500">
+                            <FaRegCheckCircle />
                         </p>
                     </div>
 
@@ -60,12 +60,15 @@ const Ticket = () => {
                 <div className="flex flex-col space-y-2 w-full">
 
                     {data.ticketContent.map((e, i) => {
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
                         return (
                             <div key={e.created_at}
-                                className="border rounded-2xl w-full p-4 text-sm">
-                                <p>{e.username}</p>
+                                className={`${e.isUser ? 'bg-blue-50' : 'text-right'} border rounded-2xl w-full p-4 text-sm`}>
+                                <p className="font-semibold">{e.username}</p>
                                 <p>{e.data}</p>
-                                <span className="text-xs text-gray-500">{e.created_at}</span>
+                                <span className="text-xs text-gray-500">
+                                    {new Date(e.created_at).toLocaleDateString('es-MX', options)}
+                                </span>
                             </div>
                         );
                     })}

@@ -9,7 +9,6 @@ const Navbar = ({ className, toggleSidebar, mobileSidebar }) => {
     const history = useHistory();
 
     const handleAction = (action) => {
-        console.log(action);
         switch (action) {
             case 'logout':
                 removeCredentials();

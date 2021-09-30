@@ -25,7 +25,7 @@ const DataTable = ({ onSearch, columns = [], data = [], onEvent, onUpdate, place
     // };
 
     useEffect(() => {
-        console.log('DATA', data);
+        // console.log('DATA', data);
     }, [data])
 
     return (
@@ -59,7 +59,9 @@ const DataTable = ({ onSearch, columns = [], data = [], onEvent, onUpdate, place
                         {rows.length ? rows.map((row, i) =>
                             <tr key={i}>
                                 {Object.values(row).map((e, j) =>
-                                    <td key={j} className="py-2 dark:text-gray-500">{e}</td>
+                                    <td key={j} className="py-2 dark:text-gray-500">
+                                        {(typeof e) === 'boolean' ? (e ? 'YES' : 'NO') : e }
+                                    </td>
                                 )}
                             </tr>
                         ) : <tr>

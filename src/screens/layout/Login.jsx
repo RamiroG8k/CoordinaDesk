@@ -7,9 +7,11 @@ import { BsArrowLeftShort } from 'react-icons/bs';
 
 const Login = ({ history }) => {
     const [hidden, setHidden] = useState(true);
+    const [loading, setLoading] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const logIn = async (body) => {
+        await setLoading(!loading);
         await apiInstance.post('/auth/login', body)
             .then(({ data }) => {
                 saveCredentials(data);
@@ -17,6 +19,7 @@ const Login = ({ history }) => {
             }).catch(({ response: { data: error } }) => {
                 console.log(error);
             });
+        // await setLoading(!loading); 
     }
 
     return (
@@ -70,7 +73,15 @@ const Login = ({ history }) => {
                     {/* END: Form Section */}
 
                     <button form="form" type="submit" className="py-2 bg-blue-200 dark:bg-gray-900 btn btn-animated hover:bg-blue-300 active:bg-blue-200">
-                        <p className="font-bold text-lg text-white dark:text-gray-400">Log In</p>
+                        <p className="flex justify-center items-center font-bold text-lg text-white dark:text-gray-400">
+                            {loading ? <>
+                                <svg className="absolute left-1/4 animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Loading...
+                            </> : 'Log In'}
+                        </p>
                     </button>
                 </div>
                 <p className="text-center mt-5 dark:text-gray-300">Powered by <a href="https://github.com/RamiroG8k" target="_blank" rel="noopener noreferrer" className="text-blue-700 dark:text-blue-300">Brand name</a></p>

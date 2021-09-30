@@ -4,9 +4,14 @@ import { apiInstance } from 'services';
 import { Link } from 'react-router-dom';
 import { Disclosure } from 'components/shared';
 
+import { FiSend } from 'react-icons/fi';
+
+
 const Landing = () => {
     const [code, setCode] = useState('');
+    const [question, setQuestion] = useState('');
     const [categories, setCategories] = useState();
+    const [chat, setChat] = useState([]);
 
     useEffect(() => {
         fetchSomething();
@@ -21,10 +26,23 @@ const Landing = () => {
             });
     };
 
+    const askNLP = async () => {
+        if (question) {
+            setChat([...chat, { question }]);
+            await apiInstance.post('/nlp/evaluate', { question })
+                .then(({ data }) => {
+                    console.log(data);
+                }).catch(({ response: { data: error } }) => {
+                    console.log(error);
+                });
+        }
+        setQuestion('');
+    };
+
     return (
         <>
             <Header />
-            <section className="flex flex-col w-screen h-screen items-center bg-white pt-32">
+            <section className="relative flex flex-col w-screen h-screen items-center bg-white pt-32">
                 <h1 className="text-4xl sm:text-6xl font-semibold p-2 sm:p-4">CoordinaDesk</h1>
                 <div className="w-full sm:w-1/2 p-4 text-center">
                     <input type="text" onChange={v => setCode(v.target.value.toUpperCase())} value={code}
@@ -33,6 +51,31 @@ const Landing = () => {
                         className={`${code ? '' : 'opacity-50'} btn btn-animated disabled:opacity-50 bg-blue-200 w-auto px-4 p-2 mt-6 text-xl`}>
                         Search
                     </Link>
+                </div>
+
+                <div className="flex flex-col absolute bottom-0 h-1/2 bg-blue-100 rounded-t-4xl w-full sm:w-2/3 p-2 sm:p-4" >
+                    <h3 className="text-gray-700 text-center font-semibold text-3xl mb-4">Chatbot</h3>
+                    <div className="flex flex-col w-full h-full gap-4">
+                        <div className="flex flex-col h-full w-full bg-gray-50 rounded-3xl p-4 gap-2 overflow-y-scroll">
+                            {chat?.map((e, i) => {
+                                return (
+                                    <div key={i} className={e.question ? 'text-right' : ''}>
+                                        <p className="inline-block px-4 py-2 bg-white border border-blue-100 rounded-full">{e.question}</p>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div className="bottom flex w-full gap-2">
+                            <input value={question} onChange={v => setQuestion(v.target.value)} type="text" placeholder="Ask anything"
+                                className="input rounded-3xl bg-white border-2 border-blue-100 w-full" />
+                            <button onClick={() => askNLP()}
+                                className="btn-animated w-10 h-10 bg-white rounded-full flex justify-center items-center focus:outline-none">
+                                <p className="text-blue-400 text-xl">
+                                    <FiSend />
+                                </p>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </section>
             <section id="faqs" className="flex flex-col w-screen h-screen bg-gray-50 items-center px-4 sm:px-10">
@@ -55,7 +98,6 @@ const Landing = () => {
                                 <Disclosure key={e._id} title={e._id} description={e.category} color="blue" />
                             );
                         })}
-                        {/* <pre className="text-xs">{JSON.stringify(categories, null, 4)}</pre> */}
                     </div>
                 </div>
             </section>
