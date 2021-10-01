@@ -28,15 +28,17 @@ const Landing = () => {
     };
 
     const askNLP = async () => {
+        setChat([...chat, { question }]);
+
         if (question) {
             await apiInstance.post('/nlp/evaluate', { question })
                 .then(({ data }) => {
-                    
+
                     // chatbot.current?.scrollIntoView({
                     //     block: 'end', 
                     //     behavior: 'smooth',
                     // });
-
+                    
                     setChat([...chat, { question }, data]);
                 }).catch(({ response: { data: error } }) => {
                     console.log(error);
