@@ -6,6 +6,10 @@ const sections = [
         goTo: '#faqs',
     },
     {
+        name: 'Ticket Tracking',
+        goTo: '#tracking',
+    },
+    {
         name: 'Concept',
         goTo: '#',
     },

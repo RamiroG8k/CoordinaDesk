@@ -16,16 +16,16 @@ const ScrollToTop = () => {
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
-            behavior: "smooth"
+            behavior: 'smooth'
         });
     }
 
     return (
-        <div className="fixed right-14 bottom-20">
-            {visible && <button onClick={() => scrollToTop()} 
-                className="bg-white rounded-2xl p-2 shadow-xl focus:outline-none">
-                <p className="text-4xl text-brand">
-                    <IoIosArrowUp/>
+        <div className="fixed right-6 bottom-10 sm:right-14 sm:bottom-20">
+            {visible && <button onClick={() => scrollToTop()}
+                className="bg-blue-200 rounded-full p-2 shadow-xl focus:outline-none">
+                <p className="text-4xl text-white">
+                    <IoIosArrowUp />
                 </p>
             </button>
             }

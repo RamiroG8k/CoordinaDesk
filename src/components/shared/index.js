@@ -5,5 +5,6 @@ import Paginator from './Paginator';
 import Select from './Select';
 import Dropdown from './Dropdown';
 import Disclosure from './Disclosure';
+import ScrollToTop from './ScrollToTop';
 
-export { ModeSwitcher, Modal, Datatable, Paginator, Select, Dropdown, Disclosure };
+export { ModeSwitcher, Modal, Datatable, Paginator, Select, Dropdown, Disclosure, ScrollToTop };

@@ -1,7 +1,7 @@
 // Common
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 // Screens
-import { Login, Dashboard, Landing, Ticket } from 'screens/layout';
+import { Login, Dashboard, Landing, Ticket, Activate } from 'screens/layout';
 // Components
 import { Home, Users } from 'screens';
 import { isLoggedIn } from 'utils';
@@ -16,6 +16,7 @@ function App() {
 					<PublicRoute path="/" exact component={Landing} />
 					<PublicRoute path="/login" exact restricted component={Login} />
 					<PublicRoute path="/ticket/id/:id" exact component={Ticket} />
+					<PublicRoute path="/activate/id/:id/token/:token" exact component={Activate} />
 					<PrivateRoute path="/home" exact component={Home} />
 					<PrivateRoute path="/users" exact component={Users} />
 					<PrivateRoute path="/tickets" exact component={Tickets} />

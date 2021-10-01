@@ -1,38 +1,36 @@
+// Common
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+// Services
 import { apiInstance } from 'services';
-import { saveCredentials } from 'utils';
-import { BsArrowLeftShort } from 'react-icons/bs';
 
-const Login = ({ history }) => {
+const Activate = () => {
+    const { id, token } = useParams();
+
     const [hidden, setHidden] = useState(true);
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const logIn = async (body) => {
+    const activate = async (body) => {
         setLoading(!loading);
-        await apiInstance.post('/auth/login', body)
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };        
+        await apiInstance.put('/user/activate', { ...body, _id: id }, config)
             .then(({ data }) => {
-                saveCredentials(data);
-                history.push('/home');
+                console.log(data);
             }).catch(({ response: { data: error } }) => {
-                console.log(error);
+                alert(error.status === 401 ? 'Expired token' : error);
             });
         await setLoading(false); 
-    };
-
+    }
+    
     return (
         <section className="flex w-screen h-screen relative overflow-hidden bg-gray-50 dark:bg-gray-800 sm:bg-blue-50 sm:dark:bg-gray-800 justify-center items-center">
             <div className="w-full sm:w-96 z-10">
 
                 <div className="flex relative justify-center items-center mb-8">
-                    <Link to="/" className="absolute left-2">
-                        <BsArrowLeftShort />
-                        <p className="text-xs">
-                            Inicio
-                        </p>
-                    </Link>
                     <img className="block lg:hidden h-6 w-auto" alt="Workflow"
                         src="https://tailwindcss.com/_next/static/media/tailwindcss-mark.cb8046c163f77190406dfbf4dec89848.svg" />
                     <img className="hidden lg:block h-6 w-auto" alt="Workflow"
@@ -41,18 +39,18 @@ const Login = ({ history }) => {
 
                 <div className="h-1/2 sm:bg-white sm:dark:bg-gray-600 sm:shadow-md p-10 rounded-3xl mx-auto">
                     <div className="text-center">
-                        <h3 className="text-gray-900 dark:text-gray-900 font-bold text-2xl">Welcome back</h3>
-                        <h4 className="text-gray-500 dark:text-gray-800 text-xs">Enter your credentials to access to your account</h4>
+                        <h3 className="text-gray-900 dark:text-gray-900 font-bold text-2xl">Ready to Sign up!</h3>
+                        <h4 className="text-gray-500 dark:text-gray-800 text-xs">Create your credentials to access to your account</h4>
                     </div>
 
                     {/* Form Section*/}
-                    <form id="form" onSubmit={handleSubmit(logIn)} className="my-6">
+                    <form id="form" onSubmit={handleSubmit(activate)} className="my-6">
                         <div className="space-y-3 mb-4">
                             <div>
-                                <label htmlFor="email" className="text-sm ml-2 mb-1">Email</label>
-                                <input id="email" {...register('email', { required: true })} type="text" autoComplete="off"
+                                <label htmlFor="name" className="text-sm ml-2 mb-1">Name</label>
+                                <input id="name" {...register('name', { required: true })} type="text" autoComplete="off"
                                     className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
-                                {errors.email && <span className="ml-2 text-xs text-red-400">This field is required</span>}
+                                {errors.name && <span className="ml-2 text-xs text-red-400">This field is required</span>}
                             </div>
                             <div>
                                 <label htmlFor="password" className="text-sm ml-2 mb-1">Password</label>
@@ -76,11 +74,11 @@ const Login = ({ history }) => {
                         <p className="flex justify-center items-center font-bold text-lg text-white dark:text-gray-400">
                             {loading ? <>
                                 <svg className="absolute left-1/4 animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
                                 Loading...
-                            </> : 'Log In'}
+                            </> : 'Sign up'}
                         </p>
                     </button>
                 </div>
@@ -92,4 +90,4 @@ const Login = ({ history }) => {
     );
 };
 
-export default Login;
+export default Activate;

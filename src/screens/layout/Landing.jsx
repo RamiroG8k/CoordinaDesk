@@ -1,17 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Footer, Header } from 'components/Landing';
 import { apiInstance } from 'services';
 import { Link } from 'react-router-dom';
-import { Disclosure } from 'components/shared';
+import { Disclosure, ScrollToTop } from 'components/shared';
 
 import { FiSend } from 'react-icons/fi';
-
 
 const Landing = () => {
     const [code, setCode] = useState('');
     const [question, setQuestion] = useState('');
     const [categories, setCategories] = useState();
     const [chat, setChat] = useState([]);
+
+    const chatbot = useRef(null);
 
     useEffect(() => {
         fetchSomething();
@@ -28,10 +29,15 @@ const Landing = () => {
 
     const askNLP = async () => {
         if (question) {
-            setChat([...chat, { question }]);
             await apiInstance.post('/nlp/evaluate', { question })
                 .then(({ data }) => {
-                    console.log(data);
+                    
+                    // chatbot.current?.scrollIntoView({
+                    //     block: 'end', 
+                    //     behavior: 'smooth',
+                    // });
+
+                    setChat([...chat, { question }, data]);
                 }).catch(({ response: { data: error } }) => {
                     console.log(error);
                 });
@@ -42,28 +48,22 @@ const Landing = () => {
     return (
         <>
             <Header />
-            <section className="relative flex flex-col w-screen h-screen items-center bg-white pt-32">
-                <h1 className="text-4xl sm:text-6xl font-semibold p-2 sm:p-4">CoordinaDesk</h1>
-                <div className="w-full sm:w-1/2 p-4 text-center">
-                    <input type="text" onChange={v => setCode(v.target.value.toUpperCase())} value={code}
-                        placeholder="Start typing your ticket id" className="input text-2xl rounded-2xl bg-blue-50 border-2" />
-                    <Link to={`/ticket/id/${code}`} type="button" disabled={!code}
-                        className={`${code ? '' : 'opacity-50'} btn btn-animated disabled:opacity-50 bg-blue-200 w-auto px-4 p-2 mt-6 text-xl`}>
-                        Search
-                    </Link>
+            <section className="relative flex flex-col w-screen h-screen items-center bg-white">
+                <div className="h-1/3 py-4 sm:py-10 text-center w-full sm:w-2/3">
+                    <h1 className="text-4xl sm:text-6xl font-semibold p-2 sm:p-4">CoordinaDesk</h1>
+                    <p className="font-medium text-md sm:text-xl text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                 </div>
-
-                <div className="flex flex-col absolute bottom-0 h-1/2 bg-blue-100 rounded-t-4xl w-full sm:w-2/3 p-2 sm:p-4" >
-                    <h3 className="text-gray-700 text-center font-semibold text-3xl mb-4">Chatbot</h3>
-                    <div className="flex flex-col w-full h-full gap-4">
-                        <div className="flex flex-col h-full w-full bg-gray-50 rounded-3xl p-4 gap-2 overflow-y-scroll">
-                            {chat?.map((e, i) => {
-                                return (
-                                    <div key={i} className={e.question ? 'text-right' : ''}>
-                                        <p className="inline-block px-4 py-2 bg-white border border-blue-100 rounded-full">{e.question}</p>
-                                    </div>
-                                );
-                            })}
+                {/* <h3 className="text-gray-700 text-center font-semibold text-3xl">Chatbot</h3> */}
+                <div className="flex flex-col justify-between h-2/3 bg-blue-200 rounded-t-4xl w-full sm:w-2/3 p-2 sm:p-4" >
+                    <div className="flex flex-col w-full h-full gap-2 sm:gap-4">
+                        <div ref={chatbot} className="flex flex-col h-full w-full bg-gray-50 rounded-3xl p-4 gap-2 overflow-y-scroll">
+                            {chat?.map((e, i) =>
+                                <div key={i} className={e.question ? 'text-right' : ''}>
+                                    <p className={`${e.question ? 'bg-white' : 'bg-blue-50'} inline-block px-4 py-2 border border-blue-100 rounded-xl`}>
+                                        {e.question ?? e.answer}
+                                    </p>
+                                </div>
+                            )}
                         </div>
                         <div className="bottom flex w-full gap-2">
                             <input value={question} onChange={v => setQuestion(v.target.value)} type="text" placeholder="Ask anything"
@@ -77,6 +77,7 @@ const Landing = () => {
                         </div>
                     </div>
                 </div>
+
             </section>
             <section id="faqs" className="flex flex-col w-screen h-screen bg-gray-50 items-center px-4 sm:px-10">
                 <div className="title text-center p-5">
@@ -101,10 +102,18 @@ const Landing = () => {
                     </div>
                 </div>
             </section>
-            <section id="faqs" className="flex flex-col w-screen h-screen items-center bg-white pt-32">
-
+            <section id="tracking" className="flex flex-col w-screen h-screen justify-center items-center bg-white">
+                <div className="w-full sm:w-1/2 p-4 text-center">
+                    <input type="text" onChange={v => setCode(v.target.value.toUpperCase())} value={code}
+                        placeholder="Start typing your ticket id" className="input text-2xl rounded-2xl bg-blue-50 border-2" />
+                    <Link to={`/ticket/id/${code}`} type="button" disabled={!code}
+                        className={`${code ? '' : 'opacity-50'} btn btn-animated disabled:opacity-50 bg-blue-200 w-auto px-4 p-2 mt-6 text-xl`}>
+                        Search
+                    </Link>
+                </div>
             </section>
             <Footer />
+            <ScrollToTop />
         </>
     )
 }
