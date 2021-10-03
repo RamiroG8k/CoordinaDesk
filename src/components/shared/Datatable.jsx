@@ -3,7 +3,7 @@ import { BsSearch } from 'react-icons/bs';
 import { Paginator, Select } from 'components/shared';
 
 const DataTable = ({ onSearch, columns = [], data = [], onEvent, onUpdate, placeholder }) => {
-    const { rows = [], total, from, to, last_page: last, current_page: current } = data;
+    const { rows = [], total, from, to, last, current } = data;
     let timer;
 
     const keyPressed = () => {
@@ -25,7 +25,7 @@ const DataTable = ({ onSearch, columns = [], data = [], onEvent, onUpdate, place
     // };
 
     useEffect(() => {
-        // console.log('DATA', data);
+        console.log('DATA', data);
     }, [data])
 
     return (
@@ -39,7 +39,7 @@ const DataTable = ({ onSearch, columns = [], data = [], onEvent, onUpdate, place
                     </p>
                 </div>
                 <div className="limit w-1/4">
-                    <Select array={[10, 20, 30, 50, 100]} item="pages" onChange={(value) => console.log(value)}
+                    <Select array={[10, 20, 30, 50, 100]} item="pages" onChange={(value) => onUpdate(current, value)}
                         activeStyle="bg-blue-100 dark:bg-gray-800"
                         buttonStyle="bg-gray-50 shadow dark:bg-gray-800 dark:text-gray-400"
                         dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500"
