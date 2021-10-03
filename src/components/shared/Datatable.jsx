@@ -25,7 +25,7 @@ const DataTable = ({ onSearch, columns = [], data = [], onEvent, onUpdate, place
     // };
 
     useEffect(() => {
-        console.log('DATA', data);
+        // console.log('DATA', data);
     }, [data])
 
     return (

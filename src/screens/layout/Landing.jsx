@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 // Components
-import { Footer, Header } from 'components/Landing';
+import { Footer, Header } from 'components/landing';
 import { Disclosure, ScrollToTop } from 'components/shared';
 // Services
 import { apiInstance } from 'services';
@@ -121,7 +121,7 @@ const Landing = () => {
                 </div>
             </section>
             <section id="tracking" className="flex flex-col sm:flex-row w-screen h-screen bg-white sm:px-20 xl:px-36">
-                <div className="flex flex-col w-full sm:w-1/3 h-full items-start p-4 pt-20">
+                <div className="flex flex-col w-full sm:w-1/3 h-full items-start p-6 pt-20">
                     <div className="my-8">
                         <h3 className="text-5xl font-semibold leading-tight">Make your <span className="text-blue-300">tracking</span> easy</h3>
                         <p className="text-xl font-medium my-4">
