@@ -45,9 +45,9 @@ const CreateUser = ({ close }) => {
                     </div>
                     <div>
                         <label htmlFor="role" className="text-sm ml-2 mb-1">Rol</label>
-                        <Controller control={control} name="role" defaultValue="AUXILIAR" rules={{ required: true }}
+                        <Controller control={control} name="role" defaultValue="ASSISTANT" rules={{ required: true }}
                             render={({ field: { onChange } }) => (
-                                <Select array={['AUXILIAR', 'COORDINATOR']} onChange={onChange}
+                                <Select array={['ASSISTANT', 'COORDINATOR']} onChange={onChange}
                                     activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle="z-10"
                                     buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700"
                                     dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500" />
