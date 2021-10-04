@@ -2,9 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 // Components
-import Footer from 'components/landing/Footer';
-import Header from 'components/landing/Header';
-// import { Footer, Header } from 'components/landing';
+import { Footer, Header } from 'components/landing';
 import { Disclosure, ScrollToTop } from 'components/shared';
 // Services
 import { apiInstance } from 'services';
