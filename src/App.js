@@ -3,9 +3,11 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 // Screens
 import { Login, Dashboard, Landing, Ticket, Activate } from 'screens/layout';
 // Components
-import { Home, Users } from 'screens';
+import { Home, Users, Tickets } from 'screens';
 import { isLoggedIn } from 'utils';
-import Tickets from 'screens/Tickets';
+// Others
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
@@ -23,6 +25,7 @@ function App() {
 					<Redirect path="/**" to="/" />
 				</Switch>
 			</div>
+			<ToastContainer />
 		</BrowserRouter>
 	);
 }

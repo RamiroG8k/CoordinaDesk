@@ -5,20 +5,32 @@ import { useForm, Controller } from 'react-hook-form';
 import { Select } from 'components/shared';
 // Services
 import { apiInstance } from 'services';
+import { toast } from 'react-toastify';
 
 const CreateUser = ({ close }) => {
     const [loading, setLoading] = useState(false);
-    const { register, handleSubmit, control, formState: { errors } } = useForm();
+    const { register, handleSubmit, control, reset, formState: { errors } } = useForm();
 
     const create = async (body) => {
         setLoading(!loading);
-        // await apiInstance.post('/user', body)
-        //     .then(({ data }) => {
-        //         console.log(data)
-        //     }).catch(({ response: { data: error } }) => {
-        //         console.log(error);
-        //     });
-        // await setLoading(false); 
+        await apiInstance.post('/user', body)
+            .then(({ data }) => {
+                close(false);
+                toast.success('Usuario creado satisfactoriamente', {
+                    position: toast.POSITION.TOP_RIGHT
+                });
+            }).catch(({ response: { data: error } }) => {
+                // close(false);
+                reset();
+                toast.error(error.message, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+            });
+        await setLoading(false);
     };
 
     return (
