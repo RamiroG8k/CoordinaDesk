@@ -4,13 +4,15 @@ import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 // Services
 import { apiInstance } from 'services';
+// Others
+import { toast } from 'react-toastify';
 
-const Activate = () => {
+const Activate = ({ history }) => {
     const { id, token } = useParams();
 
     const [hidden, setHidden] = useState(true);
     const [loading, setLoading] = useState(false);
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const activate = async (body) => {
         setLoading(!loading);
@@ -19,10 +21,20 @@ const Activate = () => {
         };        
         await apiInstance.put('/user/activate', { ...body, _id: id }, config)
             .then(({ data }) => {
-                console.log(data);
+                history.push('/');
+                toast.success('Cuenta activada!', {
+                    position: toast.POSITION.TOP_RIGHT
+                });
             }).catch(({ response: { data: error } }) => {
-                alert(error.status === 401 ? 'Expired token' : error);
+                toast.error(error.message, {
+                    position: 'El correo de activacion ha expirado',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
             });
+        reset();
         await setLoading(false); 
     }
     
