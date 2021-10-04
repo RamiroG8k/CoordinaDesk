@@ -44,18 +44,14 @@ const Users = () => {
 
     return (
         <section className="space-y-6">
-            <Modal visible={create} toggle={setCreate} size="xl" title="Crear usuario"
-                body={<CreateUser.Body />} actions={<CreateUser.Actions />}>
-                {/* <CreateUser>
-                    <CreateUser.Body />
-                    <CreateUser.Actions />
-                </CreateUser> */}
+            <Modal visible={create} toggle={setCreate} size="xl" title="Crear usuario">
+                <CreateUser close={setCreate}/>
             </Modal>
             <div className="bg-white shadow-lg dark:bg-gray-700 w-full rounded-4xl p-4 sm:p-10 flex flex-col justify-center items-center" >
                 <div className="relative w-full">
                     <h1 className="text-4xl sm:text-5xl text-center font-bold text-gray-400 mb-4 sm:mb-8">Usuarios</h1>
                     <button onClick={() => setCreate(!create)}
-                        className="absolute top-0 flex items-center gap-1 btn btn-animated bg-blue-100 w-auto px-3 py-2">
+                        className="absolute top-0 flex items-center gap-1 btn btn-animated bg-blue-100 dark:bg-gray-600 w-auto px-3 py-2">
                         <p className="text-3xl"><AiOutlineUserAdd /></p>
                         <p className="hidden md:block text-xl">Crear</p>
                     </button>
