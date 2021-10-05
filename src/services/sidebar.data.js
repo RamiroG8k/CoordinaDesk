@@ -2,19 +2,18 @@ import { FiUsers, FiHome, FiInbox } from 'react-icons/fi';
 
 const sections = [
     {
-        title: 'Home',
+        title: 'Inicio',
         icon: <FiHome/>,
         type: 'link',
         path: '/home',
     },
     {
-        title: 'Users',
+        title: 'Usuarios',
         icon: <FiUsers/>,
         type: 'sub',
         path: '/users',
         children: [
-            { path: '/users', title: 'All Users', type: 'link' },
-            // { path: '/users/brand-partners', title: 'Brand Partners', type: 'link' }
+            { path: '/users', title: 'Todos', type: 'link' },
         ],
     },
     {
@@ -23,8 +22,8 @@ const sections = [
         type: 'sub',
         path: '/tickets',
         children: [
-            { path: '/tickets', title: 'All Tickets', type: 'link' },
-            // { path: '/users/brand-partners', title: 'Brand Partners', type: 'link' }
+            { path: '/tickets', title: 'Todos', type: 'link' },
+            { path: '/tickets', title: 'Inactivos', type: 'link' },
         ],
     },
 ];

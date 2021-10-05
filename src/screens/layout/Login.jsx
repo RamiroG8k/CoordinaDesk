@@ -14,12 +14,13 @@ const Login = ({ history }) => {
         setLoading(!loading);
         await apiInstance.post('/auth/login', body)
             .then(({ data }) => {
+                setLoading(false); 
                 saveCredentials(data);
                 history.push('/home');
             }).catch(({ response: { data: error } }) => {
+                setLoading(false); 
                 console.log(error);
             });
-        await setLoading(false); 
     };
 
     return (
