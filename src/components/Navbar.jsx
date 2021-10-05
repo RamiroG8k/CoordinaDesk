@@ -11,26 +11,23 @@ const Navbar = ({ className, toggleSidebar, mobileSidebar }) => {
     const handleAction = (action) => {
         switch (action) {
             case 'logout':
-                removeCredentials();
                 logOut();
                 break;
-        
+
             default:
+                logOut();
                 break;
         }
     };
 
     const logOut = async () => {
-        history.push('/login');
-        // await apiInstance.get('/auth/logout')
-        //     .then(() => {
-
-        //     })
-        //     .catch(error => {
-
-        //     })
+        await apiInstance.post('/auth/logout')
+            .then(() => {
+                removeCredentials();
+                history.push('/login');
+            });
     };
-    
+
     const ActionsUser = () => {
         return (
             <div className="user flex gap-2 items-center bg-blue-50 dark:bg-gray-800 rounded-full transform hover:scale-105 transition">

@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 // Services
 import { apiInstance } from 'services';
-// Others
 import { toast } from 'react-toastify';
 
 const Activate = ({ history }) => {
@@ -18,26 +17,25 @@ const Activate = ({ history }) => {
         setLoading(!loading);
         const config = {
             headers: { Authorization: `Bearer ${token}` }
-        };        
+        };
         await apiInstance.put('/user/activate', { ...body, _id: id }, config)
             .then(({ data }) => {
                 history.push('/');
-                toast.success('Cuenta activada!', {
+                toast.success(`Se ha activado correctamente su cuenta, intente iniciar con su correo y contraseña`, {
                     position: toast.POSITION.TOP_RIGHT
                 });
             }).catch(({ response: { data: error } }) => {
                 toast.error(error.message, {
-                    position: 'El correo de activacion ha expirado',
+                    position: toast.POSITION.TOP_RIGHT,
                     autoClose: 5000,
                     hideProgressBar: false,
                     pauseOnHover: true,
                     draggable: true,
                 });
             });
-        reset();
-        await setLoading(false); 
+        await setLoading(false);
     }
-    
+
     return (
         <section className="flex w-screen h-screen relative overflow-hidden bg-gray-50 dark:bg-gray-800 sm:bg-blue-50 sm:dark:bg-gray-800 justify-center items-center">
             <div className="w-full sm:w-96 z-10">

@@ -1,3 +1,4 @@
+import { BsTrash, BsEnvelope, BsFileEarmarkText } from 'react-icons/bs';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter, FaYoutube } from 'react-icons/fa';
 
 const sections = [
@@ -27,4 +28,25 @@ const socials = [
     { icon: <FaYoutube />, url: 'https://www.google.com' },
 ];
 
-export { sections, socials };
+const userActions = [
+    {
+        name: 'Detalles',
+        action: 'details',
+        description: 'Informacion general de usuario',
+        icon: <BsFileEarmarkText />,
+    },
+    {
+        name: 'Borrar',
+        action: 'delete',
+        description: 'Eliminar usuario del registro',
+        icon: <BsTrash />,
+    },
+    {
+        name: 'Reenviar email',
+        action: 'resend-email',
+        description: 'Mandar correo de activacion',
+        icon: <BsEnvelope />,
+    }
+];
+
+export { sections, socials, userActions };

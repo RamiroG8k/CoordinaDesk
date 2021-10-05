@@ -6,5 +6,6 @@ import Select from './Select';
 import Dropdown from './Dropdown';
 import Disclosure from './Disclosure';
 import ScrollToTop from './ScrollToTop';
+import Popover from './Popover';
 
-export { ModeSwitcher, Modal, Datatable, Paginator, Select, Dropdown, Disclosure, ScrollToTop };
+export { ModeSwitcher, Modal, Datatable, Paginator, Select, Dropdown, Disclosure, ScrollToTop, Popover };
