@@ -2,10 +2,12 @@
 import { useState, useEffect } from 'react';
 // Compontens
 import { Modal } from 'components/shared';
-// Others
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 // Data
 import { apiInstance } from 'services';
+// Others
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { TicketDetails } from 'components/admin';
+import { firstCapitalized } from 'utils';
 
 const Tickets = () => {
     const [tickets, setTickets] = useState();
@@ -65,10 +67,8 @@ const Tickets = () => {
     return (
         <>
             <Modal visible={details.visible} toggle={(show) => setDetails({ ...details, visible: show })}
-                size="xl" title="Detalles de ticket">
-                <div className="px-6 py-4 text-xs">
-                    <pre>{JSON.stringify(details.data, null, 4)}</pre>
-                </div>
+                size="2xl" title="Detalles de ticket">
+                <TicketDetails details={details.data}/>
             </Modal>
             <section className="flex flex-col sm:grid grid-cols-3 gap-6">
                 <DragDropContext onDragEnd={onDragEnd}>
@@ -87,7 +87,7 @@ const Tickets = () => {
                                                         className="relative flex items-center h-16 sm:h-20 w-full p-2 rounded-2xl bg-gray-50 dark:bg-gray-800 border dark:border-gray-600" >
                                                         <div className={`h-2/3 mr-2 w-0 border border-${item.priority === 'HIGH' ? 'red' : 'green'}-300`} />
                                                         <div className="h-full w-full">
-                                                            <p className="text-sm dark:text-gray-500">{item.title}</p>
+                                                            <p className="text-sm dark:text-gray-500">{firstCapitalized(item.title)}</p>
                                                             <span className="absolute right-2 bottom-2 text-blue-300 text-xs font-semibold" >{item.status} </span>
                                                         </div>
                                                     </div>
@@ -115,7 +115,7 @@ const Tickets = () => {
                                                         className="relative flex items-center h-16 sm:h-20 w-full p-2 rounded-2xl bg-gray-50 dark:bg-gray-800 border dark:border-gray-600" >
                                                         <div className={`h-2/3 mr-2 w-0 border border-${item.priority === 'HIGH' ? 'red' : 'green'}-300`} />
                                                         <div className="h-full w-full">
-                                                            <p className="text-sm dark:text-gray-500">{item.title}</p>
+                                                            <p className="text-sm dark:text-gray-500">{firstCapitalized(item.title)}</p>
                                                             <span className="absolute right-2 bottom-2 text-blue-300 text-xs font-semibold" >{item.status} </span>
                                                         </div>
                                                     </div>
@@ -144,7 +144,7 @@ const Tickets = () => {
                                                         className="relative flex items-center h-16 sm:h-20 w-full p-2 rounded-2xl bg-gray-50 dark:bg-gray-800 border dark:border-gray-600" >
                                                         <div className={`h-2/3 mr-2 w-0 border border-${item.priority === 'HIGH' ? 'red' : 'green'}-300`} />
                                                         <div className="h-full w-full">
-                                                            <p className="text-sm dark:text-gray-500">{item.title}</p>
+                                                            <p className="text-sm dark:text-gray-500">{firstCapitalized(item.title)}</p>
                                                             <span className="absolute right-2 bottom-2 text-blue-300 text-xs font-semibold" >{item.status} </span>
                                                         </div>
                                                     </div>

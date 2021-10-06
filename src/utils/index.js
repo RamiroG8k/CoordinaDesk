@@ -33,3 +33,7 @@ export const shortDate = (date) => {
 
     return dmy;
 };
+
+export const firstCapitalized = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+};

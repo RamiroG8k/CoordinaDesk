@@ -1,5 +1,9 @@
+// Common
 import { Fragment, useRef } from 'react';
+// Components
 import { Dialog, Transition } from '@headlessui/react';
+// Others
+import { CgClose } from 'react-icons/cg';
 
 const Modal = ({ toggle, visible, type = 1, size = 'sm', title, children }) => {
     const cancelButtonRef = useRef(null);
@@ -33,7 +37,11 @@ const Modal = ({ toggle, visible, type = 1, size = 'sm', title, children }) => {
                                     <Dialog.Title as="h3" className="text-xl leading-6 font-medium text-gray-900 dark:text-gray-400">
                                         {title}
                                     </Dialog.Title>
-                                    <button onClick={() => toggle(false)} className="p-2">x</button>
+                                    <button onClick={() => toggle(false)} className="p-2">
+                                        <p>
+                                            <CgClose />
+                                        </p>
+                                    </button>
                                 </div>
                             </div>
                             {children}
