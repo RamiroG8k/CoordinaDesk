@@ -68,12 +68,9 @@ const Chatbot = () => {
         <>
             <Modal visible={createTicket} toggle={setCreateTicket} size="xl" title={ticket ? 'Informacion de ticket' : 'Crear ticket'}>
                 {!ticket && <CreateTicket close={setCreateTicket} onCreate={setTicket} />}
-                <div className="p-4 sm:p-6 sm:pt-4">
+                {ticket && <div className="p-4 sm:p-6 sm:pt-4">
                     {JSON.stringify(ticket, null, 4)}
-                    {/* <div class="select-all input input-primary">
-                        {ticket.}
-                    </div> */}
-                </div>
+                </div>}
             </Modal>
 
             <section className="relative flex flex-col w-screen h-screen items-center bg-white">

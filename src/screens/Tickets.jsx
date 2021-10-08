@@ -46,18 +46,12 @@ const Tickets = () => {
 
             default: break;
         };
-
-        // const [reorderedItem] = tickets.splice(result.source.index, 1);
-        // tickets.splice(result.destination.index, 0, reorderedItem);
-        // tickets.map((e, index) => e.position = index + 1);
-
         changeStatus(result.draggableId, status);
     };
 
     const changeStatus = async (id, status) => {
         await apiInstance.patch(`/ticket/id/${id}/change-status`, { status })
             .then(({ data }) => {
-                console.log(data);
                 fetchTickets();
             }).catch(({ response: { data: error } }) => {
                 console.log(error);
@@ -68,7 +62,7 @@ const Tickets = () => {
         <>
             <Modal visible={details.visible} toggle={(show) => setDetails({ ...details, visible: show })}
                 size="2xl" title="Detalles de ticket">
-                <TicketDetails details={details.data} onUpdate={fetchTickets}/>
+                {details.data && <TicketDetails id={details.data._id} onUpdate={fetchTickets}/>}                    
             </Modal>
             <section className="flex flex-col sm:grid grid-cols-3 gap-6">
                 <DragDropContext onDragEnd={onDragEnd}>
@@ -88,7 +82,7 @@ const Tickets = () => {
                                                         <div className={`h-2/3 mr-2 w-0 border border-${item.priority === 'HIGH' ? 'red' : 'green'}-300`} />
                                                         <div className="h-full w-full">
                                                             <p className="text-sm dark:text-gray-500">{firstCapitalized(item.title)}</p>
-                                                            <span className="absolute right-2 bottom-2 text-blue-300 text-xs font-semibold" >{item.status} </span>
+                                                            <span className="absolute right-2 bottom-2 text-blue-300 text-xs font-semibold" >{firstCapitalized(item.user.name)} </span>
                                                         </div>
                                                     </div>
                                                 )}
@@ -116,7 +110,7 @@ const Tickets = () => {
                                                         <div className={`h-2/3 mr-2 w-0 border border-${item.priority === 'HIGH' ? 'red' : 'green'}-300`} />
                                                         <div className="h-full w-full">
                                                             <p className="text-sm dark:text-gray-500">{firstCapitalized(item.title)}</p>
-                                                            <span className="absolute right-2 bottom-2 text-blue-300 text-xs font-semibold" >{item.status} </span>
+                                                            <span className="absolute right-2 bottom-2 text-blue-300 text-xs font-semibold" >{firstCapitalized(item.user.name)} </span>
                                                         </div>
                                                     </div>
                                                 )}
@@ -132,7 +126,6 @@ const Tickets = () => {
                         {(provided) => (
                             <div className="bg-white shadow-lg dark:bg-gray-700 w-full rounded-3xl sm:rounded-4xl p-4" >
                                 <h2 className="text-4xl font-bold text-gray-400 text-center">Done</h2>
-
                                 <div {...provided.droppableProps} ref={provided.innerRef}
                                     className="flex flex-col space-y-3 mt-6">
                                     {done.map((item, i) => {
@@ -145,7 +138,7 @@ const Tickets = () => {
                                                         <div className={`h-2/3 mr-2 w-0 border border-${item.priority === 'HIGH' ? 'red' : 'green'}-300`} />
                                                         <div className="h-full w-full">
                                                             <p className="text-sm dark:text-gray-500">{firstCapitalized(item.title)}</p>
-                                                            <span className="absolute right-2 bottom-2 text-blue-300 text-xs font-semibold" >{item.status} </span>
+                                                            <span className="absolute right-2 bottom-2 text-blue-300 text-xs font-semibold" >{firstCapitalized(item.user.name)} </span>
                                                         </div>
                                                     </div>
                                                 )}
