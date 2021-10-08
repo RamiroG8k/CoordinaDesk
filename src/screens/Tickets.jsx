@@ -68,7 +68,7 @@ const Tickets = () => {
         <>
             <Modal visible={details.visible} toggle={(show) => setDetails({ ...details, visible: show })}
                 size="2xl" title="Detalles de ticket">
-                <TicketDetails details={details.data}/>
+                <TicketDetails details={details.data} onUpdate={fetchTickets}/>
             </Modal>
             <section className="flex flex-col sm:grid grid-cols-3 gap-6">
                 <DragDropContext onDragEnd={onDragEnd}>

@@ -6,6 +6,7 @@ import { Select } from 'components/shared';
 import { firstCapitalized } from 'utils';
 import { useState } from 'react';
 import { apiInstance } from 'services';
+import { IoMdReturnLeft } from 'react-icons/io';
 
 const STATUS = [
 
@@ -21,11 +22,10 @@ const STATUS = [
     // CLOSED_DUE_TO_INACTIVITY: 'CLOSED_DUE_TO_INACTIVITY'
 ];
 
-const TicketDetails = ({ details }) => {
+const TicketDetails = ({ details, onUpdate }) => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        console.log(details);
         fetchUsers();    
     }, [])
 
@@ -35,7 +35,33 @@ const TicketDetails = ({ details }) => {
                 setUsers(data.map((e) => { return { label: firstCapitalized(e.name), value: e._id } }));
             }).catch(({ response: { data: error } }) => {
                 console.log(error);
-            })
+            });
+        };
+        
+        const updateStatus = async (status) => {
+            await apiInstance.patch(`/ticket/id/${details._id}/change-status`, { status })
+                .then(({ data }) => {
+                    onUpdate();
+                    // fetchData
+                    // Notif
+                    // Close Modal
+                    // Fetch
+                }).catch(({ response: { data: error } }) => {
+                    console.log(error);
+                });
+        };
+        
+        const reasingUser = async (id) => {
+            await apiInstance.patch(`/ticket/id/${details._id}/reasign-user/${id}`)
+                .then(({ data }) => {
+                    // fetchData
+                    // Notif
+                    // Close Modal
+                    // Fetch
+                }).catch(({ response: { data: error } }) => {
+                    console.log(error);
+                });
+        
     };
 
     return (
@@ -51,7 +77,7 @@ const TicketDetails = ({ details }) => {
                             buttonStyle="w-full rounded-xl bg-blue-100 dark:bg-gray-800 text-gray-500"
                             dropdownStyle="bg-white dark:bg-gray-600 dark:text-gray-400 z-20"
                             activeStyle="bg-blue-100 dark:bg-gray-800"
-                            onChange={(value) => console.log(value)} />
+                            onChange={({ value }) => updateStatus(value)} />
                     </div>
 
                     <div className="group">
@@ -59,7 +85,7 @@ const TicketDetails = ({ details }) => {
                         {(users.length > 0) && <Select array={users} labels defaultValue={details.user._id}
                             buttonStyle="w-full rounded-xl bg-blue-100 dark:bg-gray-800 text-gray-500"
                             dropdownStyle="bg-white dark:bg-gray-800 text-gray-500 z-20"
-                            onChange={(value) => console.log(value)}
+                            onChange={({ value }) => reasingUser(value)}
                         />}
                     </div>
                 </div>

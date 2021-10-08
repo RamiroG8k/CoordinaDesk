@@ -1,15 +1,23 @@
 // Common
+import { useEffect } from 'react'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 // Screens
 import { Login, Dashboard, Landing, Ticket, Activate } from 'screens/layout';
 // Components
 import { Home, Users, Tickets } from 'screens';
-import { isLoggedIn } from 'utils';
+import { isLoggedIn, prefersDarkMode } from 'utils';
 // Others
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+	const htmlClasses = document.documentElement.classList;
+
+	useEffect(() => {
+		prefersDarkMode() ?
+			htmlClasses.add('dark') :
+			htmlClasses.remove('dark');
+	}, [htmlClasses]);
 
 	return (
 		<BrowserRouter>

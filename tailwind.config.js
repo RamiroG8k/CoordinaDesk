@@ -1,9 +1,6 @@
-const plugin = require("tailwindcss/plugin");
-const selectorParser = require("postcss-selector-parser");
-
 module.exports = {
     purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-    darkMode: 'media', // or 'media' or 'class'
+    darkMode: 'class', // or 'media' or 'class'
     theme: {
         extend: {
             screens: {
@@ -30,24 +27,12 @@ module.exports = {
         extend: {
             backgroundColor: ['dark', 'hover'],
             dark: ['backgroundColor', 'hover'],
+            animation: ['hover', 'focus'],
             width: ['hover'],
             fontWeight: ['hover'],
             opacity: ['disabled'],
             scale: ['hover'],
         },
     },
-    plugins: [
-        plugin(function ({ addVariant, prefix }) {
-            addVariant('dark', ({ modifySelectors, separator }) => {
-                modifySelectors(({ selector }) => {
-                    return selectorParser((selectors) => {
-                        selectors.walkClasses((sel) => {
-                            sel.value = `dark${separator}${sel.value}`
-                            sel.parent.insertBefore(sel, selectorParser().astSync('.scheme-dark '))
-                        })
-                    }).processSync(selector)
-                })
-            })
-        })
-    ],
+    plugins: [],
 }

@@ -26,7 +26,7 @@ export const scrollToTop = () => {
 export const shortDate = (date) => {
     date = new Date(date) ?? new Date();
     const dmy = [];
-    
+
     dmy.push(date.getUTCDate());
     dmy.push((date.getUTCMonth() + 1) < 10 ? `0${date.getUTCMonth() + 1}` : date.getUTCMonth());
     dmy.push(date.getUTCFullYear());
@@ -36,4 +36,9 @@ export const shortDate = (date) => {
 
 export const firstCapitalized = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+export const prefersDarkMode = () => {
+    return localStorage.theme === 'dark' ||
+        (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
 };
