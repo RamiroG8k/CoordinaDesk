@@ -19,7 +19,7 @@ const PopoverTool = ({ buttonAs, children, actions, docs, onAction, className })
                         <Popover.Panel className="absolute z-10 w-screen max-w-sm px-4 mt-3 transform -translate-x-1/2 -translate-y-72   left-1/2 sm:px-0">
                             <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                                 <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-2">
-                                    {actions.map((item) => (
+                                    {actions && actions.map((item) => (
                                         <button key={item.name} onClick={() => eventHandler(item.action, close)}
                                             className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-50">
                                             <div className="flex items-center justify-center bg-blue-100 rounded-xl flex-shrink-0 w-10 h-10 text-white sm:h-12 sm:w-12">

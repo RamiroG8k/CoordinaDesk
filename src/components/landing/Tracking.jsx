@@ -30,7 +30,9 @@ const Tracking = () => {
                 </div>
                 <input type="text" onChange={v => setCode(v.target.value.toUpperCase())} value={code}
                     placeholder="Start typing your ticket id" className="input text-2xl rounded-2xl bg-blue-50 border-2" />
-                <Link to={`/ticket/id/${code}`} type="button" disabled={!code}
+                <Link 
+                // to={`/ticket/id/${code}`} 
+                to={{ pathname: '/ticket/tracking', id: code }} type="button" disabled={!code}
                     className={`${code ? '' : 'opacity-50'} btn btn-animated disabled:opacity-50 bg-blue-200 w-auto px-4 p-2 mt-6 text-xl`}>
                     Search
                 </Link>

@@ -65,7 +65,8 @@ const DataTable = ({ onSearch, data = [], onEvent, onUpdate, placeholder }) => {
                         {rows.length ? rows.map((row, i) => {
                             // console.log(row.status ? [actions[0]] : actions);
                             return (
-                                <Popover key={i} buttonAs="tr" actions={row.status ? [actions[0], actions[1]] : actions} onAction={(action) => onEvent({ item: row, action })}
+                                <Popover key={i} buttonAs="tr" actions={actions && (row.status ? [actions[0], actions[1]] : actions)}
+                                    onAction={(action) => onEvent({ item: row, action })}
                                     docs={{ title: 'Acciones por usuario', description: 'Pueden variar dependiendo el status del seleccionado' }}
                                     className="cursor-pointer hover:text-blue-800">
                                     {Object.values(row).slice(1).map((e, j) => {

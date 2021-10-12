@@ -1,6 +1,6 @@
 // Common
 import { useEffect, useState, useRef } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 // Others
 import { apiInstance } from 'services';
 import { shortDate } from 'utils';
@@ -12,7 +12,7 @@ import NotFound from '../../assets/not-found.json';
 const Ticket = () => {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState();
-    const { id } = useParams();
+    const { id } = useLocation();
 
     const notFoundContainer = useRef(null);
 
@@ -22,7 +22,7 @@ const Ticket = () => {
                 .then(({ data: ticket }) => {
                     setData(ticket);
                 }).catch(({ response: { data: error } }) => {
-                    console.log(error);
+                    
                 });
             await setLoading(false);
         };

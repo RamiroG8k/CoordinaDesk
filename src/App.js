@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 // Screens
 import { Login, Dashboard, Landing, Ticket, Activate } from 'screens/layout';
 // Components
-import { Home, Users, Tickets } from 'screens';
+import { Home, Users, Tickets, TicketsDone } from 'screens';
 import { isLoggedIn, prefersDarkMode } from 'utils';
 // Others
 import { ToastContainer } from 'react-toastify';
@@ -25,11 +25,12 @@ function App() {
 				<Switch>
 					<PublicRoute path="/" exact component={Landing} />
 					<PublicRoute path="/login" exact restricted component={Login} />
-					<PublicRoute path="/ticket/id/:id" exact component={Ticket} />
+					<PublicRoute path="/ticket/tracking" exact component={Ticket} />
 					<PublicRoute path="/activate/id/:id/token/:token" exact component={Activate} />
 					<PrivateRoute path="/home" exact component={Home} />
 					<PrivateRoute path="/users" exact component={Users} />
 					<PrivateRoute path="/tickets" exact component={Tickets} />
+					<PrivateRoute path="/tickets/inactive" exact component={TicketsDone} />
 					<Redirect path="/**" to="/" />
 				</Switch>
 			</div>

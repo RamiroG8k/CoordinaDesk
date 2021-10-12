@@ -23,7 +23,7 @@ const sections = [
         path: '/tickets',
         children: [
             { path: '/tickets', title: 'Todos', type: 'link' },
-            { path: '/tickets', title: 'Inactivos', type: 'link' },
+            { path: '/tickets/inactive', title: 'Inactivos', type: 'link' },
         ],
     },
 ];

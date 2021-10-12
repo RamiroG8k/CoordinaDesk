@@ -23,7 +23,6 @@ const Users = () => {
         await apiInstance.get('/user/all/pageable', { params: { page, limit } })
             .then(({ data }) => {
                 setData({
-                    // ...data,
                     rows: userParser(data.content),
                     columns: Object.keys(userParser(data.content)[0]).slice(1),
                     actions: userActions,
