@@ -1,17 +1,20 @@
 // Common
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import { useParams, Link } from 'react-router-dom';
 // Others
-// import { Disclosure } from '@headlessui/react';
 import { apiInstance } from 'services';
 import { shortDate } from 'utils';
 import { FaRegCheckCircle } from 'react-icons/fa';
 import { Disclosure } from 'components/shared';
+import lottie from 'lottie-web';
+import NotFound from '../../assets/not-found.json';
 
 const Ticket = () => {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState();
     const { id } = useParams();
+
+    const notFoundContainer = useRef(null);
 
     useEffect(() => {
         const fetchData = async (body) => {
@@ -21,14 +24,26 @@ const Ticket = () => {
                 }).catch(({ response: { data: error } }) => {
                     console.log(error);
                 });
-            setLoading(false);
+            await setLoading(false);
         };
 
         fetchData();
     }, [id]);
 
+    useEffect(() => {
+        lottie.loadAnimation({
+            container: notFoundContainer.current,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            animationData: NotFound
+        });
+    }, [loading, data])
+
     return (
         <section className="flex flex-col w-screen h-screen items-center">
+            {loading && <p>Loading...</p>}
+
             {(!loading && data) && <div className="flex flex-col w-full max-w-5xl p-4 sm:p-10 justify-center items-center space-y-4">
                 <div className="sticky top-4 flex w-full bg-gray-100 rounded-3xl px-4 py-8 justify-between items-center">
                     <div className="flex flex-col justify-center w-5/12 text-left py-2 px-4 gap-2">
@@ -73,8 +88,18 @@ const Ticket = () => {
                     })}
                 </div>
             </div>}
-            {/* TODO: Spinner */}
-            {loading && <p>Loading...</p>}
+
+            {(!loading && !data) && <div className="flex sm:w-2/3 flex-col h-full p-6 items-center justify-center space-y-10">
+                <h4 className="text-2xl sm:text-4xl font-semibold text-center">
+                    <span className="text-blue-600">Oops</span>, parece que no hay informacion relacionada con el <span className="text-blue-600">ticket</span> proporcionado
+                </h4>
+                <div className="flex relative w-full h-1/2 justify-center items-center">
+                    <div ref={notFoundContainer} className="flex z-0" />
+                </div>
+                <Link to="/" className="px-4 py-2 w-auto btn btn-animated bg-blue-300">
+                    <p className="text-white text-lg">Regresar al Inicio</p>
+                </Link>
+            </div>}
         </section>
     )
 }

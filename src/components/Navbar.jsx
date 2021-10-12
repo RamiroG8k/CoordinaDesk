@@ -3,10 +3,11 @@ import { Dropdown, ModeSwitcher } from 'components/shared';
 import { BiSidebar, BiUserCircle, BiSearchAlt } from 'react-icons/bi';
 import { useHistory } from 'react-router-dom';
 import { apiInstance } from 'services';
-import { removeCredentials } from 'utils';
+import { firstCapitalized, removeCredentials } from 'utils';
 
 const Navbar = ({ className, toggleSidebar, mobileSidebar }) => {
     const history = useHistory();
+    const user = JSON.parse(sessionStorage.getItem('user'));
 
     const handleAction = (action) => {
         switch (action) {
@@ -34,7 +35,7 @@ const Navbar = ({ className, toggleSidebar, mobileSidebar }) => {
                 <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-blue-100 dark:bg-gray-900 flex justify-center items-center">
                     <p className="text-white dark:text-gray-500 text-2xl sm:text-4xl"><BiUserCircle /></p>
                 </div>
-                <p className="hidden sm:block text-sm sm:text-lg font-semibold text-gray-600 dark:text-gray-400 pr-3">Username</p>
+                <p className="hidden sm:block text-sm sm:text-lg font-semibold text-gray-600 dark:text-gray-400 pr-3">{firstCapitalized(user?.name.split(' ')[0])}</p>
             </div>
         );
     };
