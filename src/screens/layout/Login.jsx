@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { apiInstance } from 'services';
 import { saveCredentials } from 'utils';
 import { BsArrowLeftShort } from 'react-icons/bs';
+import { toast } from 'react-toastify';
 
 const Login = ({ history }) => {
     const [hidden, setHidden] = useState(true);
@@ -14,13 +15,18 @@ const Login = ({ history }) => {
         setLoading(!loading);
         await apiInstance.post('/auth/login', body)
             .then(({ data }) => {
-                setLoading(false); 
                 saveCredentials(data);
                 history.push('/home');
             }).catch(({ response: { data: error } }) => {
-                setLoading(false); 
-                console.log(error);
+                toast.error(error.message, {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
             });
+        await setLoading(false);
     };
 
     return (

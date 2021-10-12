@@ -30,7 +30,6 @@ const Ticket = () => {
     return (
         <section className="flex flex-col w-screen h-screen items-center">
             {(!loading && data) && <div className="flex flex-col w-full max-w-5xl p-4 sm:p-10 justify-center items-center space-y-4">
-
                 <div className="sticky top-4 flex w-full bg-gray-100 rounded-3xl px-4 py-8 justify-between items-center">
                     <div className="flex flex-col justify-center w-5/12 text-left py-2 px-4 gap-2">
                         <p className="text-sm sm:text-lg leading-3">Fecha Apertura</p>
