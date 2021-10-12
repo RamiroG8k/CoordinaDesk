@@ -12,7 +12,10 @@ import { FiSend } from 'react-icons/fi';
 import { BiBot, BiCommentEdit } from 'react-icons/bi';
 
 const Chatbot = () => {
-    const [chat, setChat] = useState([]);
+    const [chat, setChat] = useState([
+        { answer: 'Hola soy Deskbot!' },
+        { answer: 'Estoy aqui para ayudar, Por favor pregunta algo para empezar! 🔥' },
+    ]);
     const [question, setQuestion] = useState('');
     const [createTicket, setCreateTicket] = useState(false);
     const [ticket, setTicket] = useState();
