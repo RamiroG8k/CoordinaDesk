@@ -81,7 +81,7 @@ const Tickets = () => {
                                                         <div className={`h-2/3 mr-2 w-0 border border-${(item.priority === 'HIGH') ? 'red' : (item.priority === 'MODERATE') ? 'yellow' : 'green'}-300`} />
                                                         <div className="h-full w-full">
                                                             <p className="text-sm dark:text-gray-500">{firstCapitalized(item.title)}</p>
-                                                            <span className="absolute right-2 bottom-2 text-blue-300 text-xs font-semibold" >{firstCapitalized(item.user.name)} </span>
+                                                            <span className="absolute right-2 bottom-2 text-blue-300 text-xs font-semibold capitalize" >{item.user?.name ?? 'Esperando asignacion'} </span>
                                                         </div>
                                                     </div>
                                                 )}

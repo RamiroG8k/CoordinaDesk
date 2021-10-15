@@ -17,6 +17,7 @@ const CreateTicket = ({ close, onCreate }) => {
                 toast.success('Ticket creado satisfactoriamente', {
                     position: toast.POSITION.TOP_RIGHT
                 });
+                // close();
             }).catch(({ response: { data: error } }) => {
                 // close(false);
                 reset();

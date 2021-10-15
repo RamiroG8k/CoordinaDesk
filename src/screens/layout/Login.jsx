@@ -13,10 +13,12 @@ const Login = ({ history }) => {
 
     const logIn = async (body) => {
         setLoading(!loading);
+        body.email = body.email.toLowerCase().trim();
+
         await apiInstance.post('/auth/login', body)
             .then(({ data }) => {
                 saveCredentials(data);
-                history.push('/home');
+                history.push('/tickets');
             }).catch(({ response: { data: error } }) => {
                 toast.error(error.message, {
                     position: toast.POSITION.TOP_CENTER,

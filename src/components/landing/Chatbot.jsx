@@ -31,8 +31,17 @@ const Chatbot = () => {
             autoplay: true,
             animationData: ChatbotAnimation
         });
-
     }, []);
+
+    useEffect(() => {
+        setChat([
+            { answer: 'Hola soy Deskbot!' },
+            { answer: 'Estoy aqui para ayudar, Por favor pregunta algo para empezar! 🔥' },
+        ]);
+        setTicket(null);
+        setCreate({ length: false, wrong: false });
+        setCreateTicket(false);
+    }, [ticket]);
 
     const askNLP = async () => {
         if (question) {
