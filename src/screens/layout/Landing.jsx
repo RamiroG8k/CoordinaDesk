@@ -8,8 +8,8 @@ const Landing = () => {
     const [ticket, setTicket] = useState();
 
     return (
-        <>
-            <Header onCreate={setCreateTicket} />
+        <div className="relative">
+            <Header onCreate={setCreateTicket} className="sticky top-0 z-50 shadow-md"/>
             <Chatbot onCreate={setCreateTicket} ticket={ticket}/>
             <Faqs />
             <Tracking />
@@ -22,7 +22,7 @@ const Landing = () => {
                     {JSON.stringify(ticket, null, 4)}
                 </div>} */}
             </Modal>
-        </>
+        </div>
     )
 }
 

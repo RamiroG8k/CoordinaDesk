@@ -71,12 +71,12 @@ const Chatbot = ({ onCreate, ticket }) => {
 
     return (
         <section className="relative flex flex-col w-screen h-screen items-center bg-white">
-            <div className="h-1/3 py-4 sm:py-10 text-center w-full sm:w-2/3">
+            <div className="flex flex-col justify-center items-center h-1/3 p-4 sm:p-10 text-center w-full sm:max-w-6xl">
                 <h1 className="text-4xl sm:text-6xl font-semibold p-2 sm:p-4">CoordinaDesk</h1>
                 <p className="font-medium text-md sm:text-xl text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             </div>
 
-            <div className="relative flex h-2/3 w-full sm:gap-20 sm:px-10 xl:px-20 pt-10">
+            <div className="relative flex h-2/3 w-full sm:gap-20 sm:px-10 xl:px-20 sm:pt-10">
                 <div className="hidden sm:flex relative w-full sm:w-1/2 h-full justify-center items-center">
                     <div ref={chatbotContainer} className="absolute sm:w-2/3 z-10" />
                     <div className="absolute right-10 top-20 sm:w-52 sm:h-52 bg-blue-50 rounded-full z-0" />
@@ -92,9 +92,7 @@ const Chatbot = ({ onCreate, ticket }) => {
                             <p className="break-words leading-3 text-xs font-medium">Si aun no te ha resultado util la informacion, puedes crear un ticket para dar seguimiento a tu caso con folio de referencia, Toca aqui!</p>
                         </button>}
                         <div className="flex flex-col h-full w-full bg-gray-50 rounded-5xl p-4 gap-2 overflow-y-scroll">
-                            {chat?.map((e, i) =>
-                                <TextRow key={i} {...e} />
-                            )}
+                            {chat?.map((e, i) => <TextRow key={i} {...e} />)}
                         </div>
                         <div className="bottom flex w-full gap-2">
                             <input value={question} onChange={v => setQuestion(v.target.value)} type="text" placeholder="Ask anything"
