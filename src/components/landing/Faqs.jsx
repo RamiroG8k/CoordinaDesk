@@ -11,7 +11,7 @@ const Faqs = () => {
     useEffect(() => {
         fetchCategories();
     }, []);
-    
+
     const fetchCategories = async () => {
         await apiInstance.get('/category/all')
             .then(({ data }) => {
@@ -22,28 +22,24 @@ const Faqs = () => {
     };
     return (
         <section id="faqs" className="flex flex-col w-screen h-screen bg-gray-50 items-center px-4 sm:px-10">
-                <div className="title text-center p-5">
-                    <h3 className="text-4xl font-semibold">FAQs</h3>
-                    <span>Specify your category to look for the top results in our FAQs</span>
+            <div className="flex flex-col text-center p-5 sm:mt-6 gap-3">
+                <h3 className="text-4xl font-semibold">FAQs</h3>
+                <p><span className="text-blue-600">Preguntas frecuentes,</span> Selecciona la categoria para mostrar las preguntas mas realizadas de acuerdo al tema.</p>
+            </div>
+            <div className="flex flex-col sm:flex-row w-full h-full lg:w-3/4 items-center sm:gap-10">
+                <div className="flex flex-wrap h-auto justify-center gap-x-4 w-screen text-center py-2 sm:flex-col md:w-1/4 sm:text-right sm:leading-10 sm:overflow-visible" >
+                    {categories?.map(({ category }, i) => (
+                        <p key={i} className="transform transition hover:scale-105 cursor-pointer sm:whitespace-nowrap hover:text-blue-600">{category}</p>
+                    ))}
                 </div>
-                <div className="flex flex-col sm:flex-row w-full h-full lg:w-3/4 items-center sm:gap-10 sm:py-10">
-                    <div className="flex flex-wrap h-auto justify-center gap-x-4 w-screen text-center py-2 sm:flex-col md:w-1/4 sm:text-right sm:leading-10 sm:overflow-visible" >
-                        {categories?.map(({ category }, i) => {
-                            return (
-                                <p key={i} className="transform transition hover:scale-105 cursor-pointer sm:whitespace-nowrap hover:text-blue-600">{category}</p>
-                            );
-                        })}
-                    </div>
-                    <div className="border w-full sm:w-0 sm:h-4/5 " />
-                    <div className="flex flex-col space-y-4 max-h-full w-full justify-center items-center overflow-y-scroll py-4">
-                        {categories?.map((e, i) => {
-                            return (
-                                <Disclosure key={e._id} title={e._id} description={e.category} color="blue" />
-                            );
-                        })}
-                    </div>
+                <div className="border w-full sm:w-0 sm:h-4/5 " />
+                <div className="flex flex-col space-y-4 max-h-full w-full justify-center items-center overflow-y-scroll py-4">
+                    {categories?.map(({ _id, category }) => (
+                        <Disclosure key={_id} title={_id} description={category} color="blue" />
+                    ))}
                 </div>
-            </section>
+            </div>
+        </section>
     );
 };
 

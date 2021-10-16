@@ -7,7 +7,7 @@ const CustomDisclosure = ({ title, description, color = 'blue' }) => {
         <Disclosure>
             {({ open }) => (
                 <>
-                    <Disclosure.Button className={`flex justify-between w-full p-3 sm:p-4 transition sm:text-lg font-medium text-left text-${color}-900 bg-${color}-50 rounded-2xl hover:bg-${color}-100 focus:outline-none focus-visible:ring focus-visible:ring-${color}-500 focus-visible:ring-opacity-75`}>
+                    <Disclosure.Button className={`flex justify-between w-full p-3 sm:p-4 transition sm:text-lg font-medium text-left text-${color}-900 bg-${color}-100 rounded-2xl hover:bg-${color}-200 focus:outline-none focus-visible:ring focus-visible:ring-${color}-500 focus-visible:ring-opacity-75`}>
                         <span>{title}</span>
                         <GrFormDown className={`${open ? 'transform rotate-180' : ''} w-5 h-5 text-${color}-500`} />
                     </Disclosure.Button>
