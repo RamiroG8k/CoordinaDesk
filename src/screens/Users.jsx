@@ -19,8 +19,9 @@ const Users = () => {
         fetchUsers();
     }, []);
 
-    const fetchUsers = async (page, limit) => {
-        await apiInstance.get('/user/all/pageable', { params: { page, limit } })
+    const fetchUsers = async (page, limit, search) => {
+        await apiInstance.get('/user/all/pageable',
+            { params: { page, limit, name: search, email: search, role: search } })
             .then(({ data }) => {
                 setData({
                     rows: userParser(data.content),
@@ -132,9 +133,9 @@ const Users = () => {
                         <p className="hidden md:block text-lg">Crear</p>
                     </button>
                 </div>
-                {data && <Datatable data={data}
+                {data && <Datatable data={data} placeholder="Buscar por nombre, email o rol"
                     onUpdate={(page, limit) => fetchUsers(page, limit)}
-                    onEvent={handleItemEvent} />}
+                    onEvent={handleItemEvent} onSearch={(search) => fetchUsers('', '', search)} />}
             </div>
         </section>
     );

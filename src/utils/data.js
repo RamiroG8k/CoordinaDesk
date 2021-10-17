@@ -49,4 +49,11 @@ const userActions = [
     }
 ];
 
-export { sections, socials, userActions };
+const ticketStatus = [
+    { label: 'To do', value: 'ASIGNED' },
+    { label: 'In Progress', value: 'IN_PROGRESS' },
+    { label: 'Done', value: 'RESOLVE' },
+];
+
+
+export { sections, socials, userActions, ticketStatus };

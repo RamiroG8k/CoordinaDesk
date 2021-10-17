@@ -1,5 +1,3 @@
-// Common
-import { useEffect } from 'react';
 // Components
 import { Paginator, Popover, Select } from 'components/shared';
 // Others
@@ -17,8 +15,7 @@ const DataTable = ({ onSearch, data = [], onEvent, onUpdate, placeholder }) => {
         // Prevent errant multiple timeouts from being generated
         clearTimeout(timer);
         timer = setTimeout(() => {
-            console.log(term);
-            // onSearch(term.toLowerCase());
+            onSearch(term.trim().toLowerCase());
         }, 500);
     }
 
@@ -26,12 +23,6 @@ const DataTable = ({ onSearch, data = [], onEvent, onUpdate, placeholder }) => {
     //     const item = (data.data.find(searched => searched.email === email));
     //     onEvent({ action, item, page });
     // };
-
-    useEffect(() => {
-        // console.log('DATA', data);
-    }, [data])
-
-
 
     return (
         <section className="flex flex-col w-full space-y-4 sm:space-y-6">

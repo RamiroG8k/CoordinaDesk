@@ -1,21 +1,17 @@
 // Common
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 // Components
 import { Select } from 'components/shared';
 // Others
-import { firstCapitalized, shortDate, toDate } from 'utils';
-import { useState } from 'react';
 import { apiInstance } from 'services';
+import { firstCapitalized, toDate } from 'utils';
+import { ticketStatus } from 'utils/data';
+import { toast } from 'react-toastify';
 
-const STATUS = [
-    { label: 'To do', value: 'ASIGNED' },
-    { label: 'In Progress', value: 'IN_PROGRESS' },
-    { label: 'Done', value: 'RESOLVE' },
-];
-
-const TicketDetails = ({ id, onUpdate }) => {
+const TicketDetails = ({ id, onUpdate, close }) => {
     const [info, setInfo] = useState(null);
     const [users, setUsers] = useState([]);
+    const [data, setData] = useState('');
 
     useEffect(() => {
         fetchUsers();
@@ -61,18 +57,61 @@ const TicketDetails = ({ id, onUpdate }) => {
             });
     };
 
+    const ticketUpdate = async () => {
+        const user = JSON.parse(sessionStorage.getItem('user'))._id;
+        await apiInstance.post(`ticket/id/${id}/user/${user}/answer`, { data })
+            .then(({ data }) => {
+                toast.success('Respuesta asignada correctamente', {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+                setData('');
+            }).catch(({ response: { data: error } }) => {
+                console.log(error);
+            });
+    };
+
     return (
-        <section className="flex flex-col justify-between h-96 px-6 py-4 bg-gray-50 dark:bg-gray-700">
+        <section className="flex flex-col justify-between h-auto px-6 py-4 bg-gray-50 dark:bg-gray-700 overflow-scroll">
             {info && <>
                 <div className="flex gap-6 flex-col sm:flex-row w-full h-full">
                     <div className="w-full sm:w-2/3 mt-2 ml-2">
-                        <h6 className="text-xl font-medium mb-2">{firstCapitalized(info.title)}</h6>
-                        <p className="text-gray-600 dark:text-gray-900">{info.description}</p>
+                        <div className="w-full h-auto overflow-scroll">
+                            <h6 className="text-lg font-medium mb-2">{firstCapitalized(info.title)}</h6>
+                            <p className="text-gray-600 dark:text-gray-900">{info.description}</p>
+                            <div className="border w-full rounded-full dark:border-gray-800 my-2" />
+                        </div>
+                        <div className="w-full h-1/3">
+                            <label htmlFor="answer" className="text-gray-500 text-sm ml-2 mb-1">Agregar una respuesta</label>
+                            <div className="flex">
+                                <textarea id="answer" rows={2} value={data} onChange={({ target: { value } }) => setData(value)}
+                                    className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
+                                <div className="flex flex-col gap-2 w-auto px-2">
+                                    <button onClick={() => ticketUpdate()} disabled={!data}
+                                        className="btn p-1 bg-blue-400 rounded-lg disabled:opacity-40">
+                                        <p className="text-white text-xs">
+                                            Guardar
+                                        </p>
+                                    </button>
+                                    <button onClick={() => close()}
+                                        className="btn p-1 border-2 border-gray-200 rounded-lg">
+                                        <p className="text-xs">
+                                            Cancelar
+                                        </p>
+                                    </button>
+                                </div>
+                            </div>
+                            {/* <input id="answer" type="text" value={data} onChange={({ target: { value } }) => setData(value)}
+                            className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" /> */}
+                        </div>
                     </div>
                     <div className="w-full sm:w-1/3 space-y-4">
                         <div>
                             <label className="text-sm ml-2">Estado</label>
-                            <Select array={STATUS} labels defaultValue={info.status}
+                            <Select array={ticketStatus} labels defaultValue={info.status}
                                 buttonStyle="w-full rounded-xl bg-blue-100 dark:bg-gray-800 text-gray-500"
                                 dropdownStyle="bg-white dark:bg-gray-600 dark:text-gray-400 z-20"
                                 activeStyle="bg-blue-100 dark:bg-gray-800"
@@ -102,7 +141,7 @@ const TicketDetails = ({ id, onUpdate }) => {
                         </div>
                     </div>
                 </div>
-                <div className="border w-full rounded-full dark:border-gray-800" />
+                <div className="border w-full rounded-full dark:border-gray-800 mt-4" />
                 <div className="w-full px-4 py-2 text-xs dark:text-gray-400">
                     <p>Creado el: {firstCapitalized(toDate(info.createdAt))}</p>
                     <p>Modificado: {firstCapitalized(toDate(info.updatedAt))}</p>
