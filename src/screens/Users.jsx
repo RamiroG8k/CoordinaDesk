@@ -19,7 +19,7 @@ const Users = () => {
         fetchUsers();
     }, []);
 
-    const fetchUsers = async (page, limit, search) => {
+    const fetchUsers = async (page, limit = 10, search) => {
         await apiInstance.get('/user/all/pageable',
             { params: { page, limit, name: search, email: search, role: search } })
             .then(({ data }) => {
@@ -81,7 +81,7 @@ const Users = () => {
     const deleteUser = async (id) => {
         await apiInstance.delete(`/user/${id}`)
             .then(({ data }) => {
-                toast.success(`Se ha eliminado el usuario correctamente`, {
+                toast.success(`Se ha desactivado el usuario correctamente`, {
                     position: toast.POSITION.TOP_RIGHT
                 });
                 fetchUsers();

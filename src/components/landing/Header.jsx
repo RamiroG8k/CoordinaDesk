@@ -26,13 +26,13 @@ const LandingNavbar = ({ onCreate, className }) => {
                         className="font-medium hover:text-blue-800 transition transform hover:scale-105">{name}</a>
                 )}
                 <button onClick={() => onCreate(true)}
-                    className="bg-white hover:scale-105 hover:font-medium transform transition px-3 py-1 rounded-xl">
+                    className="bg-gray-100 hover:scale-105 hover:font-medium transform transition px-3 py-1 rounded-xl">
                     <div className="flex items-center gap-1 text-lg text-gray-700">
                         <p>Crear ticket</p>
                     </div>
                 </button>
                 <Link to="/login"
-                    className="bg-blue-300 hover:scale-105 hover:font-medium transform transition px-3 py-1 rounded-xl">
+                    className="bg-blue-200 hover:scale-105 hover:font-medium transform transition px-3 py-1 rounded-xl">
                     <div className="flex items-center gap-1 text-lg text-gray-700">
                         <p>Login</p>
                         <BiUserCircle />

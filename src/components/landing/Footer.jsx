@@ -1,5 +1,7 @@
-import { BiUpArrowAlt } from 'react-icons/bi';
+// Services | Data
 import { sections, socials } from 'utils/data';
+// Others
+import { BiUpArrowAlt } from 'react-icons/bi';
 import { scrollToTop } from 'utils';
 
 const Footer = () => {

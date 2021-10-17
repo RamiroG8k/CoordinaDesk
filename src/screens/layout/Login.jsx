@@ -2,12 +2,16 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+// Assets
+import LogoLarge from 'assets/images/Logo-Large.png';
+import LogoSquare from 'assets/images/Logo-Square.png';
 // Services | Data
 import { apiInstance } from 'services';
 import { saveCredentials } from 'utils';
 // Others
 import { BsArrowLeftShort } from 'react-icons/bs';
 import { toast } from 'react-toastify';
+import { errorMessages } from 'utils/data';
 
 const Login = ({ history }) => {
     const [hidden, setHidden] = useState(true);
@@ -22,8 +26,12 @@ const Login = ({ history }) => {
             .then(({ data }) => {
                 saveCredentials(data);
                 history.push('/tickets');
+                setLoading(false);
+                return;
             }).catch(({ response: { data: error } }) => {
-                toast.error(error.message, {
+                const { customText } = errorMessages.find((e) => e.message === error.message);
+
+                toast.error(customText, {
                     position: toast.POSITION.TOP_CENTER,
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -45,40 +53,44 @@ const Login = ({ history }) => {
                             Inicio
                         </p>
                     </Link>
-                    <img className="block lg:hidden h-6 w-auto" alt="Workflow"
-                        src="https://tailwindcss.com/_next/static/media/tailwindcss-mark.cb8046c163f77190406dfbf4dec89848.svg" />
-                    <img className="hidden lg:block h-6 w-auto" alt="Workflow"
-                        src="https://tailwindcss.com/_next/static/media/tailwindcss-logotype.128b6e12eb85d013bc9f80a917f57efe.svg" />
+                    {/* <img className="block lg:hidden h-6 w-auto" alt="Workflow"
+                    src="https://tailwindcss.com/_next/static/media/tailwindcss-mark.cb8046c163f77190406dfbf4dec89848.svg" /> */}
+                    <img className="block lg:hidden h-14 w-14" alt="Workflow"
+                        src={LogoSquare} />
+                    {/* <img className="hidden lg:block h-6 w-auto" alt="Workflow"
+                    src="https://tailwindcss.com/_next/static/media/tailwindcss-logotype.128b6e12eb85d013bc9f80a917f57efe.svg" /> */}
+                    <img className="hidden lg:block h-10 w-auto" alt="Workflow"
+                        src={LogoLarge} />
                 </div>
 
                 <div className="h-1/2 sm:bg-white sm:dark:bg-gray-600 sm:shadow-md p-10 rounded-3xl mx-auto">
-                    <div className="text-center">
-                        <h3 className="text-gray-900 dark:text-gray-900 font-bold text-2xl">Welcome back</h3>
-                        <h4 className="text-gray-500 dark:text-gray-800 text-xs">Enter your credentials to access to your account</h4>
+                    <div className="flex flex-col gap-2 text-center">
+                        <h3 className="text-gray-900 dark:text-gray-900 font-bold text-2xl">Log In</h3>
+                        <h4 className="text-gray-500 dark:text-gray-800 text-xs">Por favor proporciona tus credenciales para tener acceso a tu cuenta</h4>
                     </div>
 
                     {/* Form Section*/}
                     <form id="form" onSubmit={handleSubmit(logIn)} className="my-6">
                         <div className="space-y-3 mb-4">
                             <div>
-                                <label htmlFor="email" className="text-sm ml-2 mb-1">Email</label>
+                                <label htmlFor="email" className="text-sm ml-2 mb-1">E-mail</label>
                                 <input id="email" {...register('email', { required: true })} type="text" autoComplete="off"
                                     className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
-                                {errors.email && <span className="ml-2 text-xs text-red-400">This field is required</span>}
+                                {errors.email && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
                             </div>
                             <div>
-                                <label htmlFor="password" className="text-sm ml-2 mb-1">Password</label>
+                                <label htmlFor="password" className="text-sm ml-2 mb-1">Contraseña</label>
                                 <div className="relative flex items-center">
                                     <input id="password" {...register('password', { required: true })}
                                         type={hidden ? 'password' : 'text'} autoComplete="off"
                                         className="input rounded-xl pr-14 bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
                                     <button onClick={() => setHidden(!hidden)} type="button" className="absolute right-2 p-2">
                                         <p className="text-gray-600 dark:text-black text-xs font-medium uppercase">
-                                            {hidden ? 'show' : 'hide'}
+                                            {hidden ? 'mostrar' : 'ocultar'}
                                         </p>
                                     </button>
                                 </div>
-                                {errors.password && <span className="ml-2 text-xs text-red-400">This field is required</span>}
+                                {errors.password && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
                             </div>
                         </div>
                     </form>
@@ -91,12 +103,12 @@ const Login = ({ history }) => {
                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
-                                Loading...
-                            </> : 'Log In'}
+                                Cargando...
+                            </> : 'Acceder'}
                         </p>
                     </button>
                 </div>
-                <p className="text-center mt-5 dark:text-gray-300">Powered by <a href="https://github.com/RamiroG8k" target="_blank" rel="noopener noreferrer" className="text-blue-700 dark:text-blue-300">Brand name</a></p>
+                {/* <p className="text-center mt-5 dark:text-gray-300">Powered by <a href="https://github.com/RamiroG8k" target="_blank" rel="noopener noreferrer" className="text-blue-700 dark:text-blue-300">Brand name</a></p> */}
             </div>
 
             <div className="sm:hidden absolute -bottom-20 rounded-tl-full rounded-tr-full w-2/3 h-1/5 bg-blue-100 dark:bg-gray-700 z-0 opacity-75" />

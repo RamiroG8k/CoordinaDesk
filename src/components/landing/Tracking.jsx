@@ -23,16 +23,16 @@ const Tracking = () => {
         <section id="tracking" className="flex flex-col sm:flex-row w-screen h-screen bg-white sm:px-20 xl:px-36">
             <div className="flex flex-col w-full sm:w-1/3 h-full items-start p-4 sm:pt-20">
                 <div className="my-8">
-                    <h3 className="text-3xl sm:text-5xl font-semibold leading-tight">Make your <span className="text-blue-300">tracking</span> easy</h3>
+                    <h3 className="text-3xl sm:text-5xl font-semibold leading-tight">Haz tu <span className="text-blue-300">seguimiento</span> fácil</h3>
                     <p className="text-xl font-medium my-4">
-                        Keep track of your ticket with your ID reference
+                        Acceso a la información que se te proporciona con tu ID de referencia, al instante! 
                     </p>
                 </div>
-                <input type="text" onChange={v => setCode(v.target.value.toUpperCase())} value={code}
-                    placeholder="Start typing your ticket id" className="input text-2xl rounded-2xl bg-blue-50 border-2" />
+                <input type="number" pattern="[0-9]+" min="0" onChange={v => setCode(v.target.value.toUpperCase())} value={code}
+                    placeholder="Ticket ID" className="input text-xl rounded-2xl bg-blue-50 border-2" />
                 <Link to={{ pathname: code ? '/ticket/tracking' : '/', id: code }} type="button" disabled={!code}
                     className={`${code ? '' : 'opacity-50'} btn btn-animated disabled:opacity-50 bg-blue-200 w-auto px-4 p-2 mt-6 text-xl`}>
-                    Search
+                    Rastrear
                 </Link>
             </div>
             <div className="flex w-full sm:w-2/3 h-full justify-center items-center">

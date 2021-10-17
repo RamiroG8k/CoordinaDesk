@@ -29,6 +29,11 @@ html {
   background: #93C5FD;
 }
 
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {
+  opacity: 0;
+}
+
 @layer components {
   .bg-main {
     @apply bg-blue-50 dark:bg-gray-800;

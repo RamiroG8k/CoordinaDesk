@@ -7,6 +7,7 @@ import lottie from 'lottie-web';
 import ChatbotAnimation from '../../assets/chatbot.json';
 import { FiSend } from 'react-icons/fi';
 import { BiBot, BiCommentEdit } from 'react-icons/bi';
+import ScrollableFeed from 'react-scrollable-feed';
 
 const Chatbot = ({ onCreate, ticket }) => {
     const [chat, setChat] = useState([
@@ -55,14 +56,14 @@ const Chatbot = ({ onCreate, ticket }) => {
 
     const TextRow = ({ question, answer }) => {
         return (
-            <div className={`${question ? 'justify-end pl-10 sm:pl-20' : 'justify-start pr-10 sm:pr-20'} flex gap-2 items-center`}>
+            <div className={`${question ? 'justify-end pl-10 sm:pl-20' : 'justify-start pr-10 sm:pr-20'} flex gap-2 items-center my-2`}>
                 {answer && <div className="p-2 w-10 h-10 rounded-full bg-blue-100 flex justify-center items-center">
                     <p className="text-2xl">
                         <BiBot />
                     </p>
                 </div>}
 
-                <p className={`${question ? 'bg-blue-100' : 'bg-white'} px-4 py-2 border border-blue-200 rounded-xl break-words text-sm`}>
+                <p className={`${question ? 'bg-blue-100' : 'bg-white'} px-4 py-2 border border-blue-200 rounded-xl break-words text-sm max-w-full`}>
                     {question ?? answer}
                 </p>
             </div>
@@ -91,11 +92,13 @@ const Chatbot = ({ onCreate, ticket }) => {
                             </p>
                             <p className="break-words leading-3 text-xs font-medium">Si aun no te ha resultado util la informacion, puedes crear un ticket para dar seguimiento a tu caso con folio de referencia, Toca aqui!</p>
                         </button>}
-                        <div className="flex flex-col h-full w-full bg-gray-50 rounded-5xl p-4 gap-2 overflow-y-scroll">
-                            {chat?.map((e, i) => <TextRow key={i} {...e} />)}
+                        <div className="flex flex-col h-full w-full bg-gray-50 rounded-5xl p-4 overflow-y-scroll">
+                            <ScrollableFeed>
+                                {chat?.map((e, i) => <TextRow key={i} {...e} />)}
+                            </ScrollableFeed>
                         </div>
                         <div className="bottom flex w-full gap-2">
-                            <input value={question} onChange={v => setQuestion(v.target.value)} type="text" placeholder="Ask anything"
+                            <input value={question} onChange={v => setQuestion(v.target.value)} type="text" placeholder="Haz tu pregunta"
                                 className="input rounded-3xl bg-white border-2 border-blue-100 w-full" />
                             <button onClick={() => askNLP()}
                                 className="btn-animated w-10 h-10 bg-white rounded-full flex justify-center items-center focus:outline-none">

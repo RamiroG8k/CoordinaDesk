@@ -36,40 +36,39 @@ const CreateTicket = ({ close, onCreate }) => {
             <form id="createUser" onSubmit={handleSubmit(create)} className="p-4 sm:p-6 sm:pt-4">
                 <fieldset disabled={loading} className="sm:grid grid-cols-2 space-y-3 gap-x-4">
                     <div className="col-span-2">
-                        <label htmlFor="title" className="text-sm ml-2 mb-1">Titulo</label>
+                        <label htmlFor="title" className="text-sm ml-2 mb-1">Título</label>
                         <input id="title" {...register('title', { required: true })} type="text" autoComplete="off"
-                            className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
-                        {errors.title && <span className="ml-2 text-xs text-red-400">This field is required</span>}
+                            className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" placeholder="Idea principal de manera concreta"/>
+                        {errors.title && <span className="ml-2 text-xs text-red-400">Este campo es obligatorio</span>}
                     </div>
                     <div className="col-span-2">
-                        <label htmlFor="description" className="text-sm ml-2 mb-1">Descripcion</label>
+                        <label htmlFor="description" className="text-sm ml-2 mb-1">Descripción</label>
                         <textarea id="description" {...register('description', { required: true })} rows="3"
                             className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
-                        {errors.description && <span className="ml-2 text-xs text-red-400">This field is required</span>}
+                        {errors.description && <span className="ml-2 text-xs text-red-400">Este campo es obligatorio</span>}
                     </div>
                     <div className="col-span-2">
                         <label htmlFor="name" className="text-sm ml-2 mb-1">Nombre</label>
                         <input id="name" {...register('name', { required: true })} type="text" autoComplete="off"
                             className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
-                        {errors.name && <span className="ml-2 text-xs text-red-400">This field is required</span>}
+                        {errors.name && <span className="ml-2 text-xs text-red-400">Este campo es obligatorio</span>}
                     </div>
                     <div>
-                        <label htmlFor="udgId" className="text-sm ml-2 mb-1">Codigo de alumno (UDG)</label>
-                        <input id="udgId" {...register('udgId', { required: true })} type="text" autoComplete="off"
+                        <label htmlFor="udgId" className="text-sm ml-2 mb-1">Código de alumno (UDG)</label>
+                        <input id="udgId" {...register('udgId', { required: true })} type="number" min={0} autoComplete="off"
                             className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
-                        {errors.udgId && <span className="ml-2 text-xs text-red-400">This field is required</span>}
+                        {errors.udgId && <span className="ml-2 text-xs text-red-400">Este campo es obligatorio</span>}
                     </div>
                     <div>
-                        <label htmlFor="phone" className="text-sm ml-2 mb-1">Telefono</label>
-                        <input id="phone" {...register('phone', { required: true })} type="number" autoComplete="off"
+                        <label htmlFor="phone" className="text-sm ml-2 mb-1">Teléfono</label>
+                        <input id="phone" {...register('phone')} type="number" min={0} autoComplete="off"
                             className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" placeholder="A 10 digitos" />
-                        {errors.phone && <span className="ml-2 text-xs text-red-400">This field is required</span>}
                     </div>
                     <div className="col-span-2">
                         <label htmlFor="email" className="text-sm ml-2 mb-1">E-mail</label>
                         <input id="email" {...register('email', { required: true })} type="email" autoComplete="off"
-                            className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
-                        {errors.email && <span className="ml-2 text-xs text-red-400">This field is required</span>}
+                            className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" placeholder="example@domain.xyz" />
+                        {errors.email && <span className="ml-2 text-xs text-red-400">Este campo es obligatorio</span>}
                     </div>
                 </fieldset>
             </form>
