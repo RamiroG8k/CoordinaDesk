@@ -1,11 +1,14 @@
-import React, { Fragment } from 'react';
+// Common
+import { Fragment } from 'react';
+// Components
 import { Disclosure, Transition } from '@headlessui/react';
+// Others
 import { GrFormDown } from 'react-icons/gr';
 
-const CustomDisclosure = ({ title, description, color = 'blue' }) => {
+const CustomDisclosure = ({ opened, title, description, color = 'blue' }) => {
     return (
         <Disclosure>
-            {({ open }) => (
+            {({ open, close }) => (
                 <>
                     <Disclosure.Button className={`flex justify-between w-full p-3 sm:p-4 transition sm:text-lg font-medium text-left text-${color}-900 bg-${color}-100 rounded-2xl hover:bg-${color}-200 focus:outline-none focus-visible:ring focus-visible:ring-${color}-500 focus-visible:ring-opacity-75`}>
                         <span>{title}</span>

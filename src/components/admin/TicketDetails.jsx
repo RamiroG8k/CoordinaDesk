@@ -12,6 +12,7 @@ const TicketDetails = ({ id, onUpdate, close }) => {
     const [info, setInfo] = useState(null);
     const [users, setUsers] = useState([]);
     const [data, setData] = useState('');
+    const [deactivate, setDeactivate] = useState(false);
 
     useEffect(() => {
         fetchUsers();
@@ -68,10 +69,27 @@ const TicketDetails = ({ id, onUpdate, close }) => {
                     pauseOnHover: true,
                     draggable: true,
                 });
-                setData('');
+                close();
+                onUpdate();
             }).catch(({ response: { data: error } }) => {
                 console.log(error);
             });
+    };
+
+    const deactivateManually = async () => {
+        await apiInstance.patch(`/ticket/deactivate/id/${id}`)
+            .then(({ data }) => {
+                toast.success('Ticket deshabilitado correctamente', {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+                setData('');
+            }).catch(({ response: { data: error } }) => {
+                console.log(error);
+            });  
     };
 
     return (
@@ -104,8 +122,6 @@ const TicketDetails = ({ id, onUpdate, close }) => {
                                     </button>
                                 </div>
                             </div>
-                            {/* <input id="answer" type="text" value={data} onChange={({ target: { value } }) => setData(value)}
-                            className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" /> */}
                         </div>
                     </div>
                     <div className="w-full sm:w-1/3 space-y-4">
@@ -142,9 +158,24 @@ const TicketDetails = ({ id, onUpdate, close }) => {
                     </div>
                 </div>
                 <div className="border w-full rounded-full dark:border-gray-800 mt-4" />
-                <div className="w-full px-4 py-2 text-xs dark:text-gray-400">
-                    <p>Creado el: {firstCapitalized(toDate(info.createdAt))}</p>
-                    <p>Modificado: {firstCapitalized(toDate(info.updatedAt))}</p>
+                <div className="flex flex-col sm:flex-row justify-between w-full py-2 text-xs dark:text-gray-400">
+                    <div>
+                        <p>Creado el: {firstCapitalized(toDate(info.createdAt))}</p>
+                        <p>Modificado: {firstCapitalized(toDate(info.updatedAt))}</p>
+                    </div>
+                    <div className="flex items-center gap-3 mt-4 sm:mt-0">
+                        {deactivate && <>
+                            <p className="text-base dark:text-white">Seguro?</p>
+                            <button onClick={() => setDeactivate(false)}
+                            className="btn outline-none border-2 border-gray-300 bg-gray-100 px-2 py-1 transition-all">
+                                <p className="text-sm">Cancelar</p>
+                            </button>
+                        </>}
+                        <button onClick={() => deactivate ? deactivateManually() : setDeactivate(true)}
+                        className="btn outline-none border-2 border-red-400 px-2 py-1 hover:bg-red-300 transition-all">
+                            <p className="text-sm hover:text-white">Deshabilitar</p>
+                        </button>
+                    </div>
                 </div>
             </>}
         </section>
