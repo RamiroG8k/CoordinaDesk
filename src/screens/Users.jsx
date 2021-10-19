@@ -49,7 +49,7 @@ const Users = () => {
 
     const handleItemEvent = ({ item, action }) => {
         switch (action) {
-            case 'delete':
+            case 'deactivate':
                 deleteUser(item._id);
                 break;
             case 'details':

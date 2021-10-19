@@ -37,7 +37,7 @@ const userActions = [
     },
     {
         name: 'Desactivar',
-        action: 'delete',
+        action: 'deactivate',
         description: 'Deshabilitar usuario',
         icon: <BsTrash />,
     },

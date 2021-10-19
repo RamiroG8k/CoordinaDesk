@@ -6,7 +6,8 @@ import { Disclosure } from 'components/shared';
 import { apiInstance } from 'services';
 
 const Faqs = () => {
-    const [categories, setCategories] = useState();
+    const [categories, setCategories] = useState([]);
+    const [faqs, setFaqs] = useState([]);
     const [selected, setSelected] = useState();
 
     useEffect(() => {
@@ -32,30 +33,45 @@ const Faqs = () => {
     const fetchFaqs = async (id) => {
         await apiInstance.get(`/faq/category/${id}`)
             .then(({ data }) => {
-                console.log(data);
+                setFaqs(faqParser(data));
             }).catch(({ response: { data: error } }) => {
                 console.log(error);
             })
     };
 
-    return (
-        <section id="faqs" className="flex flex-col w-screen h-screen bg-gray-50 items-center px-4 sm:px-10">
-            <div className="flex flex-col text-center p-5 sm:mt-6 gap-3">
-                <h3 className="text-4xl font-semibold">Preguntas <span className="text-blue-400">Frecuentes</span></h3>
-                <p>Necesitas respuestas?, Encuentralas aqui.</p>
-            </div>
+    const faqParser = (data) => {
+        return data.map(e => ({ id: e._id, question: e.question, answer: e.answer }));
+    };
 
-            <div className="flex flex-col sm:flex-row w-full h-full lg:w-3/4 items-center sm:gap-10 bg-green-200">
-                <div className="flex flex-wrap h-auto justify-center gap-x-4 w-screen text-center py-2 sm:flex-col md:w-1/4 sm:text-right sm:leading-10 sm:overflow-visible" >
-                    {categories?.map(({ category }, i) =>
-                        <p key={i} className="transform transition hover:scale-105 cursor-pointer sm:whitespace-nowrap hover:text-blue-600">{category}</p>
-                    )}
+    return (
+        <section id="faqs" className="flex justify-end items-center w-screen h-screen p-4 sm:p-0 bg-gradient-to-r from-blue-100 to-gray-50">
+            <div className="flex gap-4 h-full sm:h-4/5 w-full sm:w-4/5 p-20 bg-white rounded-xl">
+
+                <div className="flex flex-col gap-3 w-4/5">
+                    <h2 className="w-60 text-4xl font-semibold">Preguntas <span className="text-blue-400">Frecuentes</span></h2>
+                    <p>Necesitas respuestas?,  Encuentralas aqui.</p>
+
+                    <div className="flex flex-col h-full z-10 overflow-y-scroll">
+                        {faqs?.map(({ id, question, answer }) =>
+                            <Disclosure key={id} title={question} description={answer} />
+                        )}
+                    </div>
                 </div>
-                <div className="border w-full sm:w-0 sm:h-4/5 " />
-                <div className="flex flex-col space-y-4 max-h-full w-full justify-center items-center overflow-y-scroll py-4">
-                    {categories?.map(({ _id, category }) =>
-                        <Disclosure key={_id} title={_id} description={category} color="blue" />
-                    )}
+
+                <div className="relative flex flex-col w-1/4 h-full">
+                    <div className="flex h-1/2 w-full z-0">
+                        <div className="absolute right-0 w-72 h-72 bg-blue-200 mix-blend-multiply rounded-full" />
+                        <div className="absolute top-60 right-8 w-20 h-20 mix-blend-multiply bg-red-200 rounded-full" />
+                    </div>
+
+                    <div className="flex flex-wrap justify-end  gap-2 h-1/2 w-full" >
+                        {categories?.map(({ _id, category }, i) =>
+                            <button key={_id} onClick={() => fetchFaqs(_id)}
+                                className="px-2 py-1 text-sm rounded transform transition hover:scale-105 hover:text-blue-600">
+                                {category}
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
         </section>
