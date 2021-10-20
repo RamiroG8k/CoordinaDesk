@@ -21,7 +21,7 @@ const ScrollToTop = () => {
     }
 
     return (
-        <div className="fixed right-6 bottom-10 sm:right-14 sm:bottom-20">
+        <div className="fixed right-6 bottom-10 sm:right-14 sm:bottom-20 z-50">
             {visible && <button onClick={() => scrollToTop()}
                 className="bg-blue-200 rounded-full p-2 shadow-xl focus:outline-none">
                 <p className="text-4xl text-white">

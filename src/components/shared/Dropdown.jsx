@@ -46,7 +46,7 @@ const Dropdown = ({ component, onEvent }) => {
                                     {/* <p className={active ? 'bg-blue-500 text-white' : 'text-gray-900'}>
                                         <IoIosArrowDown />
                                     </p> */}
-                                    <p>Log out</p>
+                                    <p>Cerrar sesión</p>
                                 </button>
                             )}
                         </Menu.Item>

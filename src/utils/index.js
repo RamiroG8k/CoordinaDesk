@@ -35,10 +35,10 @@ export const shortDate = (date) => {
 };
 
 export const toDate = (date) => {
-	const formated = new Date(date);
-	date = formated.toLocaleDateString('es-MX', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' });
+    const formated = new Date(date);
+    date = formated.toLocaleDateString('es-MX', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' });
 
-	return date;
+    return date;
 };
 
 export const firstCapitalized = (str) => {
@@ -49,3 +49,12 @@ export const prefersDarkMode = () => {
     return localStorage.theme === 'dark' ||
         (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
 };
+
+export const checkOverflow = (el) => {
+    const isOverflowing = {
+        width: el.clientWidth < el.scrollWidth,
+        height: el.clientHeight < el.scrollHeight
+    };
+
+    return isOverflowing;
+}
