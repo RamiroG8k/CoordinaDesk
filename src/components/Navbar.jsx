@@ -53,11 +53,11 @@ const Navbar = ({ className, toggleSidebar, mobileSidebar }) => {
                         <BiSidebar />
                     </p>
                 </button>
-                <button className="h-auto transition hover:bg-blue-100 dark:hover:bg-red-200 rounded-full">
+                {/* <button className="h-auto transition hover:bg-blue-100 dark:hover:bg-red-200 rounded-full">
                     <p className="p-2 text-3xl text-gray-500 dark:text-gray-400 active:bg-transparent">
                         <BiSearchAlt />
                     </p>
-                </button>
+                </button> */}
             </div>
 
             <div className="right flex items-center gap-5 mr-2">

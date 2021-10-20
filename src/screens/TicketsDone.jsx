@@ -20,9 +20,17 @@ const TicketsDone = () => {
                     rows: ticketParser(data.content),
                     columns: Object.keys(ticketParser(data.content)[0]).slice(1),
                     // actions: userActions,
-                    total: data.totalElements,
-                    current: data.page,
-                    last: data.pages,
+                    pagination: {
+                        total: data.totalElements,
+                        from: data.page > 1 ? ((data.totalElements) / limit + 1) : 1,
+                        to: (limit * data.page) > data.totalElements ? data.totalElements : (limit * data.page),
+                        current: data.page,
+                        last: data.pages,
+                        next: data.nextPage
+                    }
+                    // total: data.totalElements,
+                    // current: data.page,
+                    // last: data.pages,
                 });
             }).catch(console.log);
     };

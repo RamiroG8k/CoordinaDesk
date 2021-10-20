@@ -37,5 +37,7 @@ module.exports = {
             scale: ['hover'],
         },
     },
-    plugins: [],
+    plugins: [
+        require('tailwind-scrollbar-hide'),
+    ],
 }

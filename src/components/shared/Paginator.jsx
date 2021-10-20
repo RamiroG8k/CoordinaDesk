@@ -1,10 +1,10 @@
 import { BsChevronLeft, BsChevronDoubleLeft, BsChevronRight, BsChevronDoubleRight } from 'react-icons/bs';
 
-const Paginator = ({ pages: { total = 0, from = 0, to = 0, current = 0, last = 0 }, onChange, className }) => {
+const Paginator = ({ pages, pages: { next, total = 0, from = 0, to = 0, current = 0, last = 0 }, onChange, className }) => {
     const handleChange = (page) => {
         const goTo = page > last ? last : page < 1 ? 1 : page;
-        if (goTo > from && goTo < to) {
-            onChange(goTo);
+        if ((goTo > from && goTo < to) || next) {
+            onChange(next ? (current + 1) : goTo);
         }
     };
 

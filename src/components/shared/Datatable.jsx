@@ -1,15 +1,18 @@
+// Common
+import { useState } from 'react';
 // Components
-import { Paginator, Popover, Select } from 'components/shared';
-// Others
 import { BsSearch } from 'react-icons/bs';
+// Others
+import { Paginator, Popover, Select } from 'components/shared';
 
 const DataTable = ({ onSearch, data = [], onEvent, onUpdate, placeholder }) => {
-    const { rows = [], columns = [], actions, total, from, to, last, current } = data;
+    const [limit, setLimit] = useState(10);
+    const { rows = [], columns = [], actions, pagination } = data;
     let timer;
 
     const keyPressed = () => {
         clearTimeout(timer);
-    }
+    };
 
     const keyReleased = (term) => {
         // Prevent errant multiple timeouts from being generated
@@ -17,12 +20,12 @@ const DataTable = ({ onSearch, data = [], onEvent, onUpdate, placeholder }) => {
         timer = setTimeout(() => {
             onSearch(term.trim().toLowerCase());
         }, 500);
-    }
+    };
 
-    // const handleItem = ({ action, email, page }) => {
-    //     const item = (data.data.find(searched => searched.email === email));
-    //     onEvent({ action, item, page });
-    // };
+    const handleLimit = (value) => {
+        setLimit(value);
+        onUpdate(pagination.current, value);
+    };
 
     return (
         <section className="flex flex-col w-full space-y-4 sm:space-y-6">
@@ -35,7 +38,8 @@ const DataTable = ({ onSearch, data = [], onEvent, onUpdate, placeholder }) => {
                     </p>
                 </div>
                 <div className="limit w-1/4">
-                    <Select array={[10, 20, 30, 50, 100]} item="(limite)" onChange={(value) => onUpdate(current, value)}
+                    <Select array={[10, 20, 30, 50, 100]} item="(limite)"
+                        value={limit} onChange={handleLimit}
                         activeStyle="bg-blue-100 dark:bg-gray-800"
                         buttonStyle="bg-gray-50 shadow dark:bg-gray-800 dark:text-gray-400"
                         dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500"
@@ -54,9 +58,7 @@ const DataTable = ({ onSearch, data = [], onEvent, onUpdate, placeholder }) => {
                     </thead>}
                     <tbody className="text-center divide-font-medium space-y-4 text-gray-800 divide-y dark:divide-gray-700">
                         {rows.length ? rows.map((row, i) => {
-                            // console.log(row.status ? [actions[0]] : actions);
                             return (
-                                // TODO: Handle actions
                                 <Popover key={i} buttonAs="tr" actions={actions && (row.status ? [actions[0], actions[1]] : [actions[0]])}
                                     onAction={(action) => onEvent({ item: row, action })}
                                     docs={{ title: 'Acciones por usuario', description: 'Pueden variar dependiendo el status del seleccionado' }}
@@ -81,8 +83,8 @@ const DataTable = ({ onSearch, data = [], onEvent, onUpdate, placeholder }) => {
                     </tbody>
                 </table>
             </section >
-            <Paginator pages={{ total, from, to, current, last }} onChange={(e) => e !== current ? console.log(e) : null}
-                className="" />
+            <Paginator pages={pagination}
+                onChange={(e) => e !== pagination.current ? onUpdate(e, limit) : null} />
         </section>
     );
 };

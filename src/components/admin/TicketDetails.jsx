@@ -62,6 +62,7 @@ const TicketDetails = ({ id, onUpdate, close }) => {
         const user = JSON.parse(sessionStorage.getItem('user'))._id;
         await apiInstance.post(`ticket/id/${id}/user/${user}/answer`, { data })
             .then(({ data }) => {
+                // close();
                 toast.success('Respuesta asignada correctamente', {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 5000,
@@ -69,7 +70,6 @@ const TicketDetails = ({ id, onUpdate, close }) => {
                     pauseOnHover: true,
                     draggable: true,
                 });
-                close();
                 onUpdate();
             }).catch(({ response: { data: error } }) => {
                 console.log(error);
@@ -79,6 +79,7 @@ const TicketDetails = ({ id, onUpdate, close }) => {
     const deactivateManually = async () => {
         await apiInstance.patch(`/ticket/deactivate/id/${id}`)
             .then(({ data }) => {
+                close();
                 toast.success('Ticket deshabilitado correctamente', {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 5000,
@@ -86,7 +87,7 @@ const TicketDetails = ({ id, onUpdate, close }) => {
                     pauseOnHover: true,
                     draggable: true,
                 });
-                setData('');
+                onUpdate();
             }).catch(({ response: { data: error } }) => {
                 console.log(error);
             });  

@@ -63,23 +63,23 @@ const Tickets = () => {
             <Modal visible={details.visible} toggle={(show) => setDetails({ ...details, visible: show })}
                 size="2xl" title="Detalles de ticket">
                 {details.data && <TicketDetails id={details.data._id} onUpdate={() => fetchTickets()}
-                    close={(show) => setDetails({ ...details, visible: false })} />}
+                    close={() => setDetails({ ...details, visible: false })} />}
             </Modal>
             <section className="flex flex-col sm:grid grid-cols-3 gap-6">
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="todo">
                         {(provided) => (
-                            <div className="flex flex-col bg-white shadow-lg dark:bg-gray-700 w-full sm:h-screen overflow-y-scroll rounded-3xl sm:rounded-4xl p-4" >
+                            <div className="flex flex-col bg-white shadow-lg dark:bg-gray-700 w-full sm:h-screen rounded-3xl sm:rounded-4xl p-4" >
                                 <h2 className="text-4xl font-bold text-gray-400 text-center">To do</h2>
                                 <div {...provided.droppableProps} ref={provided.innerRef}
-                                    className="flex flex-col space-y-3 mt-6 h-full bg-gray-50 rounded-2xl">
+                                    className="flex flex-col space-y-3 mt-6 h-full bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-y-scroll scrollbar-hide">
                                     {todo.map((item, i) => {
                                         return (
                                             <Draggable key={item._id} draggableId={item._id.toString()} index={i}>
                                                 {(provided) => (
                                                     <div onClick={() => setDetails({ data: item, visible: true })}
                                                         {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
-                                                        className="relative flex items-center h-16 sm:h-20 w-full p-2 rounded-2xl bg-gray-50 dark:bg-gray-800 border dark:border-gray-600" >
+                                                        className="relative flex items-center h-16 sm:h-20 w-full p-2 rounded-2xl bg-gray-50 dark:bg-gray-900 border dark:border-gray-600" >
                                                         <div className={`h-2/3 mr-2 w-0 border border-${(item.priority === 'HIGH') ? 'red' : (item.priority === 'MODERATE') ? 'yellow' : 'green'}-300`} />
                                                         <div className="h-full w-full">
                                                             <p className="text-sm dark:text-gray-500">
@@ -103,14 +103,14 @@ const Tickets = () => {
                             <div className="flex flex-col bg-white shadow-lg dark:bg-gray-700 w-full sm:h-screen overflow-y-scroll rounded-3xl sm:rounded-4xl p-4" >
                                 <h2 className="text-4xl font-bold text-gray-400 text-center">In progress</h2>
                                 <div  {...provided.droppableProps} ref={provided.innerRef}
-                                    className="flex flex-col space-y-3 mt-6 h-full bg-gray-50 rounded-2xl">
+                                    className="flex flex-col space-y-3 mt-6 h-full bg-gray-50 dark:bg-gray-800 rounded-2xl">
                                     {inProgress.map((item, i) => {
                                         return (
                                             <Draggable key={item._id} draggableId={item._id.toString()} index={i}>
                                                 {(provided) => (
                                                     <div onClick={() => setDetails({ data: item, visible: true })}
                                                         {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
-                                                        className="relative flex items-center h-16 sm:h-20 w-full p-2 rounded-2xl bg-gray-50 dark:bg-gray-800 border dark:border-gray-600" >
+                                                        className="relative flex items-center h-16 sm:h-20 w-full p-2 rounded-2xl bg-gray-50 dark:bg-gray-900 border dark:border-gray-600" >
                                                         <div className={`h-2/3 mr-2 w-0 border border-${(item.priority === 'HIGH') ? 'red' : (item.priority === 'MODERATE') ? 'yellow' : 'green'}-300`} />
                                                         <div className="h-full w-full">
                                                             <p className="text-sm dark:text-gray-500">{firstCapitalized(item.title)}</p>
@@ -131,14 +131,14 @@ const Tickets = () => {
                             <div className="flex flex-col bg-white shadow-lg dark:bg-gray-700 w-full sm:h-screen overflow-y-scroll rounded-3xl sm:rounded-4xl p-4" >
                                 <h2 className="text-4xl font-bold text-gray-400 text-center">Done</h2>
                                 <div {...provided.droppableProps} ref={provided.innerRef}
-                                    className="flex flex-col space-y-3 mt-6 h-full bg-gray-50 rounded-2xl">
+                                    className="flex flex-col space-y-3 mt-6 h-full bg-gray-50 dark:bg-gray-800 rounded-2xl">
                                     {done.map((item, i) => {
                                         return (
                                             <Draggable key={item._id} draggableId={item._id.toString()} index={i}>
                                                 {(provided) => (
                                                     <div onClick={() => setDetails({ data: item, visible: true })}
                                                         {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
-                                                        className="relative flex items-center h-16 sm:h-20 w-full p-2 rounded-2xl bg-gray-50 dark:bg-gray-800 border dark:border-gray-600" >
+                                                        className="relative flex items-center h-16 sm:h-20 w-full p-2 rounded-2xl bg-gray-50 dark:bg-gray-900 border dark:border-gray-600" >
                                                         <div className={`h-2/3 mr-2 w-0 border border-${(item.priority === 'HIGH') ? 'red' : (item.priority === 'MODERATE') ? 'yellow' : 'green'}-300`} />
                                                         <div className="h-full w-full">
                                                             <p className="text-sm dark:text-gray-500">{firstCapitalized(item.title)}</p>
