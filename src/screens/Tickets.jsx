@@ -19,7 +19,7 @@ const Tickets = () => {
     }, []);
 
     const fetchTickets = async () => {
-        setDetails({ ...details, visible: false });
+        // setDetails({ ...details, visible: false });
         await apiInstance.get('/ticket/dashboard')
             .then(({ data }) => {
                 setTickets(data);
@@ -69,10 +69,10 @@ const Tickets = () => {
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="todo">
                         {(provided) => (
-                            <div className="flex flex-col bg-white shadow-lg dark:bg-gray-700 w-full sm:h-screen rounded-3xl sm:rounded-4xl p-4" >
+                            <div className="flex flex-col bg-white shadow-lg dark:bg-gray-700 w-full sm:h-screen max-h-screen rounded-3xl sm:rounded-4xl p-4" >
                                 <h2 className="text-4xl font-bold text-gray-400 text-center">To do</h2>
                                 <div {...provided.droppableProps} ref={provided.innerRef}
-                                    className="flex flex-col space-y-3 mt-6 h-full bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-y-scroll scrollbar-hide">
+                                    className="space-y-3 mt-6 h-full bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-y-scroll scrollbar-hide">
                                     {todo.map((item, i) => {
                                         return (
                                             <Draggable key={item._id} draggableId={item._id.toString()} index={i}>
@@ -103,7 +103,7 @@ const Tickets = () => {
                             <div className="flex flex-col bg-white shadow-lg dark:bg-gray-700 w-full sm:h-screen overflow-y-scroll rounded-3xl sm:rounded-4xl p-4" >
                                 <h2 className="text-4xl font-bold text-gray-400 text-center">In progress</h2>
                                 <div  {...provided.droppableProps} ref={provided.innerRef}
-                                    className="flex flex-col space-y-3 mt-6 h-full bg-gray-50 dark:bg-gray-800 rounded-2xl">
+                                    className="space-y-3 mt-6 h-full bg-gray-50 dark:bg-gray-800 rounded-2xl">
                                     {inProgress.map((item, i) => {
                                         return (
                                             <Draggable key={item._id} draggableId={item._id.toString()} index={i}>
@@ -131,7 +131,7 @@ const Tickets = () => {
                             <div className="flex flex-col bg-white shadow-lg dark:bg-gray-700 w-full sm:h-screen overflow-y-scroll rounded-3xl sm:rounded-4xl p-4" >
                                 <h2 className="text-4xl font-bold text-gray-400 text-center">Done</h2>
                                 <div {...provided.droppableProps} ref={provided.innerRef}
-                                    className="flex flex-col space-y-3 mt-6 h-full bg-gray-50 dark:bg-gray-800 rounded-2xl">
+                                    className="space-y-3 mt-6 h-full bg-gray-50 dark:bg-gray-800 rounded-2xl">
                                     {done.map((item, i) => {
                                         return (
                                             <Draggable key={item._id} draggableId={item._id.toString()} index={i}>

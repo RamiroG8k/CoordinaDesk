@@ -49,10 +49,10 @@ const TicketDetails = ({ id, onUpdate, close }) => {
             });
     };
 
-    const reasingUser = async (id) => {
-        await apiInstance.patch(`/ticket/id/${id}/reasign-user/${id}`)
+    const reasingUser = async (user) => {
+        await apiInstance.patch(`/ticket/id/${id}/reasign-user/${user}`)
             .then(({ data }) => {
-                console.log(data);
+                onUpdate();
             }).catch(({ response: { data: error } }) => {
                 console.log(error);
             });
