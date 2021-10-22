@@ -1,5 +1,5 @@
 export const isLoggedIn = () => {
-    return (sessionStorage.getItem('token') ?? false);
+    return (localStorage.getItem('token') ?? false);
 };
 
 export const toggleClasses = (...classes) => {
@@ -7,13 +7,13 @@ export const toggleClasses = (...classes) => {
 };
 
 export const saveCredentials = ({ token, user }) => {
-    sessionStorage.setItem('token', token);
-    sessionStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
 };
 
 export const removeCredentials = () => {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
 };
 
 export const scrollToTop = () => {

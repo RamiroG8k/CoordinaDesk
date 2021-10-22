@@ -16,7 +16,7 @@ const apiInstance = Axios.create(
 
 apiInstance.interceptors.request.use(
     async config => {
-        const token = await sessionStorage.getItem('token');
+        const token = await localStorage.getItem('token');
         if (token) {
             config.headers.Authorization = token;
         }

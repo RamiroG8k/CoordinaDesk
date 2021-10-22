@@ -5,7 +5,7 @@ import { BsSearch } from 'react-icons/bs';
 // Others
 import { Paginator, Popover, Select } from 'components/shared';
 
-const DataTable = ({ onSearch, data = [], onEvent, onUpdate, placeholder }) => {
+const DataTable = ({ popoverTitle, onSearch, data = [], onEvent, onUpdate, placeholder }) => {
     const [limit, setLimit] = useState(10);
     const { rows = [], columns = [], actions, pagination } = data;
     let timer;
@@ -18,7 +18,7 @@ const DataTable = ({ onSearch, data = [], onEvent, onUpdate, placeholder }) => {
         // Prevent errant multiple timeouts from being generated
         clearTimeout(timer);
         timer = setTimeout(() => {
-            onSearch(term.trim().toLowerCase());
+            onSearch(pagination.current, limit, term.trim().toLowerCase());
         }, 500);
     };
 
@@ -61,7 +61,7 @@ const DataTable = ({ onSearch, data = [], onEvent, onUpdate, placeholder }) => {
                             return (
                                 <Popover key={i} buttonAs="tr" actions={actions && (row.status ? [actions[0], actions[1]] : [actions[0]])}
                                     onAction={(action) => onEvent({ item: row, action })}
-                                    docs={{ title: 'Acciones por usuario', description: 'Pueden variar dependiendo el status del seleccionado' }}
+                                    docs={{ title: popoverTitle, description: 'Pueden variar dependiendo el status del seleccionado' }}
                                     className="cursor-pointer hover:text-blue-800">
                                     {Object.values(row).slice(1).map((e, j) => {
                                         return (
@@ -77,7 +77,7 @@ const DataTable = ({ onSearch, data = [], onEvent, onUpdate, placeholder }) => {
                             );
                         }) : <tr>
                             <td colSpan={columns.length}>
-                                <p className="text-2xl text-center font-bold text-gray-500 py-4">No data found</p>
+                                <p className="text-2xl text-center font-bold text-gray-500 py-4">No hay informacion</p>
                             </td>
                         </tr>}
                     </tbody>

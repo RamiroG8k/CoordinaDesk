@@ -1,10 +1,10 @@
 import { BsChevronLeft, BsChevronDoubleLeft, BsChevronRight, BsChevronDoubleRight } from 'react-icons/bs';
 
-const Paginator = ({ pages, pages: { next, total = 0, from = 0, to = 0, current = 0, last = 0 }, onChange, className }) => {
+const Paginator = ({ pages: { total = 0, from = 0, to = 0, current = 0, last = 0 }, onChange, className }) => {
     const handleChange = (page) => {
         const goTo = page > last ? last : page < 1 ? 1 : page;
-        if ((goTo > from && goTo < to) || next) {
-            onChange(next ? (current + 1) : goTo);
+        if ((goTo > from) && (goTo < to)) {
+            onChange(goTo);
         }
     };
 
@@ -27,7 +27,7 @@ const Paginator = ({ pages, pages: { next, total = 0, from = 0, to = 0, current 
                     <BsChevronLeft />
                 </button>
                 <p className="px-3 py-2 text-sm text-gray-500">
-                    Page {current} of {last}
+                    Pagina {current} de {last}
                 </p>
                 <button onClick={() => handleChange(current + 1)}
                     className="px-3 py-2 text-sm text-gray-500 bg-gray-50 dark:bg-gray-800">
@@ -36,8 +36,8 @@ const Paginator = ({ pages, pages: { next, total = 0, from = 0, to = 0, current 
             </div>
             <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
                 <p className="text-sm text-gray-700 dark:text-gray-400">
-                    Listing <span className="font-medium">{from}</span> to <span className="font-medium">{to}</span> of{' '}
-                    <span className="font-medium">{total}</span> items
+                    Mostrando <span className="font-medium">{from}</span> a <span className="font-medium">{to}</span> de{' '}
+                    <span className="font-medium">{total}</span> elementos
                 </p>
                 <div className="flex rounded-xl overflow-hidden bg-gray-50 dark:bg-gray-800 divide-x divide-gray-100 dark:divide-gray-900 shadow">
                     {buttons.map((e, i) =>

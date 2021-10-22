@@ -7,7 +7,7 @@ import { firstCapitalized, removeCredentials } from 'utils';
 
 const Navbar = ({ className, toggleSidebar, mobileSidebar }) => {
     const history = useHistory();
-    const user = JSON.parse(sessionStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user'));
 
     const handleAction = (action) => {
         switch (action) {

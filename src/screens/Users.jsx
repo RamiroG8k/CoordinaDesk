@@ -29,11 +29,10 @@ const Users = () => {
                     actions: userActions,
                     pagination: {
                         total: data.totalElements,
-                        from: data.page > 1 ? ((data.totalElements) / limit + 1) : 1,
+                        from: data.page > 1 ? ((data.page * limit) + 1) : 1,
                         to: (limit * data.page) > data.totalElements ? data.totalElements : (limit * data.page),
                         current: data.page,
                         last: data.pages,
-                        next: data.nextPage
                     }
                 });
             }).catch(console.log);
@@ -139,8 +138,8 @@ const Users = () => {
                     </button>
                 </div>
                 {data && <Datatable data={data} placeholder="Buscar por nombre, email o rol"
-                    onUpdate={(page, limit) => fetchUsers(page, limit)}
-                    onEvent={handleItemEvent} onSearch={(search) => fetchUsers('', '', search)} />}
+                    popoverTitle="Acciones por usuario" onUpdate={(page, limit) => fetchUsers(page, limit)}
+                    onEvent={handleItemEvent} onSearch={(page, limit, search) => fetchUsers(page, limit, search)} />}
             </div>
         </section>
     );

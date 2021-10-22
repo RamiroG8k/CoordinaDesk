@@ -77,7 +77,7 @@ const Faqs = () => {
 
                 <div className="flex flex-grow-0 flex-col-reverse sm:flex-row gap-4 h-5/6 w-full z-10">
                     <div className="relative sm:w-4/5">
-                        <div ref={faqsContainer} className="h-96 sm:h-full overflow-y-scroll">
+                        <div ref={faqsContainer} className="h-96 sm:h-full overflow-y-scroll scrollbar-hide">
                             {faqs?.map((faq) => <Disclosure key={faq.id} {...faq} />)}
                         </div>
 

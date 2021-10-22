@@ -27,6 +27,7 @@ const Chatbot = ({ onCreate, ticket }) => {
             autoplay: true,
             animationData: ChatbotAnimation
         });
+
     }, []);
 
     useEffect(() => {
@@ -37,6 +38,12 @@ const Chatbot = ({ onCreate, ticket }) => {
         setCreate({ length: false, wrong: false });
     }, [ticket]);
 
+    const chatHandler = ({ code }) => {
+        if (code === 'Enter') {
+            askNLP();
+        }
+    }
+
     const askNLP = async () => {
         if (question) {
             setChat([...chat, { question }]);
@@ -44,7 +51,7 @@ const Chatbot = ({ onCreate, ticket }) => {
                 .then(({ data }) => {
                     setChat([...chat, { question }, data !== '' ? data : { answer: 'Vaya!, parece que no entiendo del todo tu pregunta, intenta de nuevo por favor!' }]);
                     setCreate({
-                        length: chat.length >= 4,
+                        length: chat.length >= 10,
                         wrong: data === '' ? true : false
                     });
                 }).catch(({ response: { data: error } }) => {
@@ -92,16 +99,17 @@ const Chatbot = ({ onCreate, ticket }) => {
                             </p>
                             <p className="break-words leading-3 text-xs font-medium">Si aun no te ha resultado util la informacion, puedes crear un ticket para dar seguimiento a tu caso con folio de referencia, Toca aqui!</p>
                         </button>}
-                        <div className="flex flex-col h-full w-full bg-gray-50 rounded-5xl p-4 overflow-y-scroll">
+                        <div className="flex flex-col h-full w-full bg-gray-50 rounded-5xl p-4 overflow-y-scroll scrollbar-hide">
                             <ScrollableFeed>
                                 {chat?.map((e, i) => <TextRow key={i} {...e} />)}
                             </ScrollableFeed>
                         </div>
                         <div className="bottom flex w-full gap-2">
-                            <input value={question} onChange={v => setQuestion(v.target.value)} type="text" placeholder="Haz tu pregunta"
+                            <input onChange={v => setQuestion(v.target.value)} onKeyDown={chatHandler}
+                                value={question} type="text" placeholder="Haz tu pregunta"
                                 className="input rounded-3xl bg-white border-2 border-blue-100 w-full" />
-                            <button onClick={() => askNLP()}
-                                className="btn-animated w-10 h-10 bg-white rounded-full flex justify-center items-center focus:outline-none">
+                            <button onClick={() => askNLP()} disabled={!question}
+                                className="btn-animated w-10 h-10 bg-white rounded-full flex justify-center items-center focus:outline-none disabled:opacity-50">
                                 <p className="text-blue-400 text-xl">
                                     <FiSend />
                                 </p>

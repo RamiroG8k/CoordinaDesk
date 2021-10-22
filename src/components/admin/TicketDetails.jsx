@@ -5,7 +5,7 @@ import { Select } from 'components/shared';
 // Others
 import { apiInstance } from 'services';
 import { firstCapitalized, toDate } from 'utils';
-import { ticketStatus } from 'utils/data';
+import { ticketPriority, ticketStatus } from 'utils/data';
 import { toast } from 'react-toastify';
 
 const TicketDetails = ({ id, onUpdate, close }) => {
@@ -90,7 +90,17 @@ const TicketDetails = ({ id, onUpdate, close }) => {
                 onUpdate();
             }).catch(({ response: { data: error } }) => {
                 console.log(error);
-            });  
+            });
+    };
+
+    const priorityHandler = async (priority) => {
+        await apiInstance.patch(`/ticket/id/${id}/change-priority`, { priority })
+            .then(({ data }) => {
+                onUpdate();
+                fetchTicketDetails(id);
+            }).catch(({ response: { data: error } }) => {
+                console.log(error);
+            });
     };
 
     return (
@@ -101,13 +111,28 @@ const TicketDetails = ({ id, onUpdate, close }) => {
                         <div className="w-full h-auto overflow-scroll">
                             <h6 className="text-lg font-medium mb-2">{firstCapitalized(info.title)}</h6>
                             <p className="text-gray-600 dark:text-gray-900">{info.description}</p>
+
+                            {info.ticketContent.map((e, i) => {
+                                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+                                return (
+                                    <div key={e.created_at}
+                                        className={`${e.isUser ? 'text-right' : ''} w-full text-sm leading-4 overflow-y-scroll`}>
+                                        <p className="font-semibold">{e.username}</p>
+                                        <p>{e.data}</p>
+                                        <span className="text-xs text-gray-500">
+                                            {new Date(e.created_at).toLocaleDateString('es-MX', options)}
+                                        </span>
+                                    </div>
+                                );
+                            })}
+
                             <div className="border w-full rounded-full dark:border-gray-800 my-2" />
                         </div>
                         <div className="w-full h-1/3">
                             <label htmlFor="answer" className="text-gray-500 text-sm ml-2 mb-1">Agregar una respuesta</label>
                             <div className="flex">
                                 <textarea id="answer" rows={2} value={data} onChange={({ target: { value } }) => setData(value)}
-                                    className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
+                                    className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-600" />
                                 <div className="flex flex-col gap-2 w-auto px-2">
                                     <button onClick={() => ticketUpdate()} disabled={!data}
                                         className="btn p-1 bg-blue-400 rounded-lg disabled:opacity-40">
@@ -151,9 +176,15 @@ const TicketDetails = ({ id, onUpdate, close }) => {
                         <div>
                             <label className="text-sm ml-2">Prioridad</label>
                             <div className="w-full h-8 rounded-xl overflow-hidden text-xs grid grid-cols-3 font-medium">
-                                <div className={`${info.priority !== 'LOW' && 'opacity-40'}  flex justify-center items-center bg-green-400 w-full col-span-1 h-full p-1`}>BAJA</div>
-                                <div className={`${info.priority !== 'MODERATE' && 'opacity-40'}  flex justify-center items-center bg-yellow-400 w-full col-span-1 h-full p-1`}>MEDIA</div>
-                                <div className={`${info.priority !== 'HIGH' && 'opacity-40'} flex justify-center items-center bg-red-400 w-full col-span-1 h-full p-1`}>ALTA</div>
+                                {ticketPriority.map((button) => (
+                                    <button key={button.priority} onClick={() => priorityHandler(button.priority)}
+                                        className={`${(info.priority !== button.priority) && 'opacity-40'} flex justify-center items-center bg-${button.color}-400 w-full col-span-1 h-full p-1`}>
+                                        {button.label}
+                                    </button>
+                                ))}
+                                {/* <button className={`${info.priority !== 'LOW' && 'opacity-40'}  flex justify-center items-center bg-green-400 w-full col-span-1 h-full p-1`}>BAJA</button>
+                                <button className={`${info.priority !== 'MODERATE' && 'opacity-40'}  flex justify-center items-center bg-yellow-400 w-full col-span-1 h-full p-1`}>MEDIA</button>
+                                <button className={`${info.priority !== 'HIGH' && 'opacity-40'} flex justify-center items-center bg-red-400 w-full col-span-1 h-full p-1`}>ALTA</button> */}
                             </div>
                         </div>
                     </div>
@@ -168,12 +199,12 @@ const TicketDetails = ({ id, onUpdate, close }) => {
                         {deactivate && <>
                             <p className="text-base dark:text-white">Seguro?</p>
                             <button onClick={() => setDeactivate(false)}
-                            className="btn outline-none border-2 border-gray-300 bg-gray-100 px-2 py-1 transition-all">
+                                className="btn outline-none border-2 border-gray-300 bg-gray-100 px-2 py-1 transition-all">
                                 <p className="text-sm">Cancelar</p>
                             </button>
                         </>}
                         <button onClick={() => deactivate ? deactivateManually() : setDeactivate(true)}
-                        className="btn outline-none border-2 border-red-400 px-2 py-1 hover:bg-red-300 transition-all">
+                            className="btn outline-none border-2 border-red-400 px-2 py-1 hover:bg-red-300 transition-all">
                             <p className="text-sm hover:text-white">Deshabilitar</p>
                         </button>
                     </div>

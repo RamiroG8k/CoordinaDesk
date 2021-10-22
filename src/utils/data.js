@@ -49,10 +49,25 @@ const userActions = [
     }
 ];
 
+const ticketActions = [
+    {
+        name: 'Detalles',
+        action: 'details',
+        description: 'Informacion general de usuario',
+        icon: <BsFileEarmarkText />,
+    },
+];
+
 const ticketStatus = [
     { label: 'To do', value: 'ASIGNED' },
     { label: 'In Progress', value: 'IN_PROGRESS' },
     { label: 'Done', value: 'RESOLVE' },
+];
+
+const ticketPriority = [
+    { priority: 'LOW', label: 'BAJA', color: 'green' },
+    { priority: 'MODERATE', label: 'MEDIA', color: 'yellow' },
+    { priority: 'HIGH', label: 'ALTA', color: 'red' },
 ];
 
 const errorMessages = [
@@ -92,4 +107,4 @@ const errorMessages = [
     { customText: 'INVALID_POSITION', message: 'ERROR.FAQ.INVALID_POSITION' },
 ];
 
-export { sections, socials, userActions, ticketStatus, errorMessages };
+export { sections, socials, ticketActions, userActions, ticketStatus, ticketPriority, errorMessages };
