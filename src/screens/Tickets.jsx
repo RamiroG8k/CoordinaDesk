@@ -58,6 +58,15 @@ const Tickets = () => {
             })
     };
 
+    const getBorderColor = (priority) => {
+        switch (priority) {
+            case 'LOW': return 'border-green-300';
+            case 'MODERATE': return 'border-yellow-300';
+            case 'HIGH': return 'border-red-300';
+            default: return 'max-w-sm';
+        }
+    };
+
     return (
         <>
             <Modal visible={details.visible} toggle={(show) => setDetails({ ...details, visible: show })}
@@ -80,7 +89,7 @@ const Tickets = () => {
                                                     <div onClick={() => setDetails({ data: item, visible: true })}
                                                         {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
                                                         className="relative flex items-center h-16 sm:h-20 w-full p-2 rounded-2xl bg-gray-50 dark:bg-gray-900 border dark:border-gray-600" >
-                                                        <div className={`h-2/3 mr-2 w-0 border border-${(item.priority === 'HIGH') ? 'red' : (item.priority === 'MODERATE') ? 'yellow' : 'green'}-300`} />
+                                                        <div className={`h-2/3 mr-2 w-0 border ${getBorderColor(item.priority)}`} />
                                                         <div className="h-full w-full">
                                                             <p className="text-sm dark:text-gray-500">
                                                                 {firstCapitalized(item.title).substring(0, 50)}

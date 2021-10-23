@@ -5,12 +5,24 @@ import { Dialog, Transition } from '@headlessui/react';
 // Others
 import { CgClose } from 'react-icons/cg';
 
-const Modal = ({ toggle, visible, type = 1, size = 'sm', title, children }) => {
+const Modal = ({ onClose, visible, type = 1, size = 'sm', title, children }) => {
     const cancelButtonRef = useRef(null);
+
+    const getMaxWidth = (size) => {
+        switch (size) {
+            case 'sm': return 'max-w-sm';
+            case 'md': return 'max-w-md';
+            case 'lg': return 'max-w-lg';
+            case 'xl': return 'max-w-xl';
+            case '2xl': return 'max-w-2xl';
+            case '3xl': return 'max-w-3xl';
+            default: return 'max-w-sm';
+        }
+    };
 
     return (
         <Transition.Root show={visible} as={Fragment}>
-            <Dialog as="div" className="fixed z-50 inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={toggle}>
+            <Dialog as="div" className="fixed z-50 inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={onClose}>
                 <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 
                     <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100"
@@ -27,7 +39,7 @@ const Modal = ({ toggle, visible, type = 1, size = 'sm', title, children }) => {
                     <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enterTo="opacity-100 translate-y-0 sm:scale-100"
                         leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 sm:scale-100" leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
 
-                        <div className={`w-full sm:align-middle sm:max-w-${size} bg-white dark:bg-gray-800 inline-block align-bottom rounded-3xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8`}>
+                        <div className={`w-full sm:align-middle ${getMaxWidth(size)} bg-white dark:bg-gray-800 inline-block align-bottom rounded-3xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8`}>
                             <div className="p-4 sm:p-6 pb-0 sm:pb-0">
                                 {/* TODO: Handle type */}
                                 {/* <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-800 sm:mx-0 sm:h-10 sm:w-10">
@@ -37,7 +49,7 @@ const Modal = ({ toggle, visible, type = 1, size = 'sm', title, children }) => {
                                     <Dialog.Title as="h3" className="text-xl leading-6 font-medium text-gray-900 dark:text-gray-400">
                                         {title}
                                     </Dialog.Title>
-                                    <button onClick={() => toggle(false)} className="p-2">
+                                    <button onClick={() => onClose(false)} className="p-2">
                                         <p>
                                             <CgClose />
                                         </p>

@@ -12,10 +12,10 @@ const TicketsDone = () => {
     const [details, setDetails] = useState({ visible: false, data: null });
 
     useEffect(() => {
-        fetchUsers();
+        fetchTickets();
     }, []);
 
-    const fetchUsers = async (page, limit = 10, search) => {
+    const fetchTickets = async (page, limit = 10, search) => {
         await apiInstance.get('/ticket/inactive/all', { params: { page, limit } })
             .then(({ data }) => {
                 setData({
@@ -84,7 +84,7 @@ const TicketsDone = () => {
                     <h1 className="text-4xl sm:text-5xl text-center font-bold text-gray-400 mb-4 sm:mb-8">Tickets Inhabilitados</h1>
                 </div>
                 {data && <Datatable data={data} popoverTitle="Acciones por ticket"
-                    onUpdate={(page, limit) => fetchUsers(page, limit)}
+                    onUpdate={(page, limit) => fetchTickets(page, limit)}
                     onEvent={handleItemEvent}  />}
             </div>
         </section>

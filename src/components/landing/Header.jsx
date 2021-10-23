@@ -9,7 +9,7 @@ import { sections } from 'utils/data';
 
 const LandingNavbar = ({ onCreate, className }) => {
     return (
-        <header className={`${className} bg-white bg-opacity-10 backdrop-filter backdrop-blur-md flex w-full h-16 px-8 py-4 justify-between items-center`}>
+        <header className={`${className} bg-opacity-10 backdrop-filter backdrop-blur-md flex w-full h-16 px-8 py-4 justify-between items-center`}>
             <div className="flex justify-center">
                 {/* <img className="block lg:hidden h-6 w-auto" alt="Workflow"
                     src="https://tailwindcss.com/_next/static/media/tailwindcss-mark.cb8046c163f77190406dfbf4dec89848.svg" /> */}
@@ -23,17 +23,17 @@ const LandingNavbar = ({ onCreate, className }) => {
             <div className="hidden sm:flex gap-6 items-center">
                 {sections.map(({ name, goTo }) =>
                     <a href={goTo} key={name}
-                        className="font-medium hover:text-blue-800 transition transform hover:scale-105">{name}</a>
+                        className="dark:text-gray-500 font-medium hover:text-blue-800 transition transform hover:scale-105">{name}</a>
                 )}
                 <button onClick={() => onCreate(true)}
-                    className="bg-gray-100 hover:scale-105 hover:font-medium transform transition px-3 py-1 rounded-xl">
-                    <div className="flex items-center gap-1 text-lg text-gray-700">
+                    className="bg-gray-100 dark:bg-gray-700 hover:scale-105 hover:font-medium transform transition px-3 py-1 rounded-xl">
+                    <div className="flex items-center gap-1 text-lg text-gray-700 dark:text-gray-400">
                         <p>Crear ticket</p>
                     </div>
                 </button>
                 <Link to="/login"
-                    className="bg-blue-200 hover:scale-105 hover:font-medium transform transition px-3 py-1 rounded-xl">
-                    <div className="flex items-center gap-1 text-lg text-gray-700">
+                    className="bg-blue-200 dark:bg-blue-900 hover:scale-105 hover:font-medium transform transition px-3 py-1 rounded-xl">
+                    <div className="flex items-center gap-1 text-lg text-gray-700 dark:text-white">
                         <p>Login</p>
                         <BiUserCircle />
                     </div>

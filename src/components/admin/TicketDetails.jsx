@@ -182,9 +182,6 @@ const TicketDetails = ({ id, onUpdate, close }) => {
                                         {button.label}
                                     </button>
                                 ))}
-                                {/* <button className={`${info.priority !== 'LOW' && 'opacity-40'}  flex justify-center items-center bg-green-400 w-full col-span-1 h-full p-1`}>BAJA</button>
-                                <button className={`${info.priority !== 'MODERATE' && 'opacity-40'}  flex justify-center items-center bg-yellow-400 w-full col-span-1 h-full p-1`}>MEDIA</button>
-                                <button className={`${info.priority !== 'HIGH' && 'opacity-40'} flex justify-center items-center bg-red-400 w-full col-span-1 h-full p-1`}>ALTA</button> */}
                             </div>
                         </div>
                     </div>

@@ -63,23 +63,23 @@ const Login = ({ history }) => {
                         src={LogoLarge} />
                 </div>
 
-                <div className="h-1/2 sm:bg-white sm:dark:bg-gray-600 sm:shadow-md p-10 rounded-3xl mx-auto">
+                <div className="h-1/2 sm:bg-white sm:dark:bg-gray-900 sm:shadow-md p-10 rounded-3xl mx-auto">
                     <div className="flex flex-col gap-2 text-center">
-                        <h3 className="text-gray-900 dark:text-gray-900 font-bold text-2xl">Log In</h3>
-                        <h4 className="text-gray-500 dark:text-gray-800 text-xs">Por favor proporciona tus credenciales para tener acceso a tu cuenta</h4>
+                        <h3 className="text-gray-900 dark:text-gray-400 font-bold text-2xl">Log In</h3>
+                        <h4 className="text-gray-500 dark:text-gray-500 text-xs">Por favor proporciona tus credenciales para tener acceso a tu cuenta</h4>
                     </div>
 
                     {/* Form Section*/}
                     <form id="form" onSubmit={handleSubmit(logIn)} className="my-6">
                         <div className="space-y-3 mb-4">
                             <div>
-                                <label htmlFor="email" className="text-sm ml-2 mb-1">E-mail</label>
+                                <label htmlFor="email" className="dark:text-gray-500 text-sm ml-2 mb-1">E-mail</label>
                                 <input id="email" {...register('email', { required: true })} type="text" autoComplete="off"
                                     className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
                                 {errors.email && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
                             </div>
                             <div>
-                                <label htmlFor="password" className="text-sm ml-2 mb-1">Contraseña</label>
+                                <label htmlFor="password" className="dark:text-gray-500 text-sm ml-2 mb-1">Contraseña</label>
                                 <div className="relative flex items-center">
                                     <input id="password" {...register('password', { required: true })}
                                         type={hidden ? 'password' : 'text'} autoComplete="off"
@@ -96,8 +96,8 @@ const Login = ({ history }) => {
                     </form>
                     {/* END: Form Section */}
 
-                    <button form="form" type="submit" className="py-2 bg-blue-200 dark:bg-gray-900 btn btn-animated hover:bg-blue-300 active:bg-blue-200">
-                        <p className="flex justify-center items-center font-bold text-lg text-white dark:text-gray-400">
+                    <button form="form" type="submit" className="py-2 bg-blue-200 dark:bg-gray-700 btn btn-animated hover:bg-blue-300 active:bg-blue-200">
+                        <p className="flex justify-center items-center font-bold text-lg text-white dark:text-gray-900">
                             {loading ? <>
                                 <svg className="absolute left-1/4 animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>

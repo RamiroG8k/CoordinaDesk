@@ -11,7 +11,7 @@ const Activate = ({ history }) => {
 
     const [hidden, setHidden] = useState(true);
     const [loading, setLoading] = useState(false);
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     const activate = async (body) => {
         setLoading(!loading);

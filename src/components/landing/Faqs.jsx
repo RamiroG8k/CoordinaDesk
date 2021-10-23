@@ -42,7 +42,7 @@ const Faqs = () => {
                 const activeCategories = data.filter(c => c.isActive);
 
                 setCategories(activeCategories);
-                setSelected(activeCategories[2]._id);
+                setSelected(activeCategories[0]._id);
             }).catch(({ response: { data: error } }) => {
                 console.log(error);
             });
@@ -68,14 +68,14 @@ const Faqs = () => {
     };
 
     return (
-        <section id="faqs" className="flex justify-end items-center w-screen sm:h-screen p-4 sm:p-0 sm:bg-gradient-to-r from-blue-100 to-gray-50">
-            <div className="relative flex flex-col h-full sm:h-4/5 w-full sm:w-4/5 bg-gray-50 sm:bg-white rounded-2xl gap-4 p-6 sm:p-14">
-                <div className="flex flex-col w-auto h-1/6 gap-3 z-10">
-                    <h2 className="w-60 text-4xl font-semibold">Preguntas <span className="text-blue-400">Frecuentes</span></h2>
-                    <p>Necesitas respuestas?,  Encuentralas aqui.</p>
+                <section id="faqs" className="flex justify-end items-center w-screen sm:h-screen p-4 sm:p-0 sm:bg-gradient-to-r from-blue-100 dark:from-gray-900 to-gray-50 dark:to-gray-900">
+        <div className="relative flex flex-grow-0 flex-col h-full sm:h-4/5 w-full sm:w-4/5 bg-gray-50 dark:bg-gray-900 sm:dark:bg-gray-800 sm:bg-white rounded-2xl p-6 sm:px-12 py-10">
+                <div className="flex flex-col w-auto h-1/5 gap-3 z-10 mb-4">
+                    <h2 className="w-60 text-4xl font-semibold dark:text-white">Preguntas <span className="text-blue-400">Frecuentes</span></h2>
+                    <p className="dark:text-gray-500">Necesitas respuestas?,  Encuentralas aqui.</p>
                 </div>
 
-                <div className="flex flex-grow-0 flex-col-reverse sm:flex-row gap-4 h-5/6 w-full z-10">
+                <div className="flex flex-col-reverse sm:flex-row gap-4 h-4/5 w-full z-10">
                     <div className="relative sm:w-4/5">
                         <div ref={faqsContainer} className="h-96 sm:h-full overflow-y-scroll scrollbar-hide">
                             {faqs?.map((faq) => <Disclosure key={faq.id} {...faq} />)}
@@ -96,8 +96,8 @@ const Faqs = () => {
                         <div className="flex sm:flex-col flex-wrap gap-x-6 gap-y-4 justify-center">
                             {categories?.map(({ _id, category }, i) =>
                                 <button key={_id} onClick={() => setSelected(_id)}
-                                    className={`${selected === _id ? 'sm:-translate-x-4 font-medium scale-105 text-blue-600' : 'hover:scale-105 hover:text-blue-600 hover:-translate-x-2'}
-                                            text-sm text-right rounded transform transition`}>
+                                    className={`${selected === _id ? 'sm:-translate-x-4 font-medium scale-105 text-blue-600 dark:text-blue-700' : 'hover:scale-105 hover:text-blue-600 hover:-translate-x-2'}
+                                            text-sm text-right rounded transform transition dark:text-gray-500`}>
                                     {category}
                                 </button>
                             )}
@@ -106,12 +106,12 @@ const Faqs = () => {
                 </div>
 
                 <div className="z-0 opacity-30 sm:opacity-60">
-                    <div className="absolute top-10 right-20 w-60 h-60 bg-blue-200 mix-blend-multiply rounded-full" >
+                    <div className="absolute top-10 right-20 w-60 h-60 bg-blue-200 dark:bg-blue-900 mix-blend-multiply rounded-full" >
                         <div className="hidden lg:flex relative w-full h-full justify-center items-center">
                             <div ref={lottieContainer} className="absolute w-full z-10" />
                         </div>
                     </div>
-                    <div className="absolute flex justify-center items-center top-52 right-16 w-20 h-20 mix-blend-multiply bg-red-200 rounded-full" >
+                    <div className="absolute flex justify-center items-center top-52 right-16 w-20 h-20 mix-blend-multiply bg-red-200 dark:bg-red-500 rounded-full" >
                         <p className="hidden sm:block text-4xl font-semibold text-white">?</p>
                     </div>
                 </div>

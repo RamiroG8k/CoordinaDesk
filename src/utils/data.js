@@ -1,22 +1,22 @@
 import { BsTrash, BsEnvelope, BsFileEarmarkText } from 'react-icons/bs';
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaFacebookF } from 'react-icons/fa';
 
 const sections = [
+    {
+        name: 'Concepto',
+        goTo: '#concept',
+    },
     {
         name: 'FAQs',
         goTo: '#faqs',
     },
     {
-        name: 'Ticket Tracking',
-        goTo: '#tracking',
-    },
-    {
-        name: 'Concept',
-        goTo: '#',
-    },
-    {
-        name: 'About',
+        name: 'Acerca de',
         goTo: '#about',
+    },
+    {
+        name: 'Seguimiento',
+        goTo: '#tracking',
     },
 ];
 

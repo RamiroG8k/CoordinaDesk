@@ -1,10 +1,10 @@
 import { useState } from 'react';
 // Components
-import { Footer, Header, Chatbot, Faqs, Tracking, CreateTicket } from 'components/landing';
+import { Footer, Header, Chatbot, Faqs, Tracking, CreateTicket, Concept, About } from 'components/landing';
 import { ScrollToTop, Modal } from 'components/shared';
 
 const Landing = () => {
-    const [createTicket, setCreateTicket] = useState(false);
+    const [show, setShow] = useState(false);
     const [ticket, setTicket] = useState();
 
     const TicketInfo = ({ close, onCreate }) => {
@@ -30,18 +30,27 @@ const Landing = () => {
         );
     };
 
+    const handleModalClose = () => {
+        setShow(false);
+        if (ticket) {
+            setTicket(null);
+        }
+    };
+
     return (
-        <div className="relative">
-            <Header onCreate={setCreateTicket} className="sticky top-0 z-50 shadow-md" />
-            <Chatbot onCreate={setCreateTicket} ticket={ticket} />
+        <div className="relative bg-gray-800">
+            <Header onCreate={setShow} className="sticky top-0 z-50 shadow-md" />
+            <Chatbot onCreate={setShow} ticket={ticket} />
+            <Concept className=""/>
             <Faqs />
+            <About className=""/>
             <Tracking />
             <Footer />
             <ScrollToTop />
-            <Modal visible={createTicket} toggle={setCreateTicket} size="xl" title={ticket ? 'Informacion de ticket' : 'Crear ticket'}>
+            <Modal visible={show} onClose={handleModalClose} size="xl" title={ticket ? 'Informacion de ticket' : 'Crear ticket'}>
                 {ticket ?
-                    <TicketInfo close={setCreateTicket} onCreate={() => setTicket(null)} /> :
-                    <CreateTicket close={setCreateTicket} onCreate={setTicket} />}
+                    <TicketInfo close={handleModalClose} onCreate={() => setTicket(null)} /> :
+                    <CreateTicket close={handleModalClose} onCreate={setTicket} />}
             </Modal>
         </div>
     )

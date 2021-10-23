@@ -1,6 +1,6 @@
 // Others
 import { Dropdown, ModeSwitcher } from 'components/shared';
-import { BiSidebar, BiUserCircle, BiSearchAlt } from 'react-icons/bi';
+import { BiSidebar, BiUserCircle } from 'react-icons/bi';
 import { useHistory } from 'react-router-dom';
 import { apiInstance } from 'services';
 import { firstCapitalized, removeCredentials } from 'utils';
@@ -53,11 +53,6 @@ const Navbar = ({ className, toggleSidebar, mobileSidebar }) => {
                         <BiSidebar />
                     </p>
                 </button>
-                {/* <button className="h-auto transition hover:bg-blue-100 dark:hover:bg-red-200 rounded-full">
-                    <p className="p-2 text-3xl text-gray-500 dark:text-gray-400 active:bg-transparent">
-                        <BiSearchAlt />
-                    </p>
-                </button> */}
             </div>
 
             <div className="right flex items-center gap-5 mr-2">
