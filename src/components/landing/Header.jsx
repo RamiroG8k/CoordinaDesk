@@ -10,7 +10,8 @@ import { sections } from 'utils/data';
 const LandingNavbar = ({ onCreate, className }) => {
     return (
         <header className={`${className} bg-opacity-10 backdrop-filter backdrop-blur-md flex w-full h-16 px-8 py-4 justify-between items-center`}>
-            <div className="flex justify-center">
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+            <a className="flex justify-center" href="#" >
                 {/* <img className="block lg:hidden h-6 w-auto" alt="Workflow"
                     src="https://tailwindcss.com/_next/static/media/tailwindcss-mark.cb8046c163f77190406dfbf4dec89848.svg" /> */}
                 <img className="block lg:hidden h-14 w-14" alt="Workflow"
@@ -19,7 +20,7 @@ const LandingNavbar = ({ onCreate, className }) => {
                     src="https://tailwindcss.com/_next/static/media/tailwindcss-logotype.128b6e12eb85d013bc9f80a917f57efe.svg" /> */}
                 <img className="hidden lg:block h-10 w-auto" alt="Workflow"
                     src={LogoLarge} />
-            </div>
+            </a>
             <div className="hidden sm:flex gap-6 items-center">
                 {sections.map(({ name, goTo }) =>
                     <a href={goTo} key={name}

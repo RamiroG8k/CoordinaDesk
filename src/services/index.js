@@ -3,10 +3,9 @@ import SidebarSections from './sidebar.data';
 // Other
 import Axios from 'axios';
 
-
 const apiInstance = Axios.create(
     {
-        baseURL: 'https://coordina-desk-api.herokuapp.com',
+        baseURL: 'https://coordina-desk-api-dev.herokuapp.com',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
