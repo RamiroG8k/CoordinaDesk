@@ -16,7 +16,7 @@ const CustomDisclosure = ({ title, question, answer, description, color, classNa
                     <div className={`${open ? 'transform rotate-180' : ''} w-5 h-5 ${color ? `text-${color}-500` : 'dark:text-gray-300'}`}>
                         <GrFormDown />
                     </div>
-                    <span className="text-gray-300">{question || title}</span>
+                    <span className="dark:text-gray-300">{question || title}</span>
                 </Disclosure.Button>
 
                 <Transition as={Fragment} enter="transition ease-out duration-200" enterFrom="transform opacity-0" enterTo="transform opacity-100 scale-100"

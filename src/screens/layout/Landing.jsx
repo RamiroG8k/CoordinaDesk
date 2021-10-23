@@ -38,7 +38,7 @@ const Landing = () => {
     };
 
     return (
-        <div className="relative bg-gray-800">
+        <div className="relative bg-white dark:bg-gray-800">
             <Header onCreate={setShow} className="sticky top-0 z-50 shadow-md" />
             <Chatbot onCreate={setShow} ticket={ticket} />
             <Concept className=""/>

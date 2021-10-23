@@ -69,7 +69,7 @@ const Tickets = () => {
 
     return (
         <>
-            <Modal visible={details.visible} toggle={(show) => setDetails({ ...details, visible: show })}
+            <Modal visible={details.visible} onClose={(show) => setDetails({ ...details, visible: show })}
                 size="2xl" title="Detalles de ticket">
                 {details.data && <TicketDetails id={details.data._id} onUpdate={() => fetchTickets()}
                     close={() => setDetails({ ...details, visible: false })} />}

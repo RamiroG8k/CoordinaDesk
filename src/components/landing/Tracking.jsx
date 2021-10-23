@@ -28,7 +28,7 @@ const Tracking = () => {
                         Acceso a la información que se te proporciona con tu ID de referencia, al instante! 
                     </p>
                 </div>
-                <input type="number" pattern="[0-9]+" min="0" onChange={v => setCode(v.target.value.toUpperCase())} value={code}
+                <input type="number" pattern="[0-9]+" min="0" onChange={v => setCode(v.target.value)} value={code}
                     placeholder="Ticket ID" className="input text-xl rounded-2xl bg-blue-50 dark:bg-gray-900 dark:border-gray-700 border-2 dark:text-white" />
                 <Link to={{ pathname: code ? '/ticket/tracking' : '/', id: code }} type="button" disabled={!code}
                     className={`${code ? '' : 'opacity-50'} btn btn-animated self-center sm:self-start disabled:opacity-50 bg-blue-200 w-auto px-4 p-2 mt-6 text-xl`}>
