@@ -33,9 +33,6 @@ const Tickets = () => {
         switch (result.destination.droppableId) {
             case 'todo':
                 status = 'ASIGNED';
-                // Get from where
-                // Find and remove from there
-                // setTickets({ ...tickets, todo: [...tickets.todo, { _id: result.destination.droppableId} ] })
                 break;
             case 'inProgress':
                 status = 'IN_PROGRESS';

@@ -3,9 +3,7 @@ import { BsChevronLeft, BsChevronDoubleLeft, BsChevronRight, BsChevronDoubleRigh
 const Paginator = ({ pages: { total = 0, from = 0, to = 0, current = 0, last = 0 }, onChange, className }) => {
     const handleChange = (page) => {
         const goTo = page > last ? last : page < 1 ? 1 : page;
-        if ((goTo > from) && (goTo < to)) {
-            onChange(goTo);
-        }
+        onChange(goTo);
     };
 
     const buttons = [
