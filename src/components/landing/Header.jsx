@@ -16,7 +16,7 @@ const LandingNavbar = ({ onCreate, className }) => {
                 <img className="block lg:hidden h-14 w-14" alt="logo"src={LogoSquare} />
                 <div className="hidden lg:block">
                     <img className="dark:hidden h-10 w-auto" alt="logo" src={LogoLarge} />
-                    <img className="dark:block h-10 w-auto" alt="logo" src={LogoLargeDark} />
+                    <img className="hidden dark:block h-10 w-auto" alt="logo" src={LogoLargeDark} />
                 </div>
             </a>
             <div className="hidden sm:flex gap-6 items-center">

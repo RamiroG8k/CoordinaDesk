@@ -59,10 +59,11 @@ const TicketDetails = ({ id, onUpdate, close }) => {
     };
 
     const ticketUpdate = async () => {
-        const user = JSON.parse(sessionStorage.getItem('user'))._id;
+        const user = JSON.parse(localStorage.getItem('user'))._id;
         await apiInstance.post(`ticket/id/${id}/user/${user}/answer`, { data })
             .then(({ data }) => {
-                // close();
+                setData('');
+                fetchTicketDetails(id);
                 toast.success('Respuesta asignada correctamente', {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 5000,
@@ -112,23 +113,30 @@ const TicketDetails = ({ id, onUpdate, close }) => {
                             <h6 className="text-lg font-medium mb-2">{firstCapitalized(info.title)}</h6>
                             <p className="text-gray-600 dark:text-gray-900">{info.description}</p>
 
-                            <div className="border w-full rounded-full dark:border-gray-800 my-2" />
+                            {(info.ticketContent.length > 0) && <>
 
-                            <div className="flex flex-col gap-2">
-                                {info.ticketContent.map((e, i) => {
-                                    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-                                    return (
-                                        <div key={e.created_at}
-                                            className={`${e.isUser ? 'text-right' : ''} w-full text-sm leading-4 overflow-y-scroll`}>
-                                            <p className="font-semibold">{e.username}</p>
-                                            <p className="break-words w-2/3">{e.data}</p>
-                                            <span className="text-xs text-gray-500">
-                                                {new Date(e.created_at).toLocaleDateString('es-MX', options)}
-                                            </span>
-                                        </div>
-                                    );
-                                })}
-                            </div>
+                                <div className="border w-full rounded-full dark:border-gray-800 my-2" />
+
+                                <div className="flex flex-col gap-2">
+                                    {info.ticketContent.map((e, i) => {
+                                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+                                        return (
+                                            <div key={e.created_at}
+                                                className={`${e.isUser ? 'text-right' : ''} w-full text-sm leading-4 overflow-y-scroll`}>
+                                                <p className="font-semibold">{e.username}</p>
+
+                                                <div className={`flex ${e.isUser ? 'text-right justify-end' : 'text-left' }`}>
+                                                    <p className="break-words w-3/4">{e.data}</p>
+                                                </div>
+
+                                                <span className="text-xs text-gray-500">
+                                                    {new Date(e.created_at).toLocaleDateString('es-MX', options)}
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </>}
                             <div className="border w-full rounded-full dark:border-gray-800 my-2" />
                         </div>
                         <div className="w-full h-1/3">
@@ -172,9 +180,20 @@ const TicketDetails = ({ id, onUpdate, close }) => {
                         </div>
                         <div>
                             <label className="text-sm ml-2">Alumno</label>
-                            <p className="w-full px-3 py-2 rounded-xl bg-blue-100 dark:bg-gray-800 text-gray-500 text-sm">
-                                {info.name}
-                            </p>
+                            <div className="flex flex-col w-full px-3 py-2 gap-1 rounded-xl bg-blue-100 dark:bg-gray-800 text-gray-500 text-xs">
+                                <p>
+                                    <strong className="font-medium">Nombre: </strong>{info.name}
+                                </p>
+                                <p>
+                                    <strong className="font-medium">Código: </strong>{info.udgId}
+                                </p>
+                                {info.phone && <p>
+                                    <strong className="font-medium">Teléfono: </strong>{info.phone}
+                                </p>}
+                                <p>
+                                    <strong className="font-medium">Email: </strong>{info.email}
+                                </p>
+                            </div>
                         </div>
                         <div>
                             <label className="text-sm ml-2">Prioridad</label>

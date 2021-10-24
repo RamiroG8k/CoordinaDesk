@@ -52,7 +52,7 @@ const Ticket = () => {
     };
 
     return (
-        <section className={`flex flex-col w-screen h-screen items-center dark:bg-gray-800 ${ ticket ? 'bg-gradient-to-b from-white via-gray-200 to-blue-100' : 'bg-white'}`}>
+        <section className={`flex flex-col w-screen h-screen items-center dark:bg-gray-800 ${ticket ? 'bg-gradient-to-b from-white via-gray-200 to-blue-100' : 'bg-white'}`}>
             {loading && <p>Loading...</p>}
             {(!loading && ticket) && <div className="flex flex-col w-full h-screen max-w-5xl p-4 sm:p-10 justify-center items-center space-y-4">
                 <div className="sticky top-4 flex w-full h-1/4 dark:text-white bg-gray-100 dark:bg-gray-700 rounded-3xl px-4 py-8 justify-between items-center shadow-inner">
@@ -79,7 +79,7 @@ const Ticket = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-col rounded-3xl gap-3 w-full h-full p-4 bg-white">
+                <div className="flex flex-col rounded-3xl gap-3 w-full h-2/3 p-4 bg-white">
                     <Disclosure title={ticket.title} description={ticket.description} color="blue" className="rounded-xl" />
 
                     <div className="flex flex-col space-y-2 w-full h-full overflow-y-scroll scrollbar-hide">
@@ -88,11 +88,13 @@ const Ticket = () => {
                             return (
                                 <div key={e.created_at}
                                     className={`${e.isUser ? 'bg-blue-50 dark:bg-gray-900' : 'text-right'} border dark:border-gray-700 rounded-2xl w-full p-4 text-sm`}>
-                                    <div className={`flex gap-2 items-center ${ e.isUser ? 'text-blue-500' : 'text-right justify-end' } dark:text-white`}>
-                                        {e.isUser && <p><FaUserCheck/></p>}
+                                    <div className={`flex gap-2 items-center ${e.isUser ? 'text-blue-500' : 'text-right justify-end'} dark:text-white`}>
+                                        {e.isUser && <p><FaUserCheck /></p>}
                                         <p className="font-semibold">{e.isUser ? e.username : 'Tú'}</p>
                                     </div>
-                                    <p className="dark:text-white">{e.data}</p>
+                                    <div className={`flex gap-2 items-center ${e.isUser ? 'text-blue-500' : 'text-right justify-end'}`}>
+                                        <p className="dark:text-white break-words w-4/5">{e.data}</p>
+                                    </div>
                                     <span className="text-xs text-gray-500 capitalize">
                                         {new Date(e.created_at).toLocaleDateString('es-MX', options)}
                                     </span>

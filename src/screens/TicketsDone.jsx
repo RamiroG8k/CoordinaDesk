@@ -73,7 +73,7 @@ const TicketsDone = () => {
 
     return (
         <section className="space-y-6">
-            <Modal visible={details.visible} toggle={(show) => setDetails({ ...details, visible: show })}
+            <Modal visible={details.visible} onClose={(show) => setDetails({ ...details, visible: show })}
                 size="xl" title="Detalles ticket Inhabilitado">
                 <div className="px-6 py-4 text-xs">
                     <pre>{JSON.stringify(details.data, null, 4)}</pre>

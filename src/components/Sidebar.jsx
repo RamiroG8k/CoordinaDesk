@@ -24,7 +24,7 @@ const Sidebar = ({ status, className, visible, toggleView }) => {
                     {(status === 'max' || hover) &&
                         <div>
                             <img className="dark:hidden h-auto w-auto" alt="logo" src={LogoLarge} />
-                            <img className="dark:block h-auto w-auto" alt="logo" src={LogoLargeDark} />
+                            <img className="hidden dark:block h-auto w-auto" alt="logo" src={LogoLargeDark} />
                         </div>
                     }
                 </div>
