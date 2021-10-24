@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 // Assets
 import LogoLarge from 'assets/images/Logo-Large.png';
 import LogoSquare from 'assets/images/Logo-Square.png';
+import LogoLargeDark from 'assets/images/Logo-Large-Dark.png';
 // Services | Data
 import { apiInstance } from 'services';
 import { saveCredentials } from 'utils';
@@ -53,14 +54,11 @@ const Login = ({ history }) => {
                             Inicio
                         </p>
                     </Link>
-                    {/* <img className="block lg:hidden h-6 w-auto" alt="Workflow"
-                    src="https://tailwindcss.com/_next/static/media/tailwindcss-mark.cb8046c163f77190406dfbf4dec89848.svg" /> */}
-                    <img className="block lg:hidden h-14 w-14" alt="Workflow"
-                        src={LogoSquare} />
-                    {/* <img className="hidden lg:block h-6 w-auto" alt="Workflow"
-                    src="https://tailwindcss.com/_next/static/media/tailwindcss-logotype.128b6e12eb85d013bc9f80a917f57efe.svg" /> */}
-                    <img className="hidden lg:block h-10 w-auto" alt="Workflow"
-                        src={LogoLarge} />
+                    <img className="block lg:hidden h-14 w-14" alt="logo"src={LogoSquare} />
+                <div className="hidden lg:block">
+                    <img className="dark:hidden h-10 w-auto" alt="logo" src={LogoLarge} />
+                    <img className="dark:block h-10 w-auto" alt="logo" src={LogoLargeDark} />
+                </div>
                 </div>
 
                 <div className="h-1/2 sm:bg-white sm:dark:bg-gray-900 sm:shadow-md p-10 rounded-3xl mx-auto">

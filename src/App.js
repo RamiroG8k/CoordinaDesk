@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Login, Dashboard, Landing, Ticket, Activate } from 'screens/layout';
 // Components
 import { Home, Users, Tickets, TicketsDone } from 'screens';
-import { isLoggedIn, prefersDarkMode } from 'utils';
+import { isLoggedIn, isTokenValid, prefersDarkMode } from 'utils';
 // Others
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -55,6 +55,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 // 		false meaning public route
 //		true meaning restricted route
 const PublicRoute = ({ component: Component, restricted = false, ...rest }) => {
+	// TODO: handle token
+	// isTokenValid();
 	return (
 		<Route {...rest}
 			render={(props) =>

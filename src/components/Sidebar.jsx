@@ -6,7 +6,10 @@ import { Disclosure } from '@headlessui/react';
 import { IoIosArrowUp, IoLogoGithub, IoIosArrowForward } from 'react-icons/io';
 // Data
 import { SidebarSections } from 'services';
-
+// Assets
+import LogoLarge from 'assets/images/Logo-Large.png';
+import LogoLargeDark from 'assets/images/Logo-Large-Dark.png';
+import LogoSquare from 'assets/images/Logo-Square.png';
 
 const Sidebar = ({ status, className, visible, toggleView }) => {
     const [hover, setHover] = useState(false);
@@ -17,10 +20,13 @@ const Sidebar = ({ status, className, visible, toggleView }) => {
 
             <section className="flex justify-center items-center w-full h-16">
                 <div className="flex w-full h-full p-3 bg-blue-50 dark:bg-gray-800 rounded-2xl">
-                    {(status === 'min' && !hover) && <img className="h-full w-auto" alt="Workflow"
-                        src="https://tailwindcss.com/_next/static/media/tailwindcss-mark.cb8046c163f77190406dfbf4dec89848.svg" />}
-                    {(status === 'max' || hover) && <img className="h-full w-auto" alt="Workflow"
-                        src="https://tailwindcss.com/_next/static/media/tailwindcss-logotype.128b6e12eb85d013bc9f80a917f57efe.svg" />}
+                    {(status === 'min' && !hover) && <img className="h-full w-auto" alt="logo" src={LogoSquare} />}
+                    {(status === 'max' || hover) &&
+                        <div>
+                            <img className="dark:hidden h-auto w-auto" alt="logo" src={LogoLarge} />
+                            <img className="dark:block h-auto w-auto" alt="logo" src={LogoLargeDark} />
+                        </div>
+                    }
                 </div>
                 <button onClick={toggleView}
                     className="flex sm:hidden w-1/5 justify-center items-center text-2xl text-gray-600 dark:text-gray-900 h-full" >

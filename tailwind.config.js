@@ -28,6 +28,7 @@ module.exports = {
     },
     variants: {
         extend: {
+            display: ['dark'],
             backgroundColor: ['dark', 'hover'],
             dark: ['backgroundColor', 'hover'],
             animation: ['hover', 'focus'],

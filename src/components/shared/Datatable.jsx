@@ -32,7 +32,7 @@ const DataTable = ({ popoverTitle, onSearch, data = [], onEvent, onUpdate, place
             <div className="flex w-full justify-between items-center header gap-4 sm:gap-10">
                 <div className="search relative w-full sm:w-1/2">
                     <input type="text" placeholder={placeholder ?? 'Search by name'} onKeyPress={keyPressed} onKeyUp={(e) => keyReleased(e.target.value)}
-                        className="input border-0 rounded-xl input-primary placeholder-font-bold px-10 bg-gray-50 dark:bg-gray-800 shadow" />
+                        className="input border-0 rounded-xl input-primary placeholder-font-bold px-10 bg-gray-50 dark:bg-gray-800 dark:text-gray-400 shadow" />
                     <p className="absolute left-4 text-brand-200 top-1/3 dark:text-gray-500">
                         <BsSearch />
                     </p>

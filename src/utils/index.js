@@ -1,3 +1,14 @@
+import { apiInstance } from "services";
+
+export const isTokenValid = async () => {
+    await apiInstance.post('/auth/validate-token')
+        .then(({ data }) => {
+            console.log(data);
+        }).catch((err) => {
+            console.log(err);
+        })
+};
+
 export const isLoggedIn = () => {
     return (localStorage.getItem('token') ?? false);
 };

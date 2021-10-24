@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 // Assets
 import LogoLarge from 'assets/images/Logo-Large.png';
+import LogoLargeDark from 'assets/images/Logo-Large-Dark.png';
 import LogoSquare from 'assets/images/Logo-Square.png';
 // Others
 import { BiUserCircle } from 'react-icons/bi';
@@ -12,14 +13,11 @@ const LandingNavbar = ({ onCreate, className }) => {
         <header className={`${className} bg-opacity-10 backdrop-filter backdrop-blur-md flex w-full h-16 px-8 py-4 justify-between items-center`}>
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a className="flex justify-center" href="#" >
-                {/* <img className="block lg:hidden h-6 w-auto" alt="Workflow"
-                    src="https://tailwindcss.com/_next/static/media/tailwindcss-mark.cb8046c163f77190406dfbf4dec89848.svg" /> */}
-                <img className="block lg:hidden h-14 w-14" alt="Workflow"
-                    src={LogoSquare} />
-                {/* <img className="hidden lg:block h-6 w-auto" alt="Workflow"
-                    src="https://tailwindcss.com/_next/static/media/tailwindcss-logotype.128b6e12eb85d013bc9f80a917f57efe.svg" /> */}
-                <img className="hidden lg:block h-10 w-auto" alt="Workflow"
-                    src={LogoLarge} />
+                <img className="block lg:hidden h-14 w-14" alt="logo"src={LogoSquare} />
+                <div className="hidden lg:block">
+                    <img className="dark:hidden h-10 w-auto" alt="logo" src={LogoLarge} />
+                    <img className="dark:block h-10 w-auto" alt="logo" src={LogoLargeDark} />
+                </div>
             </a>
             <div className="hidden sm:flex gap-6 items-center">
                 {sections.map(({ name, goTo }) =>
