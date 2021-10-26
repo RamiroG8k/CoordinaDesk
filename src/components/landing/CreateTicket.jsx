@@ -1,13 +1,13 @@
 // Common
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 // Services
 import { apiInstance } from 'services';
 import { toast } from 'react-toastify';
 
 const CreateTicket = ({ close, onCreate }) => {
     const [loading, setLoading] = useState(false);
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, control, formState: { errors } } = useForm();
 
     const create = async (body) => {
         setLoading(!loading);
@@ -38,7 +38,7 @@ const CreateTicket = ({ close, onCreate }) => {
                     <div className="col-span-2">
                         <label htmlFor="title" className="dark:text-gray-500 text-sm ml-2 mb-1">Título</label>
                         <input id="title" {...register('title', { required: true })} type="text" autoComplete="off"
-                            className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" placeholder="Idea principal de manera concreta"/>
+                            className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" placeholder="Idea principal de manera concreta" />
                         {errors.title && <span className="ml-2 text-xs text-red-400">Este campo es obligatorio</span>}
                     </div>
                     <div className="col-span-2">
@@ -69,6 +69,15 @@ const CreateTicket = ({ close, onCreate }) => {
                         <input id="email" {...register('email', { required: true })} type="email" autoComplete="off"
                             className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" placeholder="example@domain.xyz" />
                         {errors.email && <span className="ml-2 text-xs text-red-400">Este campo es obligatorio</span>}
+                    </div>
+                    <div className="col-span-2">
+                        <div className="form-group form-check inline-flex items-center dark:text-gray-500 text-sm ml-2 mb-1">
+                            <Controller control={control} name="hasEmailUpdates" defaultValue={true} render={({ field: { onChange, value } }) => (
+                                <input type="checkbox" id="hasEmailUpdates" checked={value ? true : false}
+                                 className="form-check-input" onChange={onChange} value={value} />
+                            )} />
+                            <label htmlFor="hasEmailUpdates" className="form-check-label ml-2">Recibir notificaciones por email</label>
+                        </div>
                     </div>
                 </fieldset>
             </form>

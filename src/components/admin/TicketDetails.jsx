@@ -8,7 +8,7 @@ import { firstCapitalized, toDate } from 'utils';
 import { ticketPriority, ticketStatus } from 'utils/data';
 import { toast } from 'react-toastify';
 
-const TicketDetails = ({ id, onUpdate, close }) => {
+const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
     const [info, setInfo] = useState(null);
     const [users, setUsers] = useState([]);
     const [data, setData] = useState('');
@@ -145,7 +145,7 @@ const TicketDetails = ({ id, onUpdate, close }) => {
                                 <textarea id="answer" rows={2} value={data} onChange={({ target: { value } }) => setData(value)}
                                     className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-600" />
                                 <div className="flex flex-col gap-2 w-auto px-2">
-                                    <button onClick={() => ticketUpdate()} disabled={!data}
+                                    <button onClick={() => ticketUpdate()} disabled={!data || disabled}
                                         className="btn p-1 bg-blue-400 rounded-lg disabled:opacity-40">
                                         <p className="text-white text-xs">
                                             Guardar
@@ -164,7 +164,7 @@ const TicketDetails = ({ id, onUpdate, close }) => {
                     <div className="w-full sm:w-1/3 space-y-4">
                         <div>
                             <label className="text-sm ml-2">Estado</label>
-                            <Select array={ticketStatus} labels defaultValue={info.status}
+                            <Select array={ticketStatus} labels defaultValue={info.status} disabled={disabled}
                                 buttonStyle="w-full rounded-xl bg-blue-100 dark:bg-gray-800 text-gray-500"
                                 dropdownStyle="bg-white dark:bg-gray-600 dark:text-gray-400 z-20"
                                 activeStyle="bg-blue-100 dark:bg-gray-800"
@@ -172,7 +172,7 @@ const TicketDetails = ({ id, onUpdate, close }) => {
                         </div>
                         <div>
                             <label className="text-sm ml-2">Responsable</label>
-                            {(users.length > 0) && <Select array={users} labels defaultValue={info.user}
+                            {(users.length > 0) && <Select array={users} labels defaultValue={info.user} disabled={disabled}
                                 buttonStyle="w-full rounded-xl bg-blue-100 dark:bg-gray-800 text-gray-500"
                                 dropdownStyle="bg-white dark:bg-gray-800 text-gray-500 z-20"
                                 onChange={({ value }) => reasingUser(value)}
@@ -199,7 +199,7 @@ const TicketDetails = ({ id, onUpdate, close }) => {
                             <label className="text-sm ml-2">Prioridad</label>
                             <div className="w-full h-8 rounded-xl overflow-hidden text-xs grid grid-cols-3 font-medium">
                                 {ticketPriority.map((button) => (
-                                    <button key={button.priority} onClick={() => priorityHandler(button.priority)}
+                                    <button key={button.priority} disabled={disabled} onClick={() => priorityHandler(button.priority)}
                                         className={`${(info.priority !== button.priority) && 'opacity-40'} flex justify-center items-center bg-${button.color}-400 w-full col-span-1 h-full p-1`}>
                                         {button.label}
                                     </button>
@@ -222,7 +222,7 @@ const TicketDetails = ({ id, onUpdate, close }) => {
                                 <p className="text-sm">Cancelar</p>
                             </button>
                         </>}
-                        <button onClick={() => deactivate ? deactivateManually() : setDeactivate(true)}
+                        <button onClick={() => deactivate ? deactivateManually() : setDeactivate(true)} disabled={disabled}
                             className="btn outline-none border-2 border-red-400 px-2 py-1 hover:bg-red-300 transition-all">
                             <p className="text-sm hover:text-white">Deshabilitar</p>
                         </button>

@@ -2,7 +2,7 @@ import { useState, Fragment } from 'react';
 import { CgArrowsExchangeAltV, CgCheck } from 'react-icons/cg';
 import { Listbox, Transition } from '@headlessui/react';
 
-const Select = ({ array, item = '', labels = false, defaultValue, onChange,
+const Select = ({ array, item = '', labels = false, defaultValue, onChange, disabled = false,
     buttonStyle, dropdownStyle, activeStyle, parentStyle }) => {
 
     const [selected, setSelected] = useState(labels ?
@@ -16,7 +16,7 @@ const Select = ({ array, item = '', labels = false, defaultValue, onChange,
     };
 
     return (
-        <Listbox value={labels ? selected.value : selected} onChange={handleChange}>
+        <Listbox disabled={disabled} value={labels ? selected.value : selected} onChange={handleChange}>
             <div className={`${parentStyle} relative`}>
                 <Listbox.Button className={`${buttonStyle} relative w-full py-2 pl-3 pr-10 text-left rounded-xl cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm`}>
                     <span className="block truncate">{`${labels ? selected.label : selected} ${item}`}</span>

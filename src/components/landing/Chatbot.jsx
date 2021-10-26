@@ -81,7 +81,7 @@ const Chatbot = ({ onCreate, ticket }) => {
         <section className="relative flex flex-col w-screen h-screen items-center bg-white dark:bg-gray-800">
             <div className="flex flex-col justify-center items-center h-1/3 p-4 sm:p-10 text-center w-full sm:max-w-6xl">
                 <h1 className="text-4xl sm:text-6xl font-semibold p-2 sm:p-4 dark:text-gray-300">CoordinaDesk</h1>
-                <p className="font-medium text-md sm:text-xl text-gray-600 dark:text-gray-500">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p className="font-medium text-md sm:text-xl text-gray-600 dark:text-gray-500">Coordina Desk es una plataforma web para apoyar a los estudiantes de ingenieria en computacion en la solucion de problemas y dudas con ayuda Deskbot(chatbot) y de su propio help desk.</p>
             </div>
 
             <div className="relative flex h-2/3 w-full sm:gap-20 sm:px-10 xl:px-20 sm:pt-10">

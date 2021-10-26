@@ -6,6 +6,7 @@ import { Datatable, Modal } from 'components/shared';
 import { apiInstance } from 'services';
 import { ticketActions } from 'utils/data';
 import { toast } from 'react-toastify';
+import { TicketDetails } from 'components/admin';
 
 const TicketsDone = () => {
     const [data, setData] = useState();
@@ -74,10 +75,9 @@ const TicketsDone = () => {
     return (
         <section className="space-y-6">
             <Modal visible={details.visible} onClose={(show) => setDetails({ ...details, visible: show })}
-                size="xl" title="Detalles ticket Inhabilitado">
-                <div className="px-6 py-4 text-xs">
-                    <pre>{JSON.stringify(details.data, null, 4)}</pre>
-                </div>
+                size="xl" title={`Detalles de ticket (${details.data?._id})`}>
+                {details.data && <TicketDetails id={details.data._id} disabled
+                    close={() => setDetails({ ...details, visible: false })} />}
             </Modal>
             <div className="bg-white shadow-lg dark:bg-gray-700 w-full rounded-4xl p-4 sm:p-10 flex flex-col justify-center items-center" >
                 <div className="relative w-full">
@@ -85,7 +85,7 @@ const TicketsDone = () => {
                 </div>
                 {data && <Datatable data={data} popoverTitle="Acciones por ticket"
                     onUpdate={(page, limit) => fetchTickets(page, limit)}
-                    onEvent={handleItemEvent}  />}
+                    onEvent={handleItemEvent} />}
             </div>
         </section>
     );
