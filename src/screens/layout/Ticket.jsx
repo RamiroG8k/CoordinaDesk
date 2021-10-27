@@ -12,6 +12,7 @@ import NotFound from '../../assets/not-found.json';
 const Ticket = () => {
     const [loading, setLoading] = useState(true);
     const [ticket, setTicket] = useState();
+    const [hasEmailUpdates, setHasEmailUpdates] = useState();
     const [data, setData] = useState();
     const { id } = useLocation();
 
@@ -35,6 +36,7 @@ const Ticket = () => {
         await apiInstance.get(`/ticket/id/${ticket}`)
             .then(({ data }) => {
                 setTicket(data);
+                setHasEmailUpdates(data.hasEmailUpdates);
             }).catch(({ response: { data: error } }) => {
                 console.log(error);
             });
@@ -44,11 +46,33 @@ const Ticket = () => {
     const answerAsStudent = async () => {
         await apiInstance.post(`/ticket/id/${id}/student/answer`, { data })
             .then(({ data }) => {
-                console.log(data);
+                setData('');
                 fetchData(id);
             }).catch(({ response: { data: error } }) => {
                 console.log(error);
             });
+    };
+
+    const toggleEmailNotifs = async () => {
+        await apiInstance.patch(`/ticket/id/${id}/email-updates`, { hasEmailUpdates })
+            .then(({ data }) => {
+                fetchData(id);
+            }).catch(({ response: { data: error } }) => {
+                console.log(error);
+            });
+    };
+
+    const handleEmailNotifs = () => {
+        setHasEmailUpdates(v => !v);
+        toggleEmailNotifs();
+    };
+
+    const getColor = (status) => {
+        switch (status) {
+            case 'RESOLVE': return 'text-green-200 dark:text-green-600';
+            case 'IN_PROGRESS': return 'text-yellow-200 dark:text-yellow-600';
+            default: return 'text-black dark:text-gray-200';
+        }
     };
 
     return (
@@ -64,10 +88,16 @@ const Ticket = () => {
                         </div>
                     </div>
 
-                    <div className={ticket.status === 'RESOLVE' ? 'text-green-200 dark:text-green-600' : ticket.status === 'IN_PROGRESS' ? 'text-yellow-200 dark:text-yellow-600' : 'text-black dark:text-gray-200'}>
+                    <div className={`${getColor(ticket.status)} relative flex flex-col items-center group`}>
                         <p className="text-4xl rounded-full bg-white dark:bg-gray-800 p-2 shadow-lg">
                             <FaRegCheckCircle />
                         </p>
+                        <div className="absolute -top-10 flex-col items-center hidden mb-6 group-hover:flex">
+                            <span className="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black dark:bg-gray-400 shadow-lg rounded-lg text-center">
+                                Estado: {ticket.status}
+                            </span>
+                            <div className="w-3 h-3 -mt-2 transform rotate-45 bg-black dark:bg-gray-400" />
+                        </div>
                     </div>
 
                     <div className="flex flex-col justify-center w-5/12 text-right py-2 px-4 gap-2">
@@ -103,6 +133,18 @@ const Ticket = () => {
                         })}
                     </div>
                 </div>
+
+                <div className="flex w-full justify-between px-2">
+                    <div className="form-group form-check inline-flex items-center dark:text-gray-500 text-sm ml-2 mb-1">
+                        <input type="checkbox" id="hasEmailUpdates" checked={hasEmailUpdates ? true : false}
+                            className="form-check-input" onChange={() => handleEmailNotifs()} value={hasEmailUpdates} />
+                        <label htmlFor="hasEmailUpdates" className="form-check-label ml-2">Recibir notificaciones por email</label>
+                    </div>
+                    <Link to="/" className="w-auto btn btn-animated">
+                        <p className="text-blue-500 dark:text-white text-right">Regresar al Inicio</p>
+                    </Link>
+                </div>
+
 
                 <div className="flex w-full">
                     <textarea id="answer" rows={2} value={data} onChange={({ target: { value } }) => setData(value)}

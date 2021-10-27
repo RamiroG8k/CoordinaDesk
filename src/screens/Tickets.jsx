@@ -139,10 +139,11 @@ const Tickets = () => {
                                 <div {...provided.droppableProps} ref={provided.innerRef}
                                     className="space-y-3 mt-6 h-full bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-y-scroll scrollbar-hide">
                                     {done.map((item, i) => {
+                                        const disabled = (item.status === 'FINAL_RESOLVE');
                                         return (
                                             <Draggable key={item._id} draggableId={item._id.toString()} index={i}>
                                                 {(provided) => (
-                                                    <div onClick={() => setDetails({ data: item, visible: true })}
+                                                    <div onClick={() => disabled ? null : setDetails({ data: item, visible: true })} disabled={disabled}
                                                         {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
                                                         className="relative flex items-center h-16 sm:h-20 w-full p-2 rounded-2xl bg-gray-50 dark:bg-gray-900 border dark:border-gray-600" >
                                                         <div className={`h-2/3 mr-2 w-0 border border-${(item.priority === 'HIGH') ? 'red' : (item.priority === 'MODERATE') ? 'yellow' : 'green'}-300`} />
