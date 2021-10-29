@@ -5,7 +5,7 @@ import Axios from 'axios';
 
 const apiInstance = Axios.create(
     {
-        baseURL: 'https://coordina-desk-api-dev.herokuapp.com',
+        baseURL: process.env.REACT_APP_API,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
