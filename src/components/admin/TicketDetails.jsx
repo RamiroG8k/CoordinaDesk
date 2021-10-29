@@ -7,6 +7,7 @@ import { apiInstance } from 'services';
 import { firstCapitalized, toDate } from 'utils';
 import { ticketPriority, ticketStatus } from 'utils/data';
 import { toast } from 'react-toastify';
+import ScrollableFeed from 'react-scrollable-feed';
 
 const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
     const [info, setInfo] = useState(null);
@@ -109,35 +110,36 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
             {info && <>
                 <div className="flex gap-6 flex-col sm:flex-row w-full h-full">
                     <div className="w-full sm:w-2/3 mt-2 ml-2">
-                        <div className="w-full h-auto max-h-96 overflow-y-scroll">
-                            <h6 className="text-lg font-medium mb-2">{firstCapitalized(info.title)}</h6>
-                            <p className="text-gray-600 dark:text-gray-900">{info.description}</p>
+                        <h6 className="text-lg font-medium mb-2">{firstCapitalized(info.title)}</h6>
+                        <div className="w-full h-auto max-h-96">
+                            <ScrollableFeed className="mb-2">
+                                <p className="text-gray-600 dark:text-gray-900">{info.description}</p>
+                                {(info.ticketContent.length > 0) && <>
 
-                            {(info.ticketContent.length > 0) && <>
+                                    <div className="border w-full rounded-full dark:border-gray-800 my-2" />
 
-                                <div className="border w-full rounded-full dark:border-gray-800 my-2" />
+                                    <div className="flex flex-col gap-2">
+                                        {info.ticketContent.map((e, i) => {
+                                            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+                                            return (
+                                                <div key={e.created_at}
+                                                    className={`${e.isUser ? 'text-right' : ''} w-full text-sm leading-4 overflow-y-scroll`}>
+                                                    <p className="font-semibold">{e.username}</p>
 
-                                <div className="flex flex-col gap-2">
-                                    {info.ticketContent.map((e, i) => {
-                                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-                                        return (
-                                            <div key={e.created_at}
-                                                className={`${e.isUser ? 'text-right' : ''} w-full text-sm leading-4 overflow-y-scroll`}>
-                                                <p className="font-semibold">{e.username}</p>
+                                                    <div className={`flex ${e.isUser ? 'text-right justify-end' : 'text-left'}`}>
+                                                        <p className="break-words w-3/4">{e.data}</p>
+                                                    </div>
 
-                                                <div className={`flex ${e.isUser ? 'text-right justify-end' : 'text-left' }`}>
-                                                    <p className="break-words w-3/4">{e.data}</p>
+                                                    <span className="text-xs text-gray-500">
+                                                        {new Date(e.created_at).toLocaleDateString('es-MX', options)}
+                                                    </span>
                                                 </div>
-
-                                                <span className="text-xs text-gray-500">
-                                                    {new Date(e.created_at).toLocaleDateString('es-MX', options)}
-                                                </span>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </>}
-                            <div className="border w-full rounded-full dark:border-gray-800 my-2" />
+                                            );
+                                        })}
+                                    </div>
+                                </>}
+                                <div className="border w-full rounded-full dark:border-gray-800 my-2" />
+                            </ScrollableFeed>
                         </div>
                         <div className="w-full h-1/3">
                             <label htmlFor="answer" className="text-gray-500 text-sm ml-2 mb-1">Agregar una respuesta</label>
@@ -198,12 +200,16 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                         <div>
                             <label className="text-sm ml-2">Prioridad</label>
                             <div className="w-full h-8 rounded-xl overflow-hidden text-xs grid grid-cols-3 font-medium">
-                                {ticketPriority.map((button) => (
-                                    <button key={button.priority} disabled={disabled} onClick={() => priorityHandler(button.priority)}
-                                        className={`${(info.priority !== button.priority) && 'opacity-40'} flex justify-center items-center bg-${button.color}-400 w-full col-span-1 h-full p-1`}>
-                                        {button.label}
-                                    </button>
-                                ))}
+                                {ticketPriority.map((button) => {
+                                    const bg = button.color === 'green' ? 'bg-green-400' : button.color === 'yellow' ? 'bg-yellow-400' : 'bg-red-400';
+                                    return (
+                                        <button key={button.priority} disabled={disabled} onClick={() => priorityHandler(button.priority)}
+                                            className={`${(info.priority !== button.priority) && 'opacity-40'} flex justify-center items-center ${bg} w-full col-span-1 h-full p-1`}>
+                                            {button.label}
+                                        </button>
+                                    );
+                                }
+                                )}
                             </div>
                         </div>
                     </div>

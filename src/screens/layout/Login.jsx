@@ -26,8 +26,8 @@ const Login = ({ history }) => {
         await apiInstance.post('/auth/login', body)
             .then(({ data }) => {
                 saveCredentials(data);
-                history.push('/tickets');
                 setLoading(false);
+                history.push('/tickets');
                 return;
             }).catch(({ response: { data: error } }) => {
                 const { customText } = errorMessages.find((e) => e.message === error.message);
@@ -39,8 +39,8 @@ const Login = ({ history }) => {
                     pauseOnHover: true,
                     draggable: true,
                 });
+                setLoading(false);
             });
-        await setLoading(false);
     };
 
     return (

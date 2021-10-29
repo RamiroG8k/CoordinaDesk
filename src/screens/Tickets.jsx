@@ -92,7 +92,10 @@ const Tickets = () => {
                                                                 {firstCapitalized(item.title).substring(0, 50)}
                                                                 {item.title.length > 50 ? '...' : ''}
                                                             </p>
-                                                            <span className="absolute right-2 bottom-2 text-blue-300 text-xs font-semibold capitalize" >{item.user?.name ?? 'Esperando asignacion'} </span>
+                                                            <div className="absolute right-2 bottom-2 text-blue-300 text-xs text-right font-semibold capitalize">
+                                                                <p>ID: {item._id ?? '-'}</p>
+                                                                <p>Usuario: {item.user?.name ?? 'Esperando asignacion'}</p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 )}
