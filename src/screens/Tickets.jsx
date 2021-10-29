@@ -106,7 +106,7 @@ const Tickets = () => {
                     </Droppable>
                     <Droppable droppableId="inProgress">
                         {(provided) => (
-                            <div className="flex flex-col bg-white shadow-lg dark:bg-gray-700 w-full sm:h-screen overflow-y-scroll rounded-3xl sm:rounded-4xl p-4" >
+                            <div className="flex flex-col bg-white shadow-lg dark:bg-gray-700 w-full sm:h-screen rounded-3xl sm:rounded-4xl p-4" >
                                 <h2 className="text-4xl font-bold text-gray-400 text-center">In progress</h2>
                                 <div  {...provided.droppableProps} ref={provided.innerRef}
                                     className="space-y-3 mt-6 h-full bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-y-scroll scrollbar-hide">
@@ -134,7 +134,7 @@ const Tickets = () => {
                     </Droppable>
                     <Droppable droppableId="done">
                         {(provided) => (
-                            <div className="flex flex-col bg-white shadow-lg dark:bg-gray-700 w-full sm:h-screen overflow-y-scroll rounded-3xl sm:rounded-4xl p-4" >
+                            <div className="flex flex-col bg-white shadow-lg dark:bg-gray-700 w-full sm:h-screen rounded-3xl sm:rounded-4xl p-4" >
                                 <h2 className="text-4xl font-bold text-gray-400 text-center">Done</h2>
                                 <div {...provided.droppableProps} ref={provided.innerRef}
                                     className="space-y-3 mt-6 h-full bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-y-scroll scrollbar-hide">
