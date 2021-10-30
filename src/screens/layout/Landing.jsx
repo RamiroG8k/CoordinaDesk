@@ -1,7 +1,7 @@
 import { useState } from 'react';
 // Components
 import { Footer, Header, Chatbot, Faqs, Tracking, CreateTicket, Concept, About } from 'components/landing';
-import { ScrollToTop, Modal } from 'components/shared';
+import { ScrollToTop, Modal, ModeSwitcher } from 'components/shared';
 
 const Landing = () => {
     const [show, setShow] = useState(false);
@@ -39,6 +39,10 @@ const Landing = () => {
 
     return (
         <div className="relative bg-white dark:bg-gray-800">
+            <div className="absolute z-50 -right-4 top-60 transform rotate-90 bg-red-200">
+                switch
+                {/* <ModeSwitcher/> */}
+            </div>
             <Header onCreate={setShow} className="sticky top-0 z-50 shadow-md" />
             <Chatbot onCreate={setShow} ticket={ticket} />
             <Concept className=""/>

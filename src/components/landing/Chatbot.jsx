@@ -47,7 +47,7 @@ const Chatbot = ({ onCreate, ticket }) => {
     const askNLP = async () => {
         if (question) {
             setChat([...chat, { question }]);
-            await apiInstance.post('/nlp/evaluate', { question })
+            await apiInstance.post('/chatbot/evaluate', { question })
                 .then(({ data }) => {
                     setChat([...chat, { question }, data !== '' ? data : { answer: 'Vaya!, parece que no entiendo del todo tu pregunta, intenta de nuevo por favor!' }]);
                     setCreate({

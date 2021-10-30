@@ -36,14 +36,14 @@ input[type=number]::-webkit-outer-spin-button {
 
 /* Parallax */
 .bg-concept {
-  background: url(http://www.cucei.udg.mx/sites/default/files/styles/2_columnas/public/galeria_imagenes/honeyview_dsc_0033.jpg?itok=toRiOaVd);
+  background: url(assets/images/Auditorio.jpg);
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .bg-about {
-  background: url(http://www.cucei.udg.mx/sites/default/files/galeria_imagenes/1_0_0.jpg);
+  background: url(assets/images//Biblioteca.jpg);
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
