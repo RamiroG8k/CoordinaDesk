@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 // Components
 import { Datatable, Modal } from 'components/shared';
-import { CreateUser } from 'components/admin';
+import { CreateUser, UserDetails } from 'components/admin';
 // Services | Data
 import { apiInstance } from 'services';
 import { userActions } from 'utils/data';
@@ -13,7 +13,8 @@ import { toast } from 'react-toastify';
 const Users = () => {
     const [data, setData] = useState();
     const [create, setCreate] = useState(false);
-    const [details, setDetails] = useState({ visible: false, data: null });
+    const [user, setUser] = useState();
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         fetchUsers();
@@ -57,7 +58,8 @@ const Users = () => {
                 deleteUser(item._id);
                 break;
             case 'details':
-                detailsUser(item._id);
+                setShow(true);
+                setUser(item._id);
                 break;
             case 'resend-email':
                 reSendEmailUser(item)
@@ -65,21 +67,6 @@ const Users = () => {
             default:
                 break;
         }
-    };
-
-    const detailsUser = async (id) => {
-        await apiInstance.get(`/user/${id}`)
-            .then(({ data }) => {
-                setDetails({ visible: true, data });
-            }).catch(({ response: { data: error } }) => {
-                toast.error(error.message, {
-                    position: toast.POSITION.TOP_RIGHT,
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    pauseOnHover: true,
-                    draggable: true,
-                });
-            });
     };
 
     const deleteUser = async (id) => {
@@ -119,14 +106,12 @@ const Users = () => {
 
     return (
         <section className="space-y-6">
-            <Modal visible={create} toggle={setCreate} size="xl" title="Crear usuario">
+            <Modal visible={create} onClose={setCreate} size="xl" title="Crear usuario">
                 <CreateUser close={setCreate} />
             </Modal>
-            <Modal visible={details.visible} toggle={(show) => setDetails({ ...details, visible: show })}
-                size="xl" title="Detalles de usuario">
-                <div className="px-6 py-4 text-xs">
-                    <pre>{JSON.stringify(details.data, null, 4)}</pre>
-                </div>
+            <Modal visible={show} onClose={setShow}
+                size="md" title="Detalles de usuario">
+                {user && <UserDetails id={user} />}
             </Modal>
             <div className="bg-white shadow-lg dark:bg-gray-700 w-full rounded-4xl p-4 sm:p-10 flex flex-col justify-center items-center" >
                 <div className="relative w-full">

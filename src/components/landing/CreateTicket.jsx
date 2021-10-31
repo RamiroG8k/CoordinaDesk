@@ -17,9 +17,7 @@ const CreateTicket = ({ close, onCreate }) => {
                 toast.success('Ticket creado satisfactoriamente', {
                     position: toast.POSITION.TOP_RIGHT
                 });
-                // close();
             }).catch(({ response: { data: error } }) => {
-                // close(false);
                 reset();
                 toast.error(error.message, {
                     position: toast.POSITION.TOP_RIGHT,
@@ -61,7 +59,7 @@ const CreateTicket = ({ close, onCreate }) => {
                     </div>
                     <div>
                         <label htmlFor="phone" className="dark:text-gray-500 text-sm ml-2 mb-1">Teléfono</label>
-                        <input id="phone" {...register('phone')} type="number" min={0} autoComplete="off"
+                        <input id="phone" {...register('phone')} type="number" min={0} autoComplete="off" maxLength={10}
                             className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" placeholder="A 10 digitos" />
                     </div>
                     <div className="col-span-2">

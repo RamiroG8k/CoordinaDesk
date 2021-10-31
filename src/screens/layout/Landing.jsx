@@ -2,17 +2,22 @@ import { useState } from 'react';
 // Components
 import { Footer, Header, Chatbot, Faqs, Tracking, CreateTicket, Concept, About } from 'components/landing';
 import { ScrollToTop, Modal, ModeSwitcher } from 'components/shared';
+// import { FaUserCircle } from 'react-icons/fa';
 
 const Landing = () => {
     const [show, setShow] = useState(false);
     const [ticket, setTicket] = useState();
 
     const TicketInfo = ({ close, onCreate }) => {
+        console.log('TICKET: ',  ticket);
         return (
             <>
                 <div className="p-4 sm:p-6 sm:pt-4">
-                    {/* TODO: Manage ticket info */}
-                    {/* {JSON.stringify(ticket, null, 4)} */}
+                    <div className="flex w-44 h-44">
+                        {/* <FaUserCircle/> */}
+                    </div>
+
+                    {JSON.stringify(ticket, null, 4)}
                 </div>
                 <div className="bg-gray-50 dark:bg-gray-900 px-4 py-3 sm:px-6 flex flex-col sm:flex-row-reverse gap-2">
                     <button type="button" onClick={onCreate}
@@ -39,9 +44,8 @@ const Landing = () => {
 
     return (
         <div className="relative bg-white dark:bg-gray-800">
-            <div className="absolute z-50 -right-4 top-60 transform rotate-90 bg-red-200">
-                switch
-                {/* <ModeSwitcher/> */}
+            <div className="absolute z-50 -right-4 top-60 transform rotate-90 bg-red-200 px-1 py-2">
+                <ModeSwitcher/>
             </div>
             <Header onCreate={setShow} className="sticky top-0 z-50 shadow-md" />
             <Chatbot onCreate={setShow} ticket={ticket} />
