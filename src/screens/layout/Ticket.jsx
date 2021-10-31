@@ -134,43 +134,46 @@ const Ticket = () => {
                     </div>
                 </div>
 
-                <div className="flex w-full justify-between px-2">
-                    <div className="form-group form-check inline-flex items-center dark:text-gray-500 text-sm ml-2 mb-1">
-                        <input type="checkbox" id="hasEmailUpdates" checked={hasEmailUpdates ? true : false}
-                            className="form-check-input" onChange={() => handleEmailNotifs()} value={hasEmailUpdates} />
-                        <label htmlFor="hasEmailUpdates" className="form-check-label ml-2">Recibir notificaciones por email</label>
+                {(ticket.status !== 'FINAL_RESOLVE' && ticket.status !== 'CLOSED_DUE_TO_INACTIVITY') && <>
+                    <div className="flex w-full justify-between px-2">
+                        <div className="form-group form-check inline-flex items-center dark:text-gray-500 text-sm ml-2 mb-1">
+                            <input type="checkbox" id="hasEmailUpdates" checked={hasEmailUpdates ? true : false}
+                                className="form-check-input" onChange={() => handleEmailNotifs()} value={hasEmailUpdates} />
+                            <label htmlFor="hasEmailUpdates" className="form-check-label ml-2">Recibir notificaciones por email</label>
+                        </div>
+                        <Link to="/" className="w-auto btn btn-animated">
+                            <p className="text-blue-500 dark:text-white text-right">Regresar al Inicio</p>
+                        </Link>
                     </div>
-                    <Link to="/" className="w-auto btn btn-animated">
-                        <p className="text-blue-500 dark:text-white text-right">Regresar al Inicio</p>
+
+
+                    <div className="flex w-full">
+                        <textarea id="answer" rows={2} value={data} onChange={({ target: { value } }) => setData(value)}
+                            className="w-full input rounded-xl bg-gray-50 dark:bg-gray-600" />
+                        <div className="flex flex-col gap-2 w-auto px-2">
+                            <button onClick={() => answerAsStudent()} disabled={!data}
+                                className="btn px-2 py-1 bg-blue-400 dark:bg-blue-600 rounded-xl disabled:opacity-40">
+                                <p className="text-white">
+                                    Contestar
+                                </p>
+                            </button>
+                        </div>
+                    </div>
+                </>}
+            </div>}
+
+            {((!loading && !ticket) && (ticket.status !== 'FINAL_RESOLVE' && ticket.status !== 'CLOSED_DUE_TO_INACTIVITY')) &&
+                <div className="flex sm:w-2/3 flex-col h-full p-6 items-center justify-center space-y-10">
+                    <h4 className="text-2xl sm:text-4xl font-semibold text-center">
+                        <span className="text-blue-600">Oops</span>, parece que no hay informacion relacionada con el <span className="text-blue-600">ticket</span> proporcionado
+                    </h4>
+                    <div className="flex relative w-full h-1/2 justify-center items-center">
+                        <div ref={notFoundContainer} className="flex z-0" />
+                    </div>
+                    <Link to="/" className="px-4 py-2 w-auto btn btn-animated bg-blue-300">
+                        <p className="text-white text-lg">Regresar al Inicio</p>
                     </Link>
-                </div>
-
-
-                <div className="flex w-full">
-                    <textarea id="answer" rows={2} value={data} onChange={({ target: { value } }) => setData(value)}
-                        className="w-full input rounded-xl bg-gray-50 dark:bg-gray-600" />
-                    <div className="flex flex-col gap-2 w-auto px-2">
-                        <button onClick={() => answerAsStudent()} disabled={!data}
-                            className="btn px-2 py-1 bg-blue-400 dark:bg-blue-600 rounded-xl disabled:opacity-40">
-                            <p className="text-white">
-                                Contestar
-                            </p>
-                        </button>
-                    </div>
-                </div>
-            </div>}
-
-            {(!loading && !ticket) && <div className="flex sm:w-2/3 flex-col h-full p-6 items-center justify-center space-y-10">
-                <h4 className="text-2xl sm:text-4xl font-semibold text-center">
-                    <span className="text-blue-600">Oops</span>, parece que no hay informacion relacionada con el <span className="text-blue-600">ticket</span> proporcionado
-                </h4>
-                <div className="flex relative w-full h-1/2 justify-center items-center">
-                    <div ref={notFoundContainer} className="flex z-0" />
-                </div>
-                <Link to="/" className="px-4 py-2 w-auto btn btn-animated bg-blue-300">
-                    <p className="text-white text-lg">Regresar al Inicio</p>
-                </Link>
-            </div>}
+                </div>}
         </section>
     )
 }

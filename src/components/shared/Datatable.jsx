@@ -59,7 +59,7 @@ const DataTable = ({ popoverTitle, onSearch, data = [], onEvent, onUpdate, place
                     <tbody className="text-center divide-font-medium space-y-4 text-gray-800 divide-y dark:divide-gray-700">
                         {rows.length ? rows.map((row, i) => {
                             return (
-                                <Popover key={i} buttonAs="tr" actions={actions && (row.status ? [actions[0], actions[1]] : [actions[0]])}
+                                <Popover key={i} buttonAs="tr" actions={actions && (row.status ? [actions[0], actions[1]] : [actions[0], actions[2]])}
                                     onAction={(action) => onEvent({ item: row, action })}
                                     docs={{ title: popoverTitle, description: 'Pueden variar dependiendo el status del seleccionado' }}
                                     className="cursor-pointer hover:text-blue-800">
