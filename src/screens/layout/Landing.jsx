@@ -1,23 +1,46 @@
+// Common
 import { useState } from 'react';
 // Components
 import { Footer, Header, Chatbot, Faqs, Tracking, CreateTicket, Concept, About } from 'components/landing';
 import { ScrollToTop, Modal, ModeSwitcher } from 'components/shared';
-// import { FaUserCircle } from 'react-icons/fa';
+// Others
+import { FaRegCheckCircle, FaRegCopy } from 'react-icons/fa';
+import { toClipboard } from 'utils';
 
 const Landing = () => {
     const [show, setShow] = useState(false);
     const [ticket, setTicket] = useState();
 
     const TicketInfo = ({ close, onCreate }) => {
-        console.log('TICKET: ',  ticket);
         return (
             <>
-                <div className="p-4 sm:p-6 sm:pt-4">
-                    <div className="flex w-44 h-44">
-                        {/* <FaUserCircle/> */}
+                <div className="relative flex flex-col gap-4 p-4 sm:p-6 sm:pt-4">
+                    <div className="flex gap-6">
+                        <p className="text-7xl text-green-400">
+                            <FaRegCheckCircle />
+                        </p>
+                        <div className="w-full">
+                            <h4 className="text-2xl font-medium">Éxito</h4>
+                            <p>Su ticket</p>
+                            <p className="font-medium">"{ticket.title}"</p>
+                            <div className="flex justify-between items-center text-sm">
+                                <p>Status: </p>
+                                <span className="text-xs bg-green-200 px-1 rounded-full">{ticket.status}</span>
+                            </div>
+                        </div>
                     </div>
-
-                    {JSON.stringify(ticket, null, 4)}
+                    <p className="text-gray-600 font-light text-sm text-justify leading-4">
+                        Puedes dar seguimiento con la información recibida a tu correo o con el número de referencia
+                        <span className="font-bold"> ({ticket._id}) </span>a traves de esta misma plataforma.
+                    </p>
+                    <div className="absolute right-6">
+                        <button type="button" title="Copiar ID Referencia" onClick={() => toClipboard('ID de Refencia copiado satisfactoriamente', ticket._id)}
+                            className="flex w-8 h-8 justify-center items-center rounded-lg border bg-gray-100">
+                            <p className="text-gray-700">
+                                <FaRegCopy />
+                            </p>
+                        </button>
+                    </div>
                 </div>
                 <div className="bg-gray-50 dark:bg-gray-900 px-4 py-3 sm:px-6 flex flex-col sm:flex-row-reverse gap-2">
                     <button type="button" onClick={onCreate}
@@ -44,18 +67,18 @@ const Landing = () => {
 
     return (
         <div className="relative bg-white dark:bg-gray-800">
-            <div className="absolute z-50 -right-4 top-60 transform rotate-90 bg-red-200 px-1 py-2">
-                <ModeSwitcher/>
+            <div className="fixed z-50 -right-4 top-60 transform rotate-90 bg-blue-100 dark:bg-blue-800 px-3 py-2 rounded-b-2xl">
+                <ModeSwitcher />
             </div>
             <Header onCreate={setShow} className="sticky top-0 z-50 shadow-md" />
             <Chatbot onCreate={setShow} ticket={ticket} />
-            <Concept className=""/>
+            <Concept className="" />
             <Faqs />
-            <About className=""/>
+            <About className="" />
             <Tracking />
             <Footer />
             <ScrollToTop />
-            <Modal visible={show} onClose={handleModalClose} size="xl" title={ticket ? 'Informacion de ticket' : 'Crear ticket'}>
+            <Modal visible={show} onClose={handleModalClose} size={ticket ? 'xs' : 'xl'} title={ticket ? 'Informacion de ticket' : 'Crear ticket'}>
                 {ticket ?
                     <TicketInfo close={handleModalClose} onCreate={() => setTicket(null)} /> :
                     <CreateTicket close={handleModalClose} onCreate={setTicket} />}

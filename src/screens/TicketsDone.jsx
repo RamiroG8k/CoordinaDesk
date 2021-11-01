@@ -18,7 +18,7 @@ const TicketsDone = () => {
 
     const fetchTickets = async (page, limit = 10, search) => {
         await apiInstance.get('/ticket/inactive/all',
-            { params: { page, limit, name: search, email: search, role: search } })
+            { params: { page, limit, title: search, priority: search } })
             .then(({ data }) => {
                 setData({
                     rows: ticketParser(data.content),

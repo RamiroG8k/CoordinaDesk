@@ -1,4 +1,17 @@
-import { apiInstance } from "services";
+import { toast } from 'react-toastify';
+import { apiInstance } from 'services';
+
+export const toClipboard = (customText, value) => {
+    navigator.clipboard.writeText(value);
+
+    toast.success(customText, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 5000,
+        hideProgressBar: false,
+        pauseOnHover: true,
+        draggable: true,
+    });
+};
 
 export const isTokenValid = async () => {
     await apiInstance.post('/auth/validate-token')
