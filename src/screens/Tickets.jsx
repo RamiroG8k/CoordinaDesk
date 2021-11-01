@@ -1,30 +1,33 @@
 // Common
 import { useState, useEffect } from 'react';
 // Compontens
-import { Modal } from 'components/shared';
+import { Modal, Select } from 'components/shared';
 // Data
 import { apiInstance } from 'services';
 // Others
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { TicketDetails } from 'components/admin';
 import { firstCapitalized } from 'utils';
+import { ticketPriority } from 'utils/data';
 
 const Tickets = () => {
     const [tickets, setTickets] = useState();
+    const [filteredTickets, setFilteredTickets] = useState();
+    const [users, setUsers] = useState();
     const [details, setDetails] = useState({ data: null, visible: false });
-    const { todo, inProgress, done } = tickets ?? { todo: [], inProgress: [], done: [] };
+    // const { todo, inProgress, done } = tickets ?? { todo: [], inProgress: [], done: [] };
+    const { todo, inProgress, done } = filteredTickets ?? { todo: [], inProgress: [], done: [] };
+
+    const droppables = [
+        { id: 'todo', title: 'To do', array: todo },
+        { id: 'inProgress', title: 'In Progress', array: inProgress },
+        { id: 'done', title: 'Done', array: done },
+    ];
 
     useEffect(() => {
         fetchTickets();
+        fetchUsers();
     }, []);
-
-    const fetchTickets = async () => {
-        // setDetails({ ...details, visible: false });
-        await apiInstance.get('/ticket/dashboard')
-            .then(({ data }) => {
-                setTickets(data);
-            }).catch();
-    };
 
     const onDragEnd = (result) => {
         if (!result.destination) return;
@@ -46,6 +49,26 @@ const Tickets = () => {
         changeStatus(result.draggableId, status);
     };
 
+    const fetchTickets = async (user) => {
+        await apiInstance.get('/ticket/dashboard', { params: { user } })
+            .then(({ data }) => {
+                setTickets(data);
+                setFilteredTickets(data);
+            }).catch();
+    };
+
+    const fetchUsers = async () => {
+        await apiInstance.get('/user/all')
+            .then(({ data }) => {
+                setUsers(data.map((user) => (
+                    {
+                        label: user.name,
+                        value: user._id
+                    }
+                )));
+            }).catch(console.log);
+    };
+
     const changeStatus = async (id, status) => {
         await apiInstance.patch(`/ticket/id/${id}/change-status`, { status })
             .then(({ data }) => {
@@ -64,6 +87,20 @@ const Tickets = () => {
         }
     };
 
+    const filterByPriority = (lvl) => {
+        if(ticketPriority.filter((e) => e.priority === lvl).length > 0) {
+            setFilteredTickets(
+                {
+                    todo: tickets.todo.filter(e => e.priority === lvl),
+                    inProgress: tickets.inProgress.filter(e => e.priority === lvl),
+                    done: tickets.done.filter(e => e.priority === lvl),
+                }
+            );
+            return;
+        }
+        setFilteredTickets({ ...tickets });
+    };
+
     return (
         <>
             <Modal visible={details.visible} onClose={(show) => setDetails({ ...details, visible: show })}
@@ -72,15 +109,32 @@ const Tickets = () => {
                     close={() => setDetails({ ...details, visible: false })} />}
             </Modal>
             <section className="flex flex-col sm:grid grid-cols-3 gap-6">
+                <div className="flex flex-wrap gap-4 col-span-3 bg-white dark:bg-gray-700 rounded-2xl p-4">
+                    <div className="sm:w-1/4">
+                        <label htmlFor="" className="text-sm ml-2">Usuario</label>
+                        {users && <Select labels array={[{ label: 'Todos', value: null }, ...users]} onChange={({ value }) => fetchTickets(value)}
+                            activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle="z-10"
+                            buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-800 dark:text-gray-500 capitalize"
+                            dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500" />}
+                    </div>
+                    <div className="sm:w-1/4">
+                        <label htmlFor="" className="text-sm ml-2">Prioridad</label>
+                        <Select array={['TODO', 'LOW', 'MODERATE', 'HIGH']} onChange={(value) => filterByPriority(value)}
+                            activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle="z-10"
+                            buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-800 dark:text-gray-500"
+                            dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500" />
+                    </div>
+                </div>
+
                 <DragDropContext onDragEnd={onDragEnd}>
-                    <Droppable droppableId="todo">
-                        {(provided) => (
-                            <div className="flex flex-col bg-white shadow-lg dark:bg-gray-700 w-full sm:h-screen max-h-screen rounded-3xl sm:rounded-4xl p-4" >
-                                <h2 className="text-4xl font-bold text-gray-400 text-center">To do</h2>
-                                <div {...provided.droppableProps} ref={provided.innerRef}
-                                    className="space-y-3 mt-6 h-full bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-y-scroll scrollbar-hide">
-                                    {todo.map((item, i) => {
-                                        return (
+                    {droppables.map(({ id, title, array }) =>
+                        <Droppable key={id} droppableId={id}>
+                            {(provided) => (
+                                <div className="flex flex-col bg-white shadow-lg dark:bg-gray-700 w-full sm:h-screen max-h-screen rounded-3xl sm:rounded-4xl p-4" >
+                                    <h2 className="text-4xl font-bold text-gray-400 text-center">{title}</h2>
+                                    <div {...provided.droppableProps} ref={provided.innerRef}
+                                        className="space-y-3 mt-6 h-full bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-y-scroll scrollbar-hide">
+                                        {array.map((item, i) =>
                                             <Draggable key={item._id} draggableId={item._id.toString()} index={i}>
                                                 {(provided) => (
                                                     <div onClick={() => setDetails({ data: item, visible: true })}
@@ -100,70 +154,13 @@ const Tickets = () => {
                                                     </div>
                                                 )}
                                             </Draggable>
-                                        );
-                                    })}
-                                    {provided.placeholder}
+                                        )}
+                                        {provided.placeholder}
+                                    </div>
                                 </div>
-                            </div>
-                        )}
-                    </Droppable>
-                    <Droppable droppableId="inProgress">
-                        {(provided) => (
-                            <div className="flex flex-col bg-white shadow-lg dark:bg-gray-700 w-full sm:h-screen rounded-3xl sm:rounded-4xl p-4" >
-                                <h2 className="text-4xl font-bold text-gray-400 text-center">In progress</h2>
-                                <div  {...provided.droppableProps} ref={provided.innerRef}
-                                    className="space-y-3 mt-6 h-full bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-y-scroll scrollbar-hide">
-                                    {inProgress.map((item, i) => {
-                                        return (
-                                            <Draggable key={item._id} draggableId={item._id.toString()} index={i}>
-                                                {(provided) => (
-                                                    <div onClick={() => setDetails({ data: item, visible: true })}
-                                                        {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
-                                                        className="relative flex items-center h-16 sm:h-20 w-full p-2 rounded-2xl bg-gray-50 dark:bg-gray-900 border dark:border-gray-600" >
-                                                        <div className={`h-2/3 mr-2 w-0 border border-${(item.priority === 'HIGH') ? 'red' : (item.priority === 'MODERATE') ? 'yellow' : 'green'}-300`} />
-                                                        <div className="h-full w-full">
-                                                            <p className="text-sm dark:text-gray-500">{firstCapitalized(item.title)}</p>
-                                                            <span className="absolute right-2 bottom-2 text-blue-300 text-xs font-semibold" >{firstCapitalized(item.user.name)} </span>
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </Draggable>
-                                        );
-                                    })}
-                                    {provided.placeholder}
-                                </div>
-                            </div>
-                        )}
-                    </Droppable>
-                    <Droppable droppableId="done">
-                        {(provided) => (
-                            <div className="flex flex-col bg-white shadow-lg dark:bg-gray-700 w-full sm:h-screen rounded-3xl sm:rounded-4xl p-4" >
-                                <h2 className="text-4xl font-bold text-gray-400 text-center">Done</h2>
-                                <div {...provided.droppableProps} ref={provided.innerRef}
-                                    className="space-y-3 mt-6 h-full bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-y-scroll scrollbar-hide">
-                                    {done.map((item, i) => {
-                                        const disabled = (item.status === 'FINAL_RESOLVE');
-                                        return (
-                                            <Draggable key={item._id} draggableId={item._id.toString()} index={i}>
-                                                {(provided) => (
-                                                    <div onClick={() => disabled ? null : setDetails({ data: item, visible: true })} disabled={disabled}
-                                                        {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
-                                                        className="relative flex items-center h-16 sm:h-20 w-full p-2 rounded-2xl bg-gray-50 dark:bg-gray-900 border dark:border-gray-600" >
-                                                        <div className={`h-2/3 mr-2 w-0 border border-${(item.priority === 'HIGH') ? 'red' : (item.priority === 'MODERATE') ? 'yellow' : 'green'}-300`} />
-                                                        <div className="h-full w-full">
-                                                            <p className="text-sm dark:text-gray-500">{firstCapitalized(item.title)}</p>
-                                                            <span className="absolute right-2 bottom-2 text-blue-300 text-xs font-semibold" >{firstCapitalized(item.user.name)} </span>
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </Draggable>
-                                        );
-                                    })}
-                                    {provided.placeholder}
-                                </div>
-                            </div>
-                        )}
-                    </Droppable>
+                            )}
+                        </Droppable>
+                    )}
                 </DragDropContext>
             </section>
         </>
