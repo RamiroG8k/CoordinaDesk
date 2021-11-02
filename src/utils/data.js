@@ -59,10 +59,13 @@ const ticketActions = [
 ];
 
 const ticketStatus = [
+    { label: 'Por asignar', value: 'WAITING_ASIGNATION' },
     { label: 'Por hacer', value: 'ASIGNED' },
     { label: 'En progreso', value: 'IN_PROGRESS' },
+    { label: 'Esperando respuesta', value: 'WAITING_RESPONSE' },
     { label: 'Terminada', value: 'RESOLVE' },
     { label: 'Finalizada', value: 'FINAL_RESOLVE' },
+    { label: 'Cerrado por inactividad', value: 'CLOSED_DUE_TO_INACTIVITY' },
 ];
 
 const ticketPriority = [

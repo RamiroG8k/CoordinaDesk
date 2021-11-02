@@ -145,7 +145,7 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                             <label htmlFor="answer" className="text-gray-500 text-sm ml-2 mb-1">Agregar una respuesta</label>
                             <div className="flex">
                                 <textarea id="answer" rows={2} value={data} disabled={disabled || info.status === 'FINAL_RESOLVE'}
-                                    onChange={({ target: { value } }) => setData(value)} maxlength={1000}
+                                    onChange={({ target: { value } }) => setData(value)} maxLength={1000}
                                     className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-600" />
                                 <div className="flex flex-col gap-2 w-auto px-2">
                                     <button onClick={() => ticketUpdate()} disabled={!data || disabled || info.status === 'FINAL_RESOLVE'}

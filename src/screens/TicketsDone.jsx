@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Datatable, Modal } from 'components/shared';
 // Services | Data
 import { apiInstance } from 'services';
-import { ticketActions } from 'utils/data';
+import { ticketActions, ticketPriority, ticketStatus } from 'utils/data';
 import { toast } from 'react-toastify';
 import { TicketDetails } from 'components/admin';
 
@@ -42,8 +42,8 @@ const TicketsDone = () => {
                 id: ticket._id,
                 titulo: (ticket.title).substring(0, 20) + '...',
                 user: ticket.user.name.split(' ')[0],
-                priority: ticket.priority,
-                status: ticket.isActive,
+                priority: (ticketPriority.filter(({ priority }) => priority === ticket.priority))[0].label,
+                status: (ticketStatus.filter(({ value }) => value === ticket.status))[0].label,
             }
         ));
     };
