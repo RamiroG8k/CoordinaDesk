@@ -18,7 +18,7 @@ const Users = () => {
 
     useEffect(() => {
         fetchUsers();
-    }, []);
+    }, [create]);
 
     const fetchUsers = async (page, limit = 10, search) => {
         await apiInstance.get('/user/all/pageable',

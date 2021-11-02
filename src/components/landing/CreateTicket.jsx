@@ -35,19 +35,22 @@ const CreateTicket = ({ close, onCreate }) => {
                 <fieldset disabled={loading} className="sm:grid grid-cols-2 space-y-3 gap-x-4">
                     <div className="col-span-2">
                         <label htmlFor="title" className="dark:text-gray-500 text-sm ml-2 mb-1">Título</label>
-                        <input id="title" {...register('title', { required: true })} type="text" autoComplete="off"
+                        <input id="title" {...register('title', { required: true })}
+                            type="text" autoComplete="off" maxLength={200}
                             className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" placeholder="Idea principal de manera concreta" />
                         {errors.title && <span className="ml-2 text-xs text-red-400">Este campo es obligatorio</span>}
                     </div>
                     <div className="col-span-2">
                         <label htmlFor="description" className="dark:text-gray-500 text-sm ml-2 mb-1">Descripción</label>
-                        <textarea id="description" {...register('description', { required: true })} rows="3"
+                        <textarea id="description" {...register('description', { required: true })}
+                            rows="3" maxLength={1000}
                             className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
                         {errors.description && <span className="ml-2 text-xs text-red-400">Este campo es obligatorio</span>}
                     </div>
                     <div className="col-span-2">
                         <label htmlFor="name" className="dark:text-gray-500 text-sm ml-2 mb-1">Nombre</label>
-                        <input id="name" {...register('name', { required: true })} type="text" autoComplete="off"
+                        <input id="name" {...register('name', { required: true })}
+                            type="text" autoComplete="off" maxLength={200}
                             className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
                         {errors.name && <span className="ml-2 text-xs text-red-400">Este campo es obligatorio</span>}
                     </div>
@@ -64,7 +67,8 @@ const CreateTicket = ({ close, onCreate }) => {
                     </div>
                     <div className="col-span-2">
                         <label htmlFor="email" className="dark:text-gray-500 text-sm ml-2 mb-1">E-mail</label>
-                        <input id="email" {...register('email', { required: true })} type="email" autoComplete="off"
+                        <input id="email" {...register('email', { required: true })}
+                            type="email" autoComplete="off" maxLength={200}
                             className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" placeholder="example@domain.xyz" />
                         {errors.email && <span className="ml-2 text-xs text-red-400">Este campo es obligatorio</span>}
                     </div>
@@ -72,7 +76,7 @@ const CreateTicket = ({ close, onCreate }) => {
                         <div className="form-group form-check inline-flex items-center dark:text-gray-500 text-sm ml-2 mb-1">
                             <Controller control={control} name="hasEmailUpdates" defaultValue={true} render={({ field: { onChange, value } }) => (
                                 <input type="checkbox" id="hasEmailUpdates" checked={value ? true : false}
-                                 className="form-check-input" onChange={onChange} value={value} />
+                                    className="form-check-input" onChange={onChange} value={value} />
                             )} />
                             <label htmlFor="hasEmailUpdates" className="form-check-label ml-2">Recibir notificaciones por email</label>
                         </div>

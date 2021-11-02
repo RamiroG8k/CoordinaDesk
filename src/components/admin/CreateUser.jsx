@@ -38,21 +38,22 @@ const CreateUser = ({ close }) => {
             <form id="createUser" onSubmit={handleSubmit(create)} className="p-4 sm:p-6 sm:pt-4">
                 <fieldset disabled={loading} className="space-y-3">
                     <div>
-                        <label htmlFor="email" className="text-sm ml-2 mb-1">Email</label>
-                        <input id="email" {...register('email', { required: true })} type="email" autoComplete="off"
-                            className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
-                        {errors.email && <span className="ml-2 text-xs text-red-400">This field is required</span>}
+                        <label htmlFor="email" className="text-sm ml-2 mb-1 dark:text-gray-500">Email</label>
+                        <input id="email" {...register('email', { required: true })}
+                            type="email" autoComplete="off" maxLength={200}
+                            className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700 dark:text-gray-400" />
+                        {errors.email && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
                     </div>
                     <div>
-                        <label htmlFor="role" className="text-sm ml-2 mb-1">Rol</label>
+                        <label htmlFor="role" className="text-sm ml-2 mb-1 dark:text-gray-500">Rol</label>
                         <Controller control={control} name="role" defaultValue="ASSISTANT" rules={{ required: true }}
                             render={({ field: { onChange } }) => (
                                 <Select array={['ASSISTANT', 'COORDINATOR']} onChange={onChange}
                                     activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle="z-10"
-                                    buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700"
+                                    buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700 dark:text-gray-400"
                                     dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500" />
                             )} />
-                        {errors.role && <span className="ml-2 text-xs text-red-400">This field is required</span>}
+                        {errors.role && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
                     </div>
                 </fieldset>
             </form>

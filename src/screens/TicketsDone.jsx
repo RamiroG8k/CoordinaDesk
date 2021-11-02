@@ -18,7 +18,7 @@ const TicketsDone = () => {
 
     const fetchTickets = async (page, limit = 10, search) => {
         await apiInstance.get('/ticket/inactive/all',
-            { params: { page, limit, title: search, priority: search } })
+            { params: { page, limit, status: search, title: search, priority: search } })
             .then(({ data }) => {
                 setData({
                     rows: ticketParser(data.content),
@@ -85,7 +85,7 @@ const TicketsDone = () => {
                     <h1 className="text-4xl sm:text-5xl text-center font-bold text-gray-400 mb-4 sm:mb-8">Tickets Inhabilitados</h1>
                 </div>
                 {data && <Datatable data={data} popoverTitle="Acciones por ticket"
-                    onUpdate={(page, limit) => fetchTickets(page, limit)}
+                    onUpdate={(page, limit) => fetchTickets(page, limit)} placeholder="Busqueda por titulo, prioridad o status"
                     onEvent={handleItemEvent} onSearch={(page, limit, search) => fetchTickets(page, limit, search)} />}
             </div>
         </section>

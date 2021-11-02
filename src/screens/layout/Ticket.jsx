@@ -149,7 +149,7 @@ const Ticket = () => {
 
                     <div className="flex w-full">
                         <textarea id="answer" rows={2} value={data} onChange={({ target: { value } }) => setData(value)}
-                            className="w-full input rounded-xl bg-gray-50 dark:bg-gray-600" />
+                            className="w-full input rounded-xl bg-gray-50 dark:bg-gray-600" maxlength={1000} />
                         <div className="flex flex-col gap-2 w-auto px-2">
                             <button onClick={() => answerAsStudent()} disabled={!data}
                                 className="btn px-2 py-1 bg-blue-400 dark:bg-blue-600 rounded-xl disabled:opacity-40">

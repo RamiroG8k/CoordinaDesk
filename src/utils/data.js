@@ -59,9 +59,10 @@ const ticketActions = [
 ];
 
 const ticketStatus = [
-    { label: 'To do', value: 'ASIGNED' },
-    { label: 'In Progress', value: 'IN_PROGRESS' },
-    { label: 'Done', value: 'RESOLVE' },
+    { label: 'Por hacer', value: 'ASIGNED' },
+    { label: 'En progreso', value: 'IN_PROGRESS' },
+    { label: 'Terminada', value: 'RESOLVE' },
+    { label: 'Finalizada', value: 'FINAL_RESOLVE' },
 ];
 
 const ticketPriority = [

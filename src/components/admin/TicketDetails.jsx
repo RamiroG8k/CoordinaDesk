@@ -144,10 +144,11 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                         <div className="w-full h-1/3">
                             <label htmlFor="answer" className="text-gray-500 text-sm ml-2 mb-1">Agregar una respuesta</label>
                             <div className="flex">
-                                <textarea id="answer" rows={2} value={data} onChange={({ target: { value } }) => setData(value)}
+                                <textarea id="answer" rows={2} value={data} disabled={disabled || info.status === 'FINAL_RESOLVE'}
+                                    onChange={({ target: { value } }) => setData(value)} maxlength={1000}
                                     className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-600" />
                                 <div className="flex flex-col gap-2 w-auto px-2">
-                                    <button onClick={() => ticketUpdate()} disabled={!data || disabled}
+                                    <button onClick={() => ticketUpdate()} disabled={!data || disabled || info.status === 'FINAL_RESOLVE'}
                                         className="btn p-1 bg-blue-400 rounded-lg disabled:opacity-40">
                                         <p className="text-white text-xs">
                                             Guardar
@@ -166,7 +167,7 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                     <div className="w-full sm:w-1/3 space-y-4">
                         <div>
                             <label className="text-sm ml-2">Estado</label>
-                            <Select array={ticketStatus} labels defaultValue={info.status} disabled={disabled}
+                            <Select array={ticketStatus} labels defaultValue={info.status} disabled={disabled || info.status === 'FINAL_RESOLVE'}
                                 buttonStyle="w-full rounded-xl bg-blue-100 dark:bg-gray-800 text-gray-500"
                                 dropdownStyle="bg-white dark:bg-gray-600 dark:text-gray-400 z-20"
                                 activeStyle="bg-blue-100 dark:bg-gray-800"
@@ -174,7 +175,7 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                         </div>
                         <div>
                             <label className="text-sm ml-2">Responsable</label>
-                            {(users.length > 0) && <Select array={users} labels defaultValue={info.user} disabled={disabled}
+                            {(users.length > 0) && <Select array={users} labels defaultValue={info.user} disabled={disabled || info.status === 'FINAL_RESOLVE'}
                                 buttonStyle="w-full rounded-xl bg-blue-100 dark:bg-gray-800 text-gray-500"
                                 dropdownStyle="bg-white dark:bg-gray-800 text-gray-500 z-20"
                                 onChange={({ value }) => reasingUser(value)}
@@ -183,18 +184,10 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                         <div>
                             <label className="text-sm ml-2">Alumno</label>
                             <div className="flex flex-col w-full px-3 py-2 gap-1 rounded-xl bg-blue-100 dark:bg-gray-800 text-gray-500 text-xs">
-                                <p>
-                                    <strong className="font-medium">Nombre: </strong>{info.name}
-                                </p>
-                                <p>
-                                    <strong className="font-medium">Código: </strong>{info.udgId}
-                                </p>
-                                {info.phone && <p>
-                                    <strong className="font-medium">Teléfono: </strong>{info.phone}
-                                </p>}
-                                <p>
-                                    <strong className="font-medium">Email: </strong>{info.email}
-                                </p>
+                                <p><strong className="font-medium">Nombre: </strong>{info.name}</p>
+                                <p><strong className="font-medium">Código: </strong>{info.udgId}</p>
+                                {info.phone && <p><strong className="font-medium">Teléfono: </strong>{info.phone}</p>}
+                                <p><strong className="font-medium">Email: </strong>{info.email}</p>
                             </div>
                         </div>
                         <div>
@@ -203,7 +196,8 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                                 {ticketPriority.map((button) => {
                                     const bg = button.color === 'green' ? 'bg-green-400' : button.color === 'yellow' ? 'bg-yellow-400' : 'bg-red-400';
                                     return (
-                                        <button key={button.priority} disabled={disabled} onClick={() => priorityHandler(button.priority)}
+                                        <button key={button.priority} disabled={disabled || info.status === 'FINAL_RESOLVE'}
+                                            onClick={() => priorityHandler(button.priority)}
                                             className={`${(info.priority !== button.priority) && 'opacity-40'} flex justify-center items-center ${bg} w-full col-span-1 h-full p-1`}>
                                             {button.label}
                                         </button>
@@ -228,7 +222,8 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                                 <p className="text-sm">Cancelar</p>
                             </button>
                         </>}
-                        <button onClick={() => deactivate ? deactivateManually() : setDeactivate(true)} disabled={disabled}
+                        <button onClick={() => deactivate ? deactivateManually() : setDeactivate(true)}
+                            disabled={disabled || info.status === 'FINAL_RESOLVE'}
                             className="btn outline-none border-2 border-red-400 px-2 py-1 hover:bg-red-300 transition-all">
                             <p className="text-sm hover:text-white">Deshabilitar</p>
                         </button>

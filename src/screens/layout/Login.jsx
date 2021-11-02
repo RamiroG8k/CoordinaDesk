@@ -48,17 +48,17 @@ const Login = ({ history }) => {
             <div className="w-full sm:w-96 z-10">
 
                 <div className="flex relative justify-center items-center mb-8">
-                    <Link to="/" className="absolute left-2">
+                    <Link to="/" className="absolute left-2 dark:text-gray-400">
                         <BsArrowLeftShort />
                         <p className="text-xs">
                             Inicio
                         </p>
                     </Link>
-                    <img className="block lg:hidden h-14 w-14" alt="logo"src={LogoSquare} />
-                <div className="hidden lg:block">
-                    <img className="dark:hidden h-10 w-auto" alt="logo" src={LogoLarge} />
-                    <img className="hidden dark:block h-10 w-auto" alt="logo" src={LogoLargeDark} />
-                </div>
+                    <img className="block lg:hidden h-14 w-14" alt="logo" src={LogoSquare} />
+                    <div className="hidden lg:block">
+                        <img className="dark:hidden h-10 w-auto" alt="logo" src={LogoLarge} />
+                        <img className="hidden dark:block h-10 w-auto" alt="logo" src={LogoLargeDark} />
+                    </div>
                 </div>
 
                 <div className="h-1/2 sm:bg-white sm:dark:bg-gray-900 sm:shadow-md p-10 rounded-3xl mx-auto">
@@ -72,18 +72,19 @@ const Login = ({ history }) => {
                         <div className="space-y-3 mb-4">
                             <div>
                                 <label htmlFor="email" className="dark:text-gray-500 text-sm ml-2 mb-1">E-mail</label>
-                                <input id="email" {...register('email', { required: true })} type="text" autoComplete="off"
-                                    className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
+                                <input id="email" {...register('email', { required: true })}
+                                    type="email" autoComplete="off" maxLength={200}
+                                    className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700 dark:text-gray-400" />
                                 {errors.email && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
                             </div>
                             <div>
                                 <label htmlFor="password" className="dark:text-gray-500 text-sm ml-2 mb-1">Contraseña</label>
                                 <div className="relative flex items-center">
                                     <input id="password" {...register('password', { required: true })}
-                                        type={hidden ? 'password' : 'text'} autoComplete="off"
-                                        className="input rounded-xl pr-14 bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
+                                        type={hidden ? 'password' : 'text'} autoComplete="off" maxLength={200}
+                                        className="input rounded-xl pr-14 bg-blue-100 bg-opacity-60 dark:bg-gray-700 dark:text-gray-400" />
                                     <button onClick={() => setHidden(!hidden)} type="button" className="absolute right-2 p-2">
-                                        <p className="text-gray-600 dark:text-black text-xs font-medium uppercase">
+                                        <p className="text-gray-600 dark:text-gray-500 text-xs font-medium uppercase">
                                             {hidden ? 'mostrar' : 'ocultar'}
                                         </p>
                                     </button>

@@ -90,7 +90,7 @@ const Sidebar = ({ status, className, visible, toggleView }) => {
                         className="font-normal bg-blue-200 dark:bg-gray-600 px-1 rounded-sm">Brand name</a>
                 </div>} */}
                 {(status === 'min' && !hover) && <a href="https://github.com/RamiroG8k" target="_blank" rel="noreferrer"
-                    className="font-normal text-3xl p-3">
+                    className="font-normal text-3xl p-3 dark:text-gray-400">
                     <CgLogOut />
                 </a>}
 

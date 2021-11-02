@@ -49,24 +49,25 @@ const Activate = ({ history }) => {
 
                 <div className="h-1/2 sm:bg-white sm:dark:bg-gray-600 sm:shadow-md p-10 rounded-3xl mx-auto">
                     <div className="text-center">
-                        <h3 className="text-gray-900 dark:text-gray-900 font-bold text-2xl">Ready to Sign up!</h3>
-                        <h4 className="text-gray-500 dark:text-gray-800 text-xs">Create your credentials to access to your account</h4>
+                        <h3 className="text-gray-900 dark:text-gray-900 font-bold text-2xl">Listo para Acceder!</h3>
+                        <h4 className="text-gray-500 dark:text-gray-800 text-xs">Configura las credenciales para poder tener acceso a tu cuenta</h4>
                     </div>
 
                     {/* Form Section*/}
                     <form id="form" onSubmit={handleSubmit(activate)} className="my-6">
                         <div className="space-y-3 mb-4">
                             <div>
-                                <label htmlFor="name" className="text-sm ml-2 mb-1">Name</label>
-                                <input id="name" {...register('name', { required: true })} type="text" autoComplete="off"
+                                <label htmlFor="name" className="text-sm ml-2 mb-1">Nombre</label>
+                                <input id="name" {...register('name', { required: true })}
+                                    type="text" autoComplete="off" maxLength={200}
                                     className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
-                                {errors.name && <span className="ml-2 text-xs text-red-400">This field is required</span>}
+                                {errors.name && <span className="ml-2 text-xs text-red-400">Este campo es obligatorio</span>}
                             </div>
                             <div>
-                                <label htmlFor="password" className="text-sm ml-2 mb-1">Password</label>
+                                <label htmlFor="password" className="text-sm ml-2 mb-1">Contraseña</label>
                                 <div className="relative flex items-center">
                                     <input id="password" {...register('password', { required: true })}
-                                        type={hidden ? 'password' : 'text'} autoComplete="off"
+                                        type={hidden ? 'password' : 'text'} autoComplete="off" maxLength={200}
                                         className="input rounded-xl pr-14 bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
                                     <button onClick={() => setHidden(!hidden)} type="button" className="absolute right-2 p-2">
                                         <p className="text-gray-600 dark:text-black text-xs font-medium uppercase">
@@ -74,7 +75,7 @@ const Activate = ({ history }) => {
                                         </p>
                                     </button>
                                 </div>
-                                {errors.password && <span className="ml-2 text-xs text-red-400">This field is required</span>}
+                                {errors.password && <span className="ml-2 text-xs text-red-400">Este campo es obligatorio</span>}
                             </div>
                         </div>
                     </form>
