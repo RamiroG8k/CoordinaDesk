@@ -4,8 +4,8 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 // Screens
 import { Login, Dashboard, Landing, Ticket, Activate } from 'screens/layout';
 // Components
-import { Home, Users, Tickets, TicketsDone } from 'screens';
-import { isLoggedIn, isTokenValid, prefersDarkMode } from 'utils';
+import { Home, Users, Tickets, TicketsDone, FrequentQuestions } from 'screens';
+import { isLoggedIn, prefersDarkMode } from 'utils';
 // Others
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -29,6 +29,7 @@ function App() {
 					<PublicRoute path="/activate/id/:id/token/:token" exact component={Activate} />
 					<PrivateRoute path="/home" exact component={Home} />
 					<PrivateRoute path="/users" exact component={Users} />
+					<PrivateRoute path="/faqs" exact component={FrequentQuestions} />
 					<PrivateRoute path="/tickets" exact component={Tickets} />
 					<PrivateRoute path="/tickets/inactive" exact component={TicketsDone} />
 					<Redirect path="/**" to="/" />

@@ -55,9 +55,9 @@ const Sidebar = ({ status, className, visible, toggleView }) => {
                                 <Disclosure.Button as="div" className="flex p-2 h-12 text-sm font-medium text-left text-blue-900 dark:text-blue-300 bg-blue-100 dark:bg-gray-700 rounded-xl hover:bg-blue-200 dark:hover:bg-gray-600 focus:outline-none transition">
                                     <Link to={() => type === 'link' ? path : '#'}
                                         className={`flex items-center ${(status === 'max' || hover) ? 'justify-between' : 'justify-center'} h-full w-full`}>
-                                        <div className={`${(status === 'max' || hover) ? 'ml-2' : ''} flex gap-3`}>
+                                        <div className={`${(status === 'max' || hover) ? 'ml-2' : ''} flex items-center gap-3`}>
                                             <p className="text-xl">{icon}</p>
-                                            {(status === 'max' || hover) && <p className="text-md">{title}</p>}
+                                            {(status === 'max' || hover) && <p className="text-md leading-4">{title}</p>}
                                         </div>
                                         {(type === 'sub' && (status === 'max' || hover)) &&
                                             <IoIosArrowUp className={`${open ? '' : 'transform rotate-180'} w-5 h-5 mr-2`} />}

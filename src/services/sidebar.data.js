@@ -1,4 +1,4 @@
-import { FiUsers, FiHome, FiInbox } from 'react-icons/fi';
+import { FiUsers, FiHome, FiInbox, FiLayers } from 'react-icons/fi';
 
 const sections = [
     {
@@ -28,6 +28,13 @@ const sections = [
             { path: '/tickets', title: 'Todos', type: 'link' },
             { path: '/tickets/inactive', title: 'Inactivos', type: 'link' },
         ],
+    },
+    {
+        title: 'Preguntas frecuentes',
+        icon: <FiLayers/>,
+        type: 'link',
+        path: '/faqs',
+        roles: ['COORDINATOR'],
     },
 ];
 
