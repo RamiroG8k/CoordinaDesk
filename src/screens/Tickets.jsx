@@ -119,7 +119,7 @@ const Tickets = () => {
                     </div>
                     <div className="sm:w-1/4">
                         <label htmlFor="" className="text-sm ml-2 dark:text-gray-400">Prioridad</label>
-                        <Select array={['TODO', 'LOW', 'MODERATE', 'HIGH']} onChange={(value) => filterByPriority(value)}
+                        <Select array={['TODAS', 'LOW', 'MODERATE', 'HIGH']} onChange={(value) => filterByPriority(value)}
                             activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle="z-10"
                             buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-800 dark:text-gray-500"
                             dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500" />

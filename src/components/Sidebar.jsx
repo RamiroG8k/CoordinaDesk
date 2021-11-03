@@ -48,7 +48,7 @@ const Sidebar = ({ status, className, visible, toggleView }) => {
 
             <section className="flex flex-col h-full bg-gray-50 rounded-2xl p-2 dark:bg-gray-800 space-y-2">
                 {SidebarSections.map(({ title, icon, type, path, ...rest }, i) => {
-                    const actualRole = JSON.parse(localStorage.getItem('user')).role;
+                    const actualRole = JSON.parse(localStorage.getItem('user'))?.role;
                     return rest.roles.includes(actualRole) ?
                         (<Disclosure key={i}>
                             {({ open }) => <>

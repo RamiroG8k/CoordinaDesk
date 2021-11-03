@@ -13,14 +13,17 @@ export const toClipboard = (customText, value) => {
     });
 };
 
-export const isTokenValid = async () => {
-    await apiInstance.post('/auth/validate-token')
-        .then(({ data }) => {
-            console.log(data);
-        }).catch((err) => {
-            console.log(err);
-        })
-};
+// export const isTokenValid = async () => {
+//     await apiInstance.post('/auth/validate-token')
+//         .then(( data ) => {
+//             if (data.code === 200) {
+//                 return true;
+//             }
+//         }).catch(() => {
+//             return false;
+//         });
+//         return false;
+// };
 
 export const isLoggedIn = () => {
     return (localStorage.getItem('token') ?? false);
