@@ -5,7 +5,7 @@ import { Datatable, Modal } from 'components/shared';
 import { CreateUser, UserDetails } from 'components/admin';
 // Services | Data
 import { apiInstance } from 'services';
-import { userActions } from 'utils/data';
+import { errorMessages, userActions } from 'utils/data';
 // Others
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { toast } from 'react-toastify';
@@ -55,7 +55,7 @@ const Users = () => {
     const handleItemEvent = ({ item, action }) => {
         switch (action) {
             case 'deactivate':
-                deleteUser(item._id);
+                deactivateUser(item._id);
                 break;
             case 'details':
                 setShow(true);
@@ -69,7 +69,7 @@ const Users = () => {
         }
     };
 
-    const deleteUser = async (id) => {
+    const deactivateUser = async (id) => {
         await apiInstance.delete(`/user/${id}`)
             .then(({ data }) => {
                 toast.success(`Se ha desactivado el usuario correctamente`, {
@@ -77,7 +77,9 @@ const Users = () => {
                 });
                 fetchUsers();
             }).catch(({ response: { data: error } }) => {
-                toast.error(error.message, {
+                const { customText } = errorMessages.find((e) => e.message === error.message);
+
+                toast.error(customText, {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 5000,
                     hideProgressBar: false,

@@ -53,7 +53,6 @@ const Tickets = () => {
     };
 
     const fetchTickets = async () => {
-        console.log(filters);
         await apiInstance.get('/ticket/dashboard', { params: { user: filters.user } })
             .then(async ({ data }) => {
                 setTickets(data);
@@ -112,7 +111,7 @@ const Tickets = () => {
     return (
         <>
             <Modal visible={details.visible} onClose={(show) => setDetails({ ...details, visible: show })}
-                size="2xl" title={`Detalles de ticket (${details.data?._id})`}>
+                size="xl" title={`Detalles de ticket (${details.data?._id})`}>
                 {details.data && <TicketDetails id={details.data._id} onUpdate={() => fetchTickets()}
                     close={() => setDetails({ ...details, visible: false })} />}
             </Modal>
@@ -157,8 +156,8 @@ const Tickets = () => {
                                                                 {item.title.length > 50 ? '...' : ''}
                                                             </p>
                                                             <div className="absolute right-2 bottom-2 text-blue-300 dark:text-opacity-60 text-xs text-right font-semibold capitalize">
-                                                                <p>ID: {item._id ?? '-'}</p>
-                                                                <p>Usuario: {item.user?.name ?? 'Esperando asignacion'}</p>
+                                                                <p>{item._id ?? '-'}</p>
+                                                                <p>{item.user?.name ?? 'Esperando asignacion'}</p>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -51,7 +51,7 @@ const Faqs = () => {
     const fetchFaqs = async (id) => {
         await apiInstance.get(`/faq/category/${id}`)
             .then(({ data }) => {
-                setFaqs(faqParser(data ?? []));
+                setFaqs(data ? faqParser(data) : []);
                 setOverflows(checkOverflow(faqsContainer.current));
             }).catch(console.log)
     };

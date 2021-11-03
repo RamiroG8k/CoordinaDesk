@@ -5,6 +5,10 @@ import { useForm } from 'react-hook-form';
 // Services
 import { apiInstance } from 'services';
 import { toast } from 'react-toastify';
+// Assets
+import LogoLarge from 'assets/images/Logo-Large.png';
+import LogoSquare from 'assets/images/Logo-Square.png';
+import LogoLargeDark from 'assets/images/Logo-Large-Dark.png';
 
 const Activate = ({ history }) => {
     const { id, token } = useParams();
@@ -41,10 +45,11 @@ const Activate = ({ history }) => {
             <div className="w-full sm:w-96 z-10">
 
                 <div className="flex relative justify-center items-center mb-8">
-                    <img className="block lg:hidden h-6 w-auto" alt="Workflow"
-                        src="https://tailwindcss.com/_next/static/media/tailwindcss-mark.cb8046c163f77190406dfbf4dec89848.svg" />
-                    <img className="hidden lg:block h-6 w-auto" alt="Workflow"
-                        src="https://tailwindcss.com/_next/static/media/tailwindcss-logotype.128b6e12eb85d013bc9f80a917f57efe.svg" />
+                    <img className="block lg:hidden h-14 w-14" alt="logo" src={LogoSquare} />
+                    <div className="hidden lg:block">
+                        <img className="dark:hidden h-10 w-auto" alt="logo" src={LogoLarge} />
+                        <img className="hidden dark:block h-10 w-auto" alt="logo" src={LogoLargeDark} />
+                    </div>
                 </div>
 
                 <div className="h-1/2 sm:bg-white sm:dark:bg-gray-600 sm:shadow-md p-10 rounded-3xl mx-auto">
@@ -71,7 +76,7 @@ const Activate = ({ history }) => {
                                         className="input rounded-xl pr-14 bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
                                     <button onClick={() => setHidden(!hidden)} type="button" className="absolute right-2 p-2">
                                         <p className="text-gray-600 dark:text-black text-xs font-medium uppercase">
-                                            {hidden ? 'show' : 'hide'}
+                                            {hidden ? 'mostrar' : 'ocultar'}
                                         </p>
                                     </button>
                                 </div>
@@ -88,12 +93,11 @@ const Activate = ({ history }) => {
                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
-                                Loading...
-                            </> : 'Sign up'}
+                                Cargando...
+                            </> : 'Activar cuenta'}
                         </p>
                     </button>
                 </div>
-                <p className="text-center mt-5 dark:text-gray-300">Powered by <a href="https://github.com/RamiroG8k" target="_blank" rel="noopener noreferrer" className="text-blue-700 dark:text-blue-300">Brand name</a></p>
             </div>
 
             <div className="sm:hidden absolute -bottom-20 rounded-tl-full rounded-tr-full w-2/3 h-1/5 bg-blue-100 dark:bg-gray-700 z-0 opacity-75" />

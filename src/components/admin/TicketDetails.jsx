@@ -108,10 +108,10 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
     return (
         <section className="flex flex-col justify-between h-auto px-6 py-4 bg-gray-50 dark:bg-gray-700">
             {info && <>
-                <div className="flex gap-6 flex-col sm:flex-row w-full h-full">
-                    <div className="w-full sm:w-2/3 mt-2 ml-2">
+                <div className="flex gap-6 flex-col sm:flex-row w-auto h-full">
+                    <div className="w-full sm:w-3/5 mt-2 ml-2">
                         <h6 className="text-lg font-medium mb-2">{firstCapitalized(info.title)}</h6>
-                        <div className="w-full h-auto max-h-96">
+                        <div className="w-full h-auto max-h-72">
                             <ScrollableFeed className="mb-2">
                                 <p className="text-gray-600 dark:text-gray-900">{info.description}</p>
                                 {(info.ticketContent.length > 0) && <>
@@ -141,7 +141,7 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                                 <div className="border w-full rounded-full dark:border-gray-800 my-2" />
                             </ScrollableFeed>
                         </div>
-                        <div className="w-full h-1/3">
+                        {!disabled && <div className="w-full h-1/3">
                             <label htmlFor="answer" className="text-gray-500 text-sm ml-2 mb-1">Agregar una respuesta</label>
                             <div className="flex">
                                 <textarea id="answer" rows={2} value={data} disabled={disabled || info.status === 'FINAL_RESOLVE'}
@@ -162,7 +162,7 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </div>}
                     </div>
                     <div className="w-full sm:w-1/3 space-y-4">
                         <div>
@@ -222,11 +222,11 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                                 <p className="text-sm">Cancelar</p>
                             </button>
                         </>}
-                        <button onClick={() => deactivate ? deactivateManually() : setDeactivate(true)}
+                        {!disabled && <button onClick={() => deactivate ? deactivateManually() : setDeactivate(true)}
                             disabled={disabled || info.status === 'FINAL_RESOLVE'}
                             className="btn outline-none border-2 border-red-400 px-2 py-1 hover:bg-red-300 transition-all">
                             <p className="text-sm hover:text-white">Deshabilitar</p>
-                        </button>
+                        </button>}
                     </div>
                 </div>
             </>}

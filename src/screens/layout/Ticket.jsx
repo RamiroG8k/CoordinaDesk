@@ -8,6 +8,7 @@ import { FaRegCheckCircle, FaUserCheck } from 'react-icons/fa';
 import { Disclosure } from 'components/shared';
 import lottie from 'lottie-web';
 import NotFound from '../../assets/not-found.json';
+import ScrollableFeed from 'react-scrollable-feed';
 
 const Ticket = () => {
     const [loading, setLoading] = useState(true);
@@ -56,7 +57,7 @@ const Ticket = () => {
     const toggleEmailNotifs = async () => {
         await apiInstance.patch(`/ticket/id/${id}/email-updates`, { hasEmailUpdates })
             .then(({ data }) => {
-                fetchData(id);
+                
             }).catch(({ response: { data: error } }) => {
                 console.log(error);
             });
@@ -89,13 +90,13 @@ const Ticket = () => {
                         </div>
                     </div>
 
-                    <div className={`${getColor(ticket.status)} relative flex flex-col items-center group`}>
+                    <div className={`${getColor(ticket?.status)} relative flex flex-col items-center group`}>
                         <p className="text-4xl rounded-full bg-white dark:bg-gray-800 p-2 shadow-lg">
                             <FaRegCheckCircle />
                         </p>
                         <div className="absolute -top-10 flex-col items-center hidden mb-6 group-hover:flex">
                             <span className="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black dark:bg-gray-400 shadow-lg rounded-lg text-center">
-                                Estado: {ticket.status}
+                                Estado: {ticket?.status}
                             </span>
                             <div className="w-3 h-3 -mt-2 transform rotate-45 bg-black dark:bg-gray-400" />
                         </div>
@@ -113,29 +114,31 @@ const Ticket = () => {
                 <div className="flex flex-col rounded-3xl gap-3 w-full h-2/3 p-4 bg-white dark:bg-gray-700">
                     <Disclosure title={ticket.title} description={ticket.description} color="blue" className="rounded-xl" />
 
-                    <div className="flex flex-col space-y-2 w-full h-full overflow-y-scroll scrollbar-hide">
-                        {ticket.ticketContent.map((e, i) => {
-                            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-                            return (
-                                <div key={e.created_at}
-                                    className={`${e.isUser ? 'bg-blue-50 dark:bg-gray-900' : 'text-right'} border dark:bg-gray-800 dark:border-gray-900 rounded-2xl w-full p-4 text-sm`}>
-                                    <div className={`flex gap-2 items-center ${e.isUser ? 'text-blue-500' : 'text-right justify-end'} dark:text-white`}>
-                                        {e.isUser && <p><FaUserCheck /></p>}
-                                        <p className="font-semibold">{e.isUser ? e.username : 'Tú'}</p>
+                    <div className="flex flex-col w-full h-full overflow-y-scroll scrollbar-hide">
+                        <ScrollableFeed>
+                            {ticket.ticketContent.map((e, i) => {
+                                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+                                return (
+                                    <div key={e.created_at}
+                                        className={`${e.isUser ? 'bg-blue-50 dark:bg-gray-900' : 'text-right'} border dark:bg-gray-800 dark:border-gray-900 rounded-2xl w-full p-4 text-sm mb-2`}>
+                                        <div className={`flex gap-2 items-center ${e.isUser ? 'text-blue-500' : 'text-right justify-end'} dark:text-white`}>
+                                            {e.isUser && <p><FaUserCheck /></p>}
+                                            <p className="font-semibold">{e.isUser ? e.username : 'Tú'}</p>
+                                        </div>
+                                        <div className={`flex gap-2 items-center ${e.isUser ? 'text-blue-500' : 'text-right justify-end'}`}>
+                                            <p className="dark:text-white break-words w-4/5">{e.data}</p>
+                                        </div>
+                                        <span className="text-xs text-gray-500 capitalize">
+                                            {new Date(e.created_at).toLocaleDateString('es-MX', options)}
+                                        </span>
                                     </div>
-                                    <div className={`flex gap-2 items-center ${e.isUser ? 'text-blue-500' : 'text-right justify-end'}`}>
-                                        <p className="dark:text-white break-words w-4/5">{e.data}</p>
-                                    </div>
-                                    <span className="text-xs text-gray-500 capitalize">
-                                        {new Date(e.created_at).toLocaleDateString('es-MX', options)}
-                                    </span>
-                                </div>
-                            );
-                        })}
+                                );
+                            })}
+                        </ScrollableFeed>
                     </div>
                 </div>
 
-                {(ticket.status !== 'FINAL_RESOLVE' && ticket.status !== 'CLOSED_DUE_TO_INACTIVITY') && <>
+                {(ticket?.status !== 'FINAL_RESOLVE' && ticket?.status !== 'CLOSED_DUE_TO_INACTIVITY') && <>
                     <div className="flex w-full justify-between px-2">
                         <div className="form-group form-check inline-flex items-center dark:text-gray-500 text-sm ml-2 mb-1">
                             <input type="checkbox" id="hasEmailUpdates" checked={hasEmailUpdates ? true : false}
@@ -150,7 +153,7 @@ const Ticket = () => {
 
                     <div className="flex w-full">
                         <textarea id="answer" rows={2} value={data} onChange={({ target: { value } }) => setData(value)}
-                            className="w-full input rounded-xl bg-white border dark:bg-gray-600" maxlength={1000} />
+                            className="w-full input rounded-xl bg-white border dark:bg-gray-600" maxLength={1000} />
                         <div className="flex flex-col gap-2 w-auto px-2">
                             <button onClick={() => answerAsStudent()} disabled={!data}
                                 className="btn px-2 py-1 bg-blue-400 dark:bg-blue-600 rounded-xl disabled:opacity-40">
@@ -163,7 +166,7 @@ const Ticket = () => {
                 </>}
             </div>}
 
-            {((!loading && !ticket) && (ticket.status !== 'FINAL_RESOLVE' && ticket.status !== 'CLOSED_DUE_TO_INACTIVITY')) &&
+            {((!loading && !ticket) && (ticket?.status !== 'FINAL_RESOLVE' && ticket?.status !== 'CLOSED_DUE_TO_INACTIVITY')) &&
                 <div className="flex sm:w-2/3 flex-col h-full p-6 items-center justify-center space-y-10">
                     <h4 className="text-2xl sm:text-4xl font-semibold text-center">
                         <span className="text-blue-600">Oops</span>, parece que no hay informacion relacionada con el <span className="text-blue-600">ticket</span> proporcionado
