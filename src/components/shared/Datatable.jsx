@@ -7,6 +7,7 @@ import { Paginator, Popover, Select } from 'components/shared';
 
 const DataTable = ({ popoverTitle, onSearch, data = [], onEvent, onUpdate, placeholder }) => {
     const [limit, setLimit] = useState(10);
+    const [term, setTerm] = useState('');
     const { rows = [], columns = [], actions, pagination } = data;
     let timer;
 
@@ -14,24 +15,25 @@ const DataTable = ({ popoverTitle, onSearch, data = [], onEvent, onUpdate, place
         clearTimeout(timer);
     };
 
-    const keyReleased = (term) => {
+    const keyReleased = (search) => {
         // Prevent errant multiple timeouts from being generated
         clearTimeout(timer);
         timer = setTimeout(() => {
-            onSearch(pagination.current, limit, term.trim().toLowerCase());
+            onSearch(pagination.current, limit, search.trim().toLowerCase());
         }, 500);
     };
 
     const handleLimit = (value) => {
         setLimit(value);
-        onUpdate(pagination.current, value);
+        onUpdate(pagination.current, value, term.trim().toLowerCase());
     };
 
     return (
         <section className="flex flex-col w-full space-y-4 sm:space-y-6">
             <div className="flex w-full justify-between items-center header gap-4 sm:gap-10">
                 <div className="search relative w-full sm:w-1/2">
-                    <input type="text" placeholder={placeholder ?? 'Search by name'} onKeyPress={keyPressed} onKeyUp={(e) => keyReleased(e.target.value)}
+                    <input type="text" placeholder={placeholder ?? 'Search by name'} value={term} onChange={v => setTerm(v.target.value)}
+                    onKeyPress={keyPressed} onKeyUp={(e) => keyReleased(e.target.value)}
                         className="input border-0 rounded-xl input-primary placeholder-font-bold px-10 bg-gray-50 dark:bg-gray-800 dark:text-gray-400 shadow" />
                     <p className="absolute left-4 text-brand-200 top-1/3 dark:text-gray-500">
                         <BsSearch />

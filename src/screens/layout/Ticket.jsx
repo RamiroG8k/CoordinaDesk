@@ -11,7 +11,7 @@ import NotFound from '../../assets/not-found.json';
 
 const Ticket = () => {
     const [loading, setLoading] = useState(true);
-    const [ticket, setTicket] = useState();
+    const [ticket, setTicket] = useState(null);
     const [hasEmailUpdates, setHasEmailUpdates] = useState();
     const [data, setData] = useState();
     const { id } = useLocation();
@@ -20,7 +20,7 @@ const Ticket = () => {
 
     useEffect(() => {
         fetchData(id);
-    }, [id]);
+    }, []);
 
     useEffect(() => {
         lottie.loadAnimation({
@@ -37,8 +37,8 @@ const Ticket = () => {
             .then(({ data }) => {
                 setTicket(data);
                 setHasEmailUpdates(data.hasEmailUpdates);
-            }).catch(({ response: { data: error } }) => {
-                console.log(error);
+            }).catch(() => {
+                setTicket(null);
             });
         await setLoading(false);
     };
@@ -72,14 +72,15 @@ const Ticket = () => {
             case 'RESOLVE': return 'text-green-200 dark:text-green-600';
             case 'IN_PROGRESS': return 'text-yellow-200 dark:text-yellow-600';
             default: return 'text-black dark:text-gray-200';
-        }
+        };
     };
 
     return (
-        <section className={`flex flex-col w-screen h-screen items-center dark:bg-gray-800 ${ticket ? 'bg-gradient-to-b from-white via-gray-200 to-blue-100' : 'bg-white'}`}>
+        // <section className={`flex relative flex-col w-screen h-screen items-center dark:bg-gray-800 ${ticket ? 'bg-gradient-to-b from-white via-gray-200 to-blue-100' : 'bg-white'}`}>
+        <section className={`flex relative flex-col w-screen h-screen items-center bg-blue-50 dark:bg-gray-800`}>
             {loading && <p>Loading...</p>}
             {(!loading && ticket) && <div className="flex flex-col w-full h-screen max-w-5xl p-4 sm:p-10 justify-center items-center space-y-4">
-                <div className="sticky top-4 flex w-full h-1/4 dark:text-white bg-gray-100 dark:bg-gray-700 rounded-3xl px-4 py-8 justify-between items-center shadow-inner">
+                <div className="sticky top-4 flex w-full h-auto sm:h-1/4 dark:text-white bg-gray-100 dark:bg-gray-700 rounded-3xl px-4 py-4 sm:py-8 justify-between items-center shadow-inner">
                     <div className="flex flex-col justify-center w-5/12 text-left py-2 px-4 gap-2">
                         <p className="text-sm sm:text-lg leading-3">Fecha Apertura</p>
                         <div className="leading-4">
@@ -109,7 +110,7 @@ const Ticket = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-col rounded-3xl gap-3 w-full h-2/3 p-4 bg-white">
+                <div className="flex flex-col rounded-3xl gap-3 w-full h-2/3 p-4 bg-white dark:bg-gray-700">
                     <Disclosure title={ticket.title} description={ticket.description} color="blue" className="rounded-xl" />
 
                     <div className="flex flex-col space-y-2 w-full h-full overflow-y-scroll scrollbar-hide">
@@ -117,7 +118,7 @@ const Ticket = () => {
                             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
                             return (
                                 <div key={e.created_at}
-                                    className={`${e.isUser ? 'bg-blue-50 dark:bg-gray-900' : 'text-right'} border dark:border-gray-700 rounded-2xl w-full p-4 text-sm`}>
+                                    className={`${e.isUser ? 'bg-blue-50 dark:bg-gray-900' : 'text-right'} border dark:bg-gray-800 dark:border-gray-900 rounded-2xl w-full p-4 text-sm`}>
                                     <div className={`flex gap-2 items-center ${e.isUser ? 'text-blue-500' : 'text-right justify-end'} dark:text-white`}>
                                         {e.isUser && <p><FaUserCheck /></p>}
                                         <p className="font-semibold">{e.isUser ? e.username : 'Tú'}</p>
@@ -149,7 +150,7 @@ const Ticket = () => {
 
                     <div className="flex w-full">
                         <textarea id="answer" rows={2} value={data} onChange={({ target: { value } }) => setData(value)}
-                            className="w-full input rounded-xl bg-gray-50 dark:bg-gray-600" maxlength={1000} />
+                            className="w-full input rounded-xl bg-white border dark:bg-gray-600" maxlength={1000} />
                         <div className="flex flex-col gap-2 w-auto px-2">
                             <button onClick={() => answerAsStudent()} disabled={!data}
                                 className="btn px-2 py-1 bg-blue-400 dark:bg-blue-600 rounded-xl disabled:opacity-40">

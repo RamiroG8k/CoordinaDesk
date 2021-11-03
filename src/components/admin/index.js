@@ -1,7 +1,7 @@
 import CreateUser from './CreateUser';
 import TicketDetails from './TicketDetails';
 import UserDetails from './UserDetails';
-import Categories from './Categories';
-import Faqs from './Faqs';
+import CreateCategory from './CreateCategory';
+import CreateQuestion from './CreateQuestion';
 
-export { CreateUser, TicketDetails, UserDetails, Categories, Faqs };
+export { CreateUser, TicketDetails, UserDetails, CreateCategory, CreateQuestion };

@@ -96,7 +96,7 @@ const errorMessages = [
 
     // User
     { customText: 'EMAIL_ALREADY_USE', message: 'ERROR.USER.EMAIL_ALREADY_IN_USE' },
-    { customText: 'USER_NOT_FOUND', message: 'ERROR.USER.NOT_FOUND' },
+    { customText: 'Usuario no encontrado, por favor revisa tus credenciales e intenta de nuevo', message: 'ERROR.USER.NOT_FOUND' },
     { customText: 'USER_IS_ACTIVE', message: 'ERROR.USER.USER_IS_ACTIVE' },
     { customText: 'USER_IS_DELETED', message: 'ERROR.USER.USER_IS_DELETED' },
 

@@ -106,7 +106,7 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
     };
 
     return (
-        <section className="flex flex-col justify-between h-auto px-6 py-4 bg-gray-50 dark:bg-gray-700 overflow-scroll">
+        <section className="flex flex-col justify-between h-auto px-6 py-4 bg-gray-50 dark:bg-gray-700">
             {info && <>
                 <div className="flex gap-6 flex-col sm:flex-row w-full h-full">
                     <div className="w-full sm:w-2/3 mt-2 ml-2">

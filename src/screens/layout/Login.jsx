@@ -12,6 +12,7 @@ import { saveCredentials } from 'utils';
 // Others
 import { BsArrowLeftShort } from 'react-icons/bs';
 import { toast } from 'react-toastify';
+import { ModeSwitcher } from 'components/shared';
 import { errorMessages } from 'utils/data';
 
 const Login = ({ history }) => {
@@ -46,7 +47,6 @@ const Login = ({ history }) => {
     return (
         <section className="flex w-screen h-screen relative overflow-hidden bg-gray-50 dark:bg-gray-800 sm:bg-blue-50 sm:dark:bg-gray-800 justify-center items-center">
             <div className="w-full sm:w-96 z-10">
-
                 <div className="flex relative justify-center items-center mb-8">
                     <Link to="/" className="absolute left-2 dark:text-gray-400">
                         <BsArrowLeftShort />
@@ -109,7 +109,9 @@ const Login = ({ history }) => {
                 </div>
                 {/* <p className="text-center mt-5 dark:text-gray-300">Powered by <a href="https://github.com/RamiroG8k" target="_blank" rel="noopener noreferrer" className="text-blue-700 dark:text-blue-300">Brand name</a></p> */}
             </div>
-
+            <div className="fixed z-50 -right-4 top-60 transform rotate-90 bg-blue-100 dark:bg-blue-800 px-3 py-2 rounded-b-2xl">
+                <ModeSwitcher />
+            </div>
             <div className="sm:hidden absolute -bottom-20 rounded-tl-full rounded-tr-full w-2/3 h-1/5 bg-blue-100 dark:bg-gray-700 z-0 opacity-75" />
         </section>
     );

@@ -15,7 +15,8 @@ const Tickets = () => {
     const [filteredTickets, setFilteredTickets] = useState();
     const [users, setUsers] = useState();
     const [details, setDetails] = useState({ data: null, visible: false });
-    // const { todo, inProgress, done } = tickets ?? { todo: [], inProgress: [], done: [] };
+    const [filters, setFilters] = useState({ user: null, priority: null })
+
     const { todo, inProgress, done } = filteredTickets ?? { todo: [], inProgress: [], done: [] };
 
     const droppables = [
@@ -25,9 +26,12 @@ const Tickets = () => {
     ];
 
     useEffect(() => {
-        fetchTickets();
         fetchUsers();
     }, []);
+
+    useEffect(() => {
+        fetchTickets();
+    }, [filters]);
 
     const onDragEnd = (result) => {
         if (!result.destination) return;
@@ -43,18 +47,22 @@ const Tickets = () => {
             case 'done':
                 status = 'RESOLVE';
                 break;
-
             default: break;
         };
         changeStatus(result.draggableId, status);
     };
 
-    const fetchTickets = async (user) => {
-        await apiInstance.get('/ticket/dashboard', { params: { user } })
-            .then(({ data }) => {
+    const fetchTickets = async () => {
+        console.log(filters);
+        await apiInstance.get('/ticket/dashboard', { params: { user: filters.user } })
+            .then(async ({ data }) => {
                 setTickets(data);
                 setFilteredTickets(data);
-            }).catch();
+
+                if (filters.priority) {
+                    filterByPriority(data, filters.priority);
+                }
+            }).catch(console.log);
     };
 
     const fetchUsers = async () => {
@@ -86,19 +94,19 @@ const Tickets = () => {
             default: return 'max-w-sm';
         }
     };
-
-    const filterByPriority = (lvl) => {
+    
+    const filterByPriority = (data, lvl) => {
         if (ticketPriority.filter((e) => e.priority === lvl).length > 0) {
             setFilteredTickets(
                 {
-                    todo: tickets.todo.filter(e => e.priority === lvl),
-                    inProgress: tickets.inProgress.filter(e => e.priority === lvl),
-                    done: tickets.done.filter(e => e.priority === lvl),
+                    todo: data.todo.filter(e => e.priority === lvl),
+                    inProgress: data.inProgress.filter(e => e.priority === lvl),
+                    done: data.done.filter(e => e.priority === lvl),
                 }
             );
             return;
         }
-        setFilteredTickets({ ...tickets });
+        setFilteredTickets({ ...data });
     };
 
     return (
@@ -109,17 +117,19 @@ const Tickets = () => {
                     close={() => setDetails({ ...details, visible: false })} />}
             </Modal>
             <section className="flex flex-col sm:grid grid-cols-3 gap-6">
-                <div className="flex flex-wrap gap-4 col-span-3 bg-white dark:bg-gray-700 rounded-2xl p-4">
-                    <div className="sm:w-1/4">
+                <div className="flex justify-around gap-4 col-span-3 bg-white dark:bg-gray-700 rounded-2xl p-4">
+                    <div className="sm:w-1/3">
                         <label htmlFor="" className="text-sm ml-2 dark:text-gray-400">Usuario</label>
-                        {users && <Select labels array={[{ label: 'Todos', value: null }, ...users]} onChange={({ value }) => fetchTickets(value)}
+                        {users && <Select labels array={[{ label: 'Todos', value: null }, ...users]}
+                            onChange={({ value }) => setFilters((filters) => ({ ...filters, user: value }))}
                             activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle="z-10"
                             buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-800 dark:text-gray-500 capitalize"
                             dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500" />}
                     </div>
-                    <div className="sm:w-1/4">
+                    <div className="sm:w-1/3">
                         <label htmlFor="" className="text-sm ml-2 dark:text-gray-400">Prioridad</label>
-                        <Select array={['TODAS', 'LOW', 'MODERATE', 'HIGH']} onChange={(value) => filterByPriority(value)}
+                        <Select array={['TODAS', 'LOW', 'MODERATE', 'HIGH']}
+                            onChange={(value) => setFilters((filters) => ({ ...filters, priority: value }))}
                             activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle="z-10"
                             buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-800 dark:text-gray-500"
                             dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500" />
@@ -134,7 +144,7 @@ const Tickets = () => {
                                     <h2 className="text-3xl font-bold text-gray-400 text-center">{title}</h2>
                                     <div {...provided.droppableProps} ref={provided.innerRef}
                                         className="space-y-3 mt-6 h-full bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-y-scroll scrollbar-hide">
-                                        {array.map((item, i) =>
+                                        {array?.map((item, i) =>
                                             <Draggable key={item._id} draggableId={item._id.toString()} index={i}>
                                                 {(provided) => (
                                                     <div onClick={() => setDetails({ data: item, visible: true })}

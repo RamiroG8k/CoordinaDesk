@@ -51,11 +51,9 @@ const Faqs = () => {
     const fetchFaqs = async (id) => {
         await apiInstance.get(`/faq/category/${id}`)
             .then(({ data }) => {
-                setFaqs(faqParser(data));
+                setFaqs(faqParser(data ?? []));
                 setOverflows(checkOverflow(faqsContainer.current));
-            }).catch(({ response: { data: error } }) => {
-                console.log(error);
-            })
+            }).catch(console.log)
     };
 
     const faqParser = (data) => {
@@ -67,9 +65,21 @@ const Faqs = () => {
         });
     };
 
+    const onScroll = () => {
+        if (faqsContainer.current) {
+            const { scrollTop, scrollHeight, clientHeight } = faqsContainer.current;
+            if (scrollTop + clientHeight === scrollHeight) {
+                setOverflows(v => ({...v, reached: true }));
+                return;
+            }
+            setOverflows(v => ({...v, reached: false }));
+        }
+    };
+
+
     return (
-                <section id="faqs" className="flex justify-end items-center w-screen sm:h-screen p-4 sm:p-0 sm:bg-gradient-to-r from-blue-100 dark:from-gray-900 to-gray-50 dark:to-gray-900">
-        <div className="relative flex flex-grow-0 flex-col h-full sm:h-4/5 w-full sm:w-4/5 bg-gray-50 dark:bg-gray-900 sm:dark:bg-gray-800 sm:bg-white rounded-2xl p-6 sm:px-12 py-10">
+        <section id="faqs" className="flex justify-end items-center w-screen sm:h-screen p-4 sm:p-0 sm:bg-gradient-to-r from-blue-100 dark:from-gray-900 to-gray-50 dark:to-gray-900">
+            <div className="relative flex flex-grow-0 flex-col h-full sm:h-4/5 w-full sm:w-4/5 bg-gray-50 dark:bg-gray-900 sm:dark:bg-gray-800 sm:bg-white rounded-2xl p-6 sm:px-12 py-10">
                 <div className="flex flex-col w-auto h-1/5 gap-3 z-10 mb-4">
                     <h2 className="w-60 text-4xl font-semibold dark:text-white">Preguntas <span className="text-blue-400">Frecuentes</span></h2>
                     <p className="dark:text-gray-500">Necesitas respuestas?,  Encuentralas aqui.</p>
@@ -77,11 +87,11 @@ const Faqs = () => {
 
                 <div className="flex flex-col-reverse sm:flex-row gap-4 h-4/5 w-full z-10">
                     <div className="relative sm:w-4/5">
-                        <div ref={faqsContainer} className="h-96 sm:h-full overflow-y-scroll scrollbar-hide">
+                        <div ref={faqsContainer} onScroll={onScroll} className="h-96 sm:h-full overflow-y-scroll scrollbar-hide">
                             {faqs?.map((faq) => <Disclosure key={faq.id} {...faq} />)}
                         </div>
 
-                        {overflows?.height && <div className="absolute right-4 bottom-0 flex items-center animate-bounce text-blue-400">
+                        {(overflows?.height && !overflows.reached) && <div className="absolute right-4 bottom-0 flex items-center animate-bounce text-blue-400">
                             <div className="h-10 w-10">
                                 <BsArrowDownShort className="h-full w-full" />
                             </div>

@@ -35,21 +35,24 @@ apiInstance.interceptors.response.use((response) => {
     fetch(`${process.env.REACT_APP_API}/auth/validate-token`)
         .then(response => response.json())
         .then(({ status }) => {
-            if (status !== 200) {
-                toast.error('Sesion expirada, por favor ingresa tus credenciales de nuevo', {
-                    position: toast.POSITION.TOP_CENTER,
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    pauseOnHover: true,
-                    draggable: true,
-                });
-                removeCredentials();
-                setTimeout(() => { 
-                    window.location.reload();
-                }, 3000)
-                // window.location.href = `${process.env.REACT_APP_API}/login`;
-                return;
-            }
+            console.log(status);
+            // if (status === 401) {
+            //     // TODO: Handle session
+            //     toast.error('Sesion expirada, por favor ingresa tus credenciales de nuevo', {
+            //         position: toast.POSITION.TOP_CENTER,
+            //         autoClose: 3000,
+            //         hideProgressBar: false,
+            //         pauseOnHover: true,
+            //         draggable: true,
+            //     });
+
+            //     removeCredentials();
+            //     setTimeout(() => { 
+            //         window.location.reload();
+            //     }, 3000)
+            //     window.location.href = `${process.env.REACT_APP_API}/login`;
+            //     return;
+            // }
         });
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error

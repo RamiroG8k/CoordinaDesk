@@ -18,7 +18,7 @@ const Users = () => {
 
     useEffect(() => {
         fetchUsers();
-    }, [create]);
+    }, []);
 
     const fetchUsers = async (page, limit = 10, search) => {
         await apiInstance.get('/user/all/pageable',
@@ -123,7 +123,7 @@ const Users = () => {
                     </button>
                 </div>
                 {data && <Datatable data={data} placeholder="Buscar por nombre, email o rol"
-                    popoverTitle="Acciones por usuario" onUpdate={(page, limit) => fetchUsers(page, limit)}
+                    popoverTitle="Acciones por usuario" onUpdate={(page, limit, search) => fetchUsers(page, limit, search)}
                     onEvent={handleItemEvent} onSearch={(page, limit, search) => fetchUsers(page, limit, search)} />}
             </div>
         </section>
