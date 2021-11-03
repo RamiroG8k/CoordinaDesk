@@ -5,10 +5,10 @@ import { Categories, Questions } from 'screens';
 import { Modal } from 'components/shared';
 import { CreateCategory, CreateQuestion } from 'components/admin';
 // Services | Data
-import { apiInstance } from 'services';
+// import { apiInstance } from 'services';
 
 const FrequentQuestions = () => {
-    const [training, setTraining] = useState(false);
+    // const [training, setTraining] = useState(false);
     const [active, setActive] = useState();
     const [refresh, setRefresh] = useState();
     const [create, setCreate] = useState({ type: null, visible: false });
@@ -37,17 +37,10 @@ const FrequentQuestions = () => {
         setCreate({ type, visible: true });
     };
 
-    const trainNlp = async () => {
-        await apiInstance.post('/nlp/train')
-            .then(({ data }) => {
-                setTraining(true);
-            }).catch(console.log)
-    };
-
     return (
         <>
-            <Modal visible={create.visible} size="xl"
-                title={`Crear ${create.type === 'c' ? 'categoria' : 'pregunta'}`}
+            <Modal visible={create.visible} size="2xl"
+                title={`${category || faq ? 'Modificar' : 'Crear' } ${create.type === 'c' ? 'categoria' : 'pregunta'}`}
                 onClose={() => setCreate({ ...create, visible: false })} >
                 {create.type === 'c' ?
                     <CreateCategory onCreated={refreshHandler} defaultCategory={category}
@@ -56,7 +49,7 @@ const FrequentQuestions = () => {
                         close={() => setCreate({ ...create, visible: false })} />}
             </Modal>
             <section className="space-y-8">
-                <div className="flex flex-col sm:flex-row gap-4 w-full">
+                {/* <div className="flex flex-col sm:flex-row gap-4 w-full">
                     <div className="flex flex-col bg-white shadow-md dark:bg-gray-700 sm:w-1/2 justify-between rounded-3xl sm:rounded-4xl p-4 sm:p-8 space-y-4">
                         <p className="text-justify leading-5">Este boton es solo para uso en caso de no ver reflejados los cambios en el chatbot.</p>
                         <button type="button" onClick={() => trainNlp()} disabled={training}
@@ -76,7 +69,7 @@ const FrequentQuestions = () => {
                             <p className="leading-4 text-sm">No es posible inhabilitar / habilitar las preguntas ya que...</p>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div className="space-y-8 bg-white shadow-lg dark:bg-gray-700 w-full rounded-4xl p-4 sm:p-10">
                     <Categories onRefresh={refresh} onUpdate={categoryUpdateHandler}
                         onCreate={() => createHandler('c')}

@@ -9,6 +9,7 @@ import { Disclosure } from 'components/shared';
 import lottie from 'lottie-web';
 import NotFound from '../../assets/not-found.json';
 import ScrollableFeed from 'react-scrollable-feed';
+import { ticketStatus } from 'utils/data';
 
 const Ticket = () => {
     const [loading, setLoading] = useState(true);
@@ -95,8 +96,8 @@ const Ticket = () => {
                             <FaRegCheckCircle />
                         </p>
                         <div className="absolute -top-10 flex-col items-center hidden mb-6 group-hover:flex">
-                            <span className="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black dark:bg-gray-400 shadow-lg rounded-lg text-center">
-                                Estado: {ticket?.status}
+                            <span className="relative z-10 p-2 text-xs leading-none text-white bg-black dark:bg-gray-400 shadow-lg rounded-lg text-center">
+                                Estado: {ticketStatus.find((e) => e.value === ticket?.status).label}
                             </span>
                             <div className="w-3 h-3 -mt-2 transform rotate-45 bg-black dark:bg-gray-400" />
                         </div>

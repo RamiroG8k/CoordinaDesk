@@ -43,8 +43,8 @@ const TicketsDone = () => {
                 _id: ticket._id,
                 id: ticket._id,
                 titulo: (ticket.title).substring(0, 20) + '...',
-                user: ticket.user.name.split(' ')[0],
-                priority: (ticketPriority.filter(({ priority }) => priority === ticket.priority))[0].label,
+                usuario: ticket.user.name.split(' ')[0],
+                prioridad: (ticketPriority.filter(({ priority }) => priority === ticket.priority))[0].label,
                 status: (ticketStatus.filter(({ value }) => value === ticket.status))[0].label,
             }
         ));
@@ -79,34 +79,35 @@ const TicketsDone = () => {
         <section className="space-y-6">
             <Modal visible={info} onClose={setInfo} size="md" title="Informacion">
                 <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 sm:pt-4">
-                    <h4 className="font-medium text-xl mb-2">Estados del ticket</h4>
+                    <h4 className="font-medium text-xl mb-2">Filtrar por status</h4>
                     <ul className="space-y-4">
                         <li className="leading-5">
                             <span className="font-medium">ESPERANDO ASIGNACIÓN: </span>
-                            El ticket está esperando a ser asignado
+                            Se debera de introducir 'WAITING_ASIGNATION' en la Búsqueda
                         </li>
                         <li className="leading-5">
                             <span className="font-medium">ASIGNADO: </span>
-                            El ticket se ha asignado
+                            Se debera de introducir 'ASIGNED' en la Búsqueda
                         </li>
                         <li className="leading-5">
-                            <span className="font-medium">EN PROGRESO: </span>El ticket está siendo evaluado
+                            <span className="font-medium">EN PROGRESO: </span>
+                            Se debera de introducir 'IN_PROGRESS' en la Búsqueda
                         </li>
                         <li className="leading-5">
                             <span className="font-medium">ESPERANDO RESPUESTA: </span>
-                            Esperamos que nos des una respuesta del ticket
+                            Se debera de introducir 'WAITING_RESPONSE' en la Búsqueda
                         </li>
                         <li className="leading-5">
                             <span className="font-medium">RESUELTO: </span>
-                            Se ha marcado el ticket como resuelto, se puede volver a abrir si quedan dudas
+                            Se debera de introducir 'RESOLVE' en la Búsqueda
                         </li>
                         <li className="leading-5">
                             <span className="font-medium">FINALIZADO: </span>
-                            El ticket se le ha dado una respuesta final, no se puede volver a abrir
+                            Se debera de introducir 'FINAL_RESOLVE' en la Búsqueda
                         </li>
                         <li className="leading-5">
                             <span className="font-medium">CERRADO POR INACTIVIDAD: </span>
-                            El ticket se ha cerrado por inactividad
+                            Se debera de introducir 'CLOSED_DUE_TO_INACTIVITY' en la Búsqueda
                         </li>
                     </ul>
                     <div className="border w-full rounded-full dark:border-gray-800 mt-4" />
@@ -114,15 +115,15 @@ const TicketsDone = () => {
                         <h4 className="font-medium text-xl mb-2">Filtrar por prioridad</h4>
                         <li className="leading-5">
                             <span className="font-medium text-green-500">Baja: </span>
-                            Se debera de introducir 'LOW' en la Busqueda
+                            Se debera de introducir 'LOW' en la Búsqueda
                         </li>
                         <li className="leading-5">
                             <span className="font-medium text-yellow-500">Media: </span>
-                            Se debera de introducir 'MODERATE' en la Busqueda
+                            Se debera de introducir 'MODERATE' en la Búsqueda
                         </li>
                         <li className="leading-5">
                             <span className="font-medium text-red-500">Alta: </span>
-                            Se debera de introducir 'HIGH' en la Busqueda
+                            Se debera de introducir 'HIGH' en la Búsqueda
                         </li>
                     </ul>
                     <div className="border w-full rounded-full dark:border-gray-800" />
@@ -152,7 +153,7 @@ const TicketsDone = () => {
                     </button>
                 </div>
                 {data && <Datatable data={data} popoverTitle="Acciones por ticket"
-                    onUpdate={(page, limit) => fetchTickets(page, limit)} placeholder="Busqueda por titulo, prioridad o status"
+                    onUpdate={(page, limit) => fetchTickets(page, limit)} placeholder="Búsqueda por titulo, prioridad o status"
                     onEvent={handleItemEvent} onSearch={(page, limit, search) => fetchTickets(page, limit, search)} />}
             </div>
         </section>

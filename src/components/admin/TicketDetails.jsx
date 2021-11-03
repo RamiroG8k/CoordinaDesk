@@ -111,7 +111,7 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                 <div className="flex gap-6 flex-col sm:flex-row w-auto h-full">
                     <div className="w-full sm:w-3/5 mt-2 ml-2">
                         <h6 className="text-lg font-medium mb-2">{firstCapitalized(info.title)}</h6>
-                        <div className="w-full h-auto max-h-72">
+                        <div className="w-full h-auto max-h-96">
                             <ScrollableFeed className="mb-2">
                                 <p className="text-gray-600 dark:text-gray-900">{info.description}</p>
                                 {(info.ticketContent.length > 0) && <>
@@ -167,7 +167,7 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                     <div className="w-full sm:w-1/3 space-y-4">
                         <div>
                             <label className="text-sm ml-2">Estado</label>
-                            <Select array={[ticketStatus[1], ticketStatus[2], ticketStatus[4]]} labels defaultValue={info.status} disabled={disabled || info.status === 'FINAL_RESOLVE'}
+                            <Select array={[ticketStatus[1], ticketStatus[2], ticketStatus[4]]} labels defaultValue={info.status} disabled={disabled}
                                 buttonStyle="w-full rounded-xl bg-blue-100 dark:bg-gray-800 text-gray-500"
                                 dropdownStyle="bg-white dark:bg-gray-600 dark:text-gray-400 z-20"
                                 activeStyle="bg-blue-100 dark:bg-gray-800"
@@ -175,7 +175,7 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                         </div>
                         <div>
                             <label className="text-sm ml-2">Responsable</label>
-                            {(users.length > 0) && <Select array={users} labels defaultValue={info.user} disabled={disabled || info.status === 'FINAL_RESOLVE'}
+                            {(users.length > 0) && <Select array={users} labels defaultValue={info.user} disabled={disabled}
                                 buttonStyle="w-full rounded-xl bg-blue-100 dark:bg-gray-800 text-gray-500"
                                 dropdownStyle="bg-white dark:bg-gray-800 text-gray-500 z-20"
                                 onChange={({ value }) => reasingUser(value)}
@@ -196,7 +196,7 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                                 {ticketPriority.map((button) => {
                                     const bg = button.color === 'green' ? 'bg-green-400' : button.color === 'yellow' ? 'bg-yellow-400' : 'bg-red-400';
                                     return (
-                                        <button key={button.priority} disabled={disabled || info.status === 'FINAL_RESOLVE'}
+                                        <button key={button.priority} disabled={disabled}
                                             onClick={() => priorityHandler(button.priority)}
                                             className={`${(info.priority !== button.priority) && 'opacity-40'} flex justify-center items-center ${bg} w-full col-span-1 h-full p-1`}>
                                             {button.label}
@@ -223,8 +223,7 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                             </button>
                         </>}
                         {!disabled && <button onClick={() => deactivate ? deactivateManually() : setDeactivate(true)}
-                            disabled={disabled || info.status === 'FINAL_RESOLVE'}
-                            className="btn outline-none border-2 border-red-400 px-2 py-1 hover:bg-red-300 transition-all">
+                            disabled={disabled} className="btn outline-none border-2 border-red-400 px-2 py-1 hover:bg-red-300 transition-all">
                             <p className="text-sm hover:text-white">Deshabilitar</p>
                         </button>}
                     </div>

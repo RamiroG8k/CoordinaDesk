@@ -29,7 +29,7 @@ const DataTable = ({ popoverTitle, onSearch, data = [], onEvent, onUpdate, place
     };
 
     return (
-        <section className="flex flex-col w-full space-y-4 sm:space-y-6">
+        <section className="relative flex flex-col w-full space-y-4 sm:space-y-6">
             <div className="flex w-full justify-between items-center header gap-4 sm:gap-10">
                 <div className="search relative w-full sm:w-1/2">
                     <input type="text" placeholder={placeholder ?? 'Search by name'} value={term} onChange={v => setTerm(v.target.value)}

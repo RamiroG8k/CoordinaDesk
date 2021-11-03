@@ -78,7 +78,7 @@ const errorMessages = [
     // Common
     { customText: 'ID_NOTFOUND', message: 'ERROR.COMMON.ID_NOTFOUND' },
     { customText: 'UNIQUE_ID', message: 'ERROR.COMMON.UNIQUE_ID' },
-    { customText: 'El usuario que intenta desactivar aun tiene tickets por atender', message: 'ERROR.COMMON.DELETE_HAS_DEPENDENCIES' },
+    { customText: 'No es posible eliminar, aun tiene dependencias por resolver', message: 'ERROR.COMMON.DELETE_HAS_DEPENDENCIES' },
     { customText: 'UPDATE_HAS_DEPENDENCIES', message: 'ERROR.COMMON.UPDATE_HAS_DEPENDENCIES' },
     { customText: 'UNIQUE_NAME', message: 'ERROR.COMMON.UNIQUE_NAME' },
     { customText: 'FIELD_MAY_NOT_BE_EMPTY', message: 'ERROR.COMMON.FIELD_MAY_NOT_BE_EMPTY' },
