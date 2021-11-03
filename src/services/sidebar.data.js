@@ -1,4 +1,5 @@
 import { FiUsers, FiHome, FiInbox, FiLayers } from 'react-icons/fi';
+import { AiOutlineRobot } from 'react-icons/ai';
 
 const sections = [
     {
@@ -34,6 +35,13 @@ const sections = [
         icon: <FiLayers/>,
         type: 'link',
         path: '/faqs',
+        roles: ['COORDINATOR'],
+    },
+    {
+        title: 'Chatbot',
+        icon: <AiOutlineRobot/>,
+        type: 'link',
+        path: '/chatbot',
         roles: ['COORDINATOR'],
     },
 ];
