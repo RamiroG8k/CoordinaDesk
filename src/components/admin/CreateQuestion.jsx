@@ -80,14 +80,19 @@ const CreateQuestion = ({ close, selected, onCreated, defaultFaq }) => {
                     </div>
                     <div>
                         <label htmlFor="isActive" className="text-sm ml-2 mb-1 dark:text-gray-500">Estado</label>
-                        <Controller control={control} name="isActive" defaultValue={defaultFaq?.isActive ?? true}
+
+
+                        <Controller control={control} name="isActive" defaultValue={(defaultFaq?.isActive) ?? true}
                             rules={{ required: true }} render={({ field: { onChange } }) => (
-                                <Select labels array={[{ label: 'Activa', value: true }, { label: 'Inactiva', value: false }]} onChange={onChange}
+                                <Select labels array={[{ label: 'Activa', value: true }, { label: 'Inactiva', value: false }]}
+                                    onChange={({ value }) => onChange(value)}
                                     activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle=""
                                     buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700 dark:text-gray-400"
                                     dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500 z-50" />
                             )} />
                         {errors.isActive && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
+
+
                     </div>
                     <div className="flex-grow-0 w-full">
                         <label htmlFor="category" className="text-sm ml-2 mb-1 dark:text-gray-500">Categoria</label>

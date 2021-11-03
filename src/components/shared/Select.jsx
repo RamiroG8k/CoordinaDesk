@@ -15,8 +15,8 @@ const Select = ({ array, item = '', labels = false, defaultValue, onChange, disa
 
     const handleChange = (value) => {
         const rawValue = labels ? array.filter((item => item.value === value))[0] : value;
-        onChange(rawValue);
         setSelected(rawValue);
+        onChange(rawValue);
     };
 
     return (

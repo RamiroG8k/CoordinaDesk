@@ -13,9 +13,7 @@ import { RiQuestionLine } from 'react-icons/ri';
 const Categories = ({ onActive, onCreate, onRefresh, onUpdate }) => {
     const [categories, setCategories] = useState([]);
     const [active, setActive] = useState();
-    const [disabled, setDisabled] = useState(true);
     const [info, setInfo] = useState(false);
-    const [training, setTraining] = useState(false);
 
     useEffect(() => {
         fetchCategories();
@@ -84,7 +82,9 @@ const Categories = ({ onActive, onCreate, onRefresh, onUpdate }) => {
     const trainNlp = async () => {
         await apiInstance.post('/nlp/train')
             .then(({ data }) => {
-                setTraining(true);
+                toast.success(`Se ha iniciado a entrenar`, {
+                    position: toast.POSITION.TOP_RIGHT
+                });
             }).catch(console.log)
     };
 
@@ -109,86 +109,82 @@ const Categories = ({ onActive, onCreate, onRefresh, onUpdate }) => {
                 </div>
             </Modal>
 
-            <div className="flex relative w-full">
-                <h1 className="text-3xl sm:text-5xl text-center font-bold text-gray-400 w-full">Categorias</h1>
-                <div className="absolute top-2 w-full flex justify-between gap-2">
-                    <button onClick={() => onCreate(true)} type="button"
-                        className="flex items-center gap-1 btn btn-animated text-lg bg-blue-200 dark:bg-gray-500 w-auto p-3 sm:px-2 sm:py-1">
-                        <p><HiOutlineBookmark /></p>
-                        <p className="hidden md:block">Crear</p>
-                    </button>
-
-                    {/* <button onClick={() => setDisabled((v) => !v)} type="button"
-                        className="flex items-center gap-1 btn btn-animated text-lg border-2 dark:border-gray-900 w-auto p-3 sm:px-2 sm:py-1">
-                        <p><HiOutlineAdjustments /></p>
-                        <p className="hidden md:block">Deshabilitar</p>
-                    </button> */}
-                    <div className="flex items-center">
-                        <button onClick={() => setInfo(true)} className="h-auto transition rounded-full">
-                            <p className="p-2 text-3xl text-gray-500 dark:text-gray-400 active:bg-transparent">
-                                <RiQuestionLine />
-                            </p>
+            <section className="w-full h-full flex flex-col gap-4">
+                <div className="flex relative w-full">
+                    <h1 className="text-3xl sm:text-5xl text-center font-bold text-gray-400 w-full">Categorias</h1>
+                    <div className="absolute w-full flex items-center justify-between gap-2">
+                        <button onClick={() => onCreate(true)} type="button"
+                            className="flex items-center gap-1 btn btn-animated text-lg bg-blue-200 dark:bg-gray-500 w-auto p-3 sm:px-2 sm:py-1">
+                            <p><HiOutlineBookmark /></p>
+                            <p className="hidden md:block">Crear</p>
                         </button>
-                        <button type="button" onClick={() => trainNlp()} disabled={training}
-                            className="flex items-center gap-1 btn btn-animated text-lg border-2 dark:border-gray-900 w-auto p-3 sm:px-2 sm:py-1">
-                            <p><HiOutlineAdjustments /></p>
-                            <p className="hidden md:block">{training ? 'Entrenando..' : 'Reentrenar'}</p>
-                        </button>
+                        <div className="flex items-center">
+                            <button onClick={() => setInfo(true)} className="h-auto transition rounded-full">
+                                <p className="p-2 text-3xl text-gray-500 dark:text-gray-400 active:bg-transparent">
+                                    <RiQuestionLine />
+                                </p>
+                            </button>
+                            <button type="button" onClick={() => trainNlp()}
+                                className="flex items-center gap-1 btn btn-animated text-lg border-2 dark:border-gray-900 w-auto p-3 sm:px-2 sm:py-1">
+                                <p><HiOutlineAdjustments /></p>
+                                <p className="hidden md:block">Reentrenar</p>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <DragDropContext onDragEnd={onDragEnd}>
-                <div className="flex flex-col sm:flex-row gap-4">
-                    <Droppable droppableId="active">
-                        {(provided) => (
-                            <div {...provided.droppableProps} ref={provided.innerRef}
-                                className={`${disabled ? 'sm:w-1/2' : 'w-full'} flex flex-col gap-2 bg-blue-100 dark:bg-gray-800 rounded-2xl p-2`}>
-                                <h4 className="ml-2 font-semibold text-xl dark:text-gray-300">Activas</h4>
-                                <div className="flex flex-wrap relative w-full gap-2">
-                                    {categories.map((item, i) => {
-                                        const { _id, category, ...other } = item;
-                                        return (other.isActive) ?
-                                            <Draggable key={_id} draggableId={_id} index={i}>
-                                                {(provided) => (<>
-                                                    <div key={_id} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
-                                                        className={`${active === _id && 'border-blue-400 dark:border-blue-400 text-blue-500 dark:text-blue-300'}
-                                                        flex items-center w-auto btn btn-animated bg-white dark:bg-gray-600 border dark:border-gray-900 rounded-xl group overflow-hidden`}>
-                                                        <p className="p-2 text-sm truncate" onClick={() => handleActive(item)}>
-                                                            {category}
-                                                        </p>
-                                                        <button type="button" title="Editar" onClick={() => onUpdate(item)}
-                                                            className="hidden group-hover:block p-1">
-                                                            <HiPencilAlt />
-                                                        </button>
-                                                        <button type="button" title="Eliminar" onClick={() => handleDelete(item)}
-                                                            className="hidden group-hover:block p-1">
-                                                            <HiTrash />
-                                                        </button>
-                                                    </div>
-                                                </>)}
-                                            </Draggable> : null;
-                                    })}
-                                    {provided.placeholder}
+                <div className="flex flex-col sm:flex-row gap-4 w-full">
+                    <DragDropContext onDragEnd={onDragEnd}>
+                        <Droppable droppableId="active">
+                            {(provided) => (
+                                <div className="flex flex-col sm:w-1/2 w-full gap-2 bg-blue-100 dark:bg-gray-800 rounded-2xl p-2">
+                                    <h4 className="ml-2 font-semibold text-xl dark:text-gray-300">Activas</h4>
+                                    <div {...provided.droppableProps} ref={provided.innerRef}
+                                        className="grid grid-cols-2 h-full w-full gap-2">
+                                        {categories.map((item, i) => {
+                                            const { _id, category, ...other } = item;
+                                            return (other.isActive) ?
+                                                <Draggable key={_id} draggableId={_id} index={i}>
+                                                    {(provided) => (<>
+                                                        <div key={_id} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
+                                                            className={`${active === _id && 'border-blue-400 dark:border-blue-400 text-blue-500 dark:text-blue-300'}
+                                                                flex items-center justify-between w-full h-10 btn btn-animated bg-white dark:bg-gray-600 border dark:border-gray-900 rounded-xl group overflow-hidden`}>
+                                                            <p className="p-2 text-sm truncate w-full" onClick={() => handleActive(item)}>
+                                                                {category}
+                                                            </p>
+                                                            <div className="flex">
+                                                                <button type="button" title="Editar" onClick={() => onUpdate(item)}
+                                                                    className="hidden group-hover:block p-1">
+                                                                    <HiPencilAlt />
+                                                                </button>
+                                                                <button type="button" title="Eliminar" onClick={() => handleDelete(item)}
+                                                                    className="hidden group-hover:block p-1">
+                                                                    <HiTrash />
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </>)}
+                                                </Draggable> : null;
+                                        })}
+                                        {provided.placeholder}
+                                    </div>
                                 </div>
-                            </div>
-                        )}
-                    </Droppable>
+                            )}
+                        </Droppable>
 
-                    {disabled &&
                         <Droppable droppableId="inactive">
                             {(provided) => (
-                                <div {...provided.droppableProps} ref={provided.innerRef}
-                                    className="flex flex-col gap-4 border-4 border-dashed dark:border-gray-800 sm:w-1/2 rounded-xl">
+                                <div className="flex flex-col gap-2 border-4 border-dashed dark:border-gray-800 sm:w-1/2 w-full rounded-xl">
                                     <h4 className="ml-2 font-semibold text-xl dark:text-gray-300">Inactivas</h4>
-                                    <div className="flex flex-wrap gap-x-3 gap-y-2 justify-center">
+                                    <div {...provided.droppableProps} ref={provided.innerRef}
+                                        className="grid grid-cols-2 h-full w-full gap-2" >
                                         {categories.map((item, i) => {
                                             const { _id, category, ...other } = item;
                                             return (!other.isActive) ?
                                                 <Draggable key={_id} draggableId={_id} index={i}>
                                                     {(provided) => (
                                                         <div key={_id} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
-                                                            className="flex items-center cursor-move btn btn-animated w-auto bg-white dark:bg-gray-600 border dark:border-gray-900 rounded-xl group overflow-hidden opacity-60">
+                                                            className="flex cursor-move btn btn-animated w-full h-10 bg-white dark:bg-gray-600 border dark:border-gray-900 rounded-xl group overflow-hidden opacity-60">
                                                             <p className="p-2 text-sm truncate" onClick={() => handleActive(item)}>
                                                                 {category}
                                                             </p>
@@ -207,9 +203,10 @@ const Categories = ({ onActive, onCreate, onRefresh, onUpdate }) => {
                                     </div>
                                 </div>
                             )}
-                        </Droppable>}
+                        </Droppable>
+                    </DragDropContext>
                 </div>
-            </DragDropContext>
+            </section>
         </>
     );
 };

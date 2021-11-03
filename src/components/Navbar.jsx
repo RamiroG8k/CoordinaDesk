@@ -7,9 +7,8 @@ import { apiInstance } from 'services';
 // Others
 import { firstCapitalized, removeCredentials } from 'utils';
 import { BiSidebar, BiUserCircle } from 'react-icons/bi';
-import { RiQuestionLine } from 'react-icons/ri';
 
-const Navbar = ({ className, toggleSidebar, mobileSidebar, toggleModal }) => {
+const Navbar = ({ className, toggleSidebar, mobileSidebar }) => {
     const history = useHistory();
     const user = JSON.parse(localStorage.getItem('user'));
 
@@ -61,11 +60,7 @@ const Navbar = ({ className, toggleSidebar, mobileSidebar, toggleModal }) => {
 
             <div className="right flex items-center gap-5 mr-2">
                 <ModeSwitcher />
-                <button onClick={() => toggleModal(true)} className="h-auto transition hover:bg-blue-100 rounded-full">
-                    <p className="p-2 text-3xl text-gray-500 dark:text-gray-400 active:bg-transparent">
-                        <RiQuestionLine />
-                    </p>
-                </button>
+
                 <Dropdown component={ActionsUser} onEvent={handleAction} />
             </div>
         </section>

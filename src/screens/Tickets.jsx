@@ -9,6 +9,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { TicketDetails } from 'components/admin';
 import { firstCapitalized } from 'utils';
 import { ticketPriority } from 'utils/data';
+import { RiQuestionLine } from 'react-icons/ri';
 
 const Tickets = () => {
     const [tickets, setTickets] = useState();
@@ -16,6 +17,7 @@ const Tickets = () => {
     const [users, setUsers] = useState();
     const [details, setDetails] = useState({ data: null, visible: false });
     const [filters, setFilters] = useState({ user: null, priority: null })
+    const [modal, setModal] = useState(false);
 
     const { todo, inProgress, done } = filteredTickets ?? { todo: [], inProgress: [], done: [] };
 
@@ -93,7 +95,7 @@ const Tickets = () => {
             default: return 'max-w-sm';
         }
     };
-    
+
     const filterByPriority = (data, lvl) => {
         if (ticketPriority.filter((e) => e.priority === lvl).length > 0) {
             setFilteredTickets(
@@ -110,13 +112,57 @@ const Tickets = () => {
 
     return (
         <>
+            <Modal visible={modal} onClose={setModal} size="md" title="Informacion">
+                <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 sm:pt-4">
+                    <h4 className="font-medium text-xl mb-2">Estados del ticket</h4>
+                    <ul className="space-y-4">
+                        <li className="leading-5">
+                            <span className="font-medium">ESPERANDO ASIGNACIÓN: </span>
+                            El ticket está esperando a ser asignado
+                        </li>
+                        <li className="leading-5">
+                            <span className="font-medium">ASIGNADO: </span>
+                            El ticket se ha asignado
+                        </li>
+                        <li className="leading-5">
+                            <span className="font-medium">EN PROGRESO: </span>El ticket está siendo evaluado
+                        </li>
+                        <li className="leading-5">
+                            <span className="font-medium">ESPERANDO RESPUESTA: </span>
+                            Esperamos que nos des una respuesta del ticket
+                        </li>
+                        <li className="leading-5">
+                            <span className="font-medium">RESUELTO: </span>
+                            Se ha marcado el ticket como resuelto, se puede volver a abrir si quedan dudas
+                        </li>
+                        <li className="leading-5">
+                            <span className="font-medium">FINALIZADO: </span>
+                            El ticket se le ha dado una respuesta final, no se puede volver a abrir
+                        </li>
+                        <li className="leading-5">
+                            <span className="font-medium">CERRADO POR INACTIVIDAD: </span>
+                            El ticket se ha cerrado por inactividad
+                        </li>
+                    </ul>
+                    <div className="border w-full rounded-full dark:border-gray-800 mt-4" />
+                    <div className="text-sm space-y-2 mt-2 text-justify">
+                        <p className="leading-4">
+                            Si un ticket no es usado, contestado o actualizado por más de 5 días, este se deshabilitará automáticamente.
+                        </p>
+                        <p className="leading-4">
+                            Si un ticket con estatus <span className="font-medium">RESOLVE O FINAL_RESOLVE, </span>llevan más de 2 días sin ningúna modificación, se desactiva automáticamente.
+                        </p>
+                    </div>
+                </div>
+            </Modal>
+
             <Modal visible={details.visible} onClose={(show) => setDetails({ ...details, visible: show })}
                 size="5xl" title={`Detalles de ticket (${details.data?._id})`}>
                 {details.data && <TicketDetails id={details.data._id} onUpdate={() => fetchTickets()}
                     close={() => setDetails({ ...details, visible: false })} />}
             </Modal>
             <section className="flex flex-col sm:grid grid-cols-3 gap-6">
-                <div className="flex justify-around gap-4 col-span-3 bg-white dark:bg-gray-700 rounded-2xl p-4">
+                <div className="flex justify-between sm:justify-around items-center gap-4 col-span-3 bg-white dark:bg-gray-700 rounded-2xl p-4">
                     <div className="sm:w-1/3">
                         <label htmlFor="" className="text-sm ml-2 dark:text-gray-400">Usuario</label>
                         {users && <Select labels array={[{ label: 'Todos', value: null }, ...users]}
@@ -125,6 +171,11 @@ const Tickets = () => {
                             buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-800 dark:text-gray-500 capitalize"
                             dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500" />}
                     </div>
+                    <button onClick={() => setModal(true)} className="h-auto transition rounded-full">
+                        <p className="p-2 text-3xl text-gray-500 dark:text-gray-400 active:bg-transparent">
+                            <RiQuestionLine />
+                        </p>
+                    </button>
                     <div className="sm:w-1/3">
                         <label htmlFor="" className="text-sm ml-2 dark:text-gray-400">Prioridad</label>
                         <Select array={['TODAS', 'LOW', 'MODERATE', 'HIGH']}
