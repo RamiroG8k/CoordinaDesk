@@ -7,7 +7,9 @@ const Faqs = ({ selected }) => {
     const [faqs, setFaqs] = useState([]);
 
     useEffect(() => {
-        fetchCategories(selected);
+        if (selected) {
+            fetchCategories(selected);
+        }
     }, [selected]);
 
     const fetchCategories = async (id) => {
