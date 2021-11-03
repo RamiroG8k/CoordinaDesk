@@ -23,6 +23,11 @@ const FrequentQuestions = () => {
         setCreate({ type: 'c', visible: true });
     };
 
+    const faqUpdateHandler = (item) => {
+        setFaq(item);
+        setCreate({ type: 'q', visible: true });
+    };
+
     const createHandler = (type) => {
         setCategory(null);
         setFaq(null);
@@ -37,17 +42,17 @@ const FrequentQuestions = () => {
                 {create.type === 'c' ?
                     <CreateCategory onCreated={refreshHandler} defaultCategory={category}
                         close={() => setCreate({ ...create, visible: false })} /> :
-                    <CreateQuestion onCreated={refreshHandler}
+                    <CreateQuestion onCreated={refreshHandler} defaultFaq={faq} selected={active}
                         close={() => setCreate({ ...create, visible: false })} />}
             </Modal>
             <section className="space-y-8">
                 <div className="space-y-8 bg-white shadow-lg dark:bg-gray-700 w-full rounded-4xl p-10">
                     <Categories onRefresh={refresh} onUpdate={categoryUpdateHandler}
                         onCreate={() => createHandler('c')}
-                        onActive={({ _id }) => setActive(_id)} />
+                        onActive={(item) => setActive(item)} />
                 </div>
                 <div className="space-y-8 bg-white shadow-lg dark:bg-gray-700 w-full rounded-4xl p-10">
-                    <Questions
+                    <Questions onRefresh={refresh} onUpdate={faqUpdateHandler}
                         onCreate={() => createHandler('q')}
                         selected={active} />
                 </div>

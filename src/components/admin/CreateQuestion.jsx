@@ -1,13 +1,21 @@
 // Common
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+// Components
+import { Select } from 'components/shared';
 // Data | Services
 import { apiInstance } from 'services';
 import { toast } from 'react-toastify';
 
-const CreateQuestion = ({ close, onCreated }) => {
+const CreateQuestion = ({ close, selected, onCreated, defaultFaq }) => {
+    const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+
+    const { register, handleSubmit, reset, control, formState: { errors } } = useForm();
+
+    useEffect(() => {
+        fetchCategories();
+    }, [])
 
     const create = async (body) => {
         setLoading(!loading);
@@ -30,16 +38,67 @@ const CreateQuestion = ({ close, onCreated }) => {
         await setLoading(false);
     };
 
+    const fetchCategories = async () => {
+        await apiInstance.get('/category/all')
+            .then(({ data }) => {
+                const newCategories = data.map((e) => { return { label: e.category, value: e._id } });
+                setCategories(newCategories);
+            }).catch(console.log);
+    };
+
+    const update = async (body) => {
+        await apiInstance.put(`/faq/${defaultFaq._id}`, { ...body, _id: defaultFaq._id })
+            .then(({ data }) => {
+                onCreated();
+                toast.success('Pregunta modificada satisfactoriamente', {
+                    position: toast.POSITION.TOP_RIGHT
+                });
+            }).catch(console.log);
+    };
+
+    const requestHandler = (body) => {
+        defaultFaq ? update(body) : create(body);
+    };
+
     return (
         <>
-            <form id="createQuestion" onSubmit={handleSubmit(create)} className="p-4 sm:p-6 sm:pt-4">
+            <form id="createQuestion" onSubmit={handleSubmit(requestHandler)} className="p-4 sm:p-6 sm:pt-4">
                 <fieldset disabled={loading} className="space-y-3">
                     <div>
-                        <label htmlFor="email" className="text-sm ml-2 mb-1 dark:text-gray-500">Email</label>
-                        <input id="email" {...register('email', { required: true })}
-                            type="email" autoComplete="off" maxLength={200}
+                        <label htmlFor="question" className="text-sm ml-2 mb-1 dark:text-gray-500">Pregunta</label>
+                        <input id="question" {...register('question', { required: true })} defaultValue={defaultFaq?.question}
+                            type="text" autoComplete="off" maxLength={200}
                             className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700 dark:text-gray-400" />
-                        {errors.email && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
+                        {errors.question && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
+                    </div>
+                    <div>
+                        <label htmlFor="answer" className="text-sm ml-2 mb-1 dark:text-gray-500">Respuesta</label>
+                        <textarea id="answer" rows={2} {...register('answer', { required: true })} defaultValue={defaultFaq?.answer}
+                            type="text" autoComplete="off" maxLength={1000}
+                            className="w-full input rounded-xl border-none bg-blue-100 bg-opacity-60 border dark:bg-gray-600" />
+                        {errors.answer && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
+                    </div>
+                    <div>
+                        <label htmlFor="isActive" className="text-sm ml-2 mb-1 dark:text-gray-500">Estado</label>
+                        <Controller control={control} name="isActive" defaultValue={defaultFaq?.isActive ?? true}
+                            rules={{ required: true }} render={({ field: { onChange } }) => (
+                                <Select labels array={[{ label: 'Activa', value: true }, { label: 'Inactiva', value: false }]} onChange={onChange}
+                                    activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle="z-10"
+                                    buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700 dark:text-gray-400"
+                                    dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500" />
+                            )} />
+                        {errors.isActive && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
+                    </div>
+                    <div>
+                        <label htmlFor="category" className="text-sm ml-2 mb-1 dark:text-gray-500">Categoria</label>
+                        <Controller control={control} name="category" rules={{ required: true }} defaultValue={(defaultFaq?.category ?? selected) ?? null}
+                            render={({ field: { onChange } }) => (
+                                <Select labels array={categories} onChange={onChange} defaultValue={(defaultFaq?.category ?? selected) ?? null}
+                                    activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle="z-10"
+                                    buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700 dark:text-gray-400"
+                                    dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500" />
+                            )} />
+                        {errors.category && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
                     </div>
                 </fieldset>
             </form>
@@ -51,7 +110,7 @@ const CreateQuestion = ({ close, onCreated }) => {
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>}
                     <p className="text-white text-base sm:text-sm font-medium">
-                        {loading ? 'Creando...' : 'Crear'}
+                        {loading ? (defaultFaq ? 'Modificando...' : 'Creando...') : (defaultFaq ? 'Modificar' : 'Crear')}
                     </p>
                 </button>
                 <button type="button" onClick={() => close(false)}

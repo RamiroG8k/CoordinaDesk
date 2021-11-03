@@ -1,13 +1,17 @@
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react';
 import { CgArrowsExchangeAltV, CgCheck } from 'react-icons/cg';
 import { Listbox, Transition } from '@headlessui/react';
 
 const Select = ({ array, item = '', labels = false, defaultValue, onChange, disabled = false,
     buttonStyle, dropdownStyle, activeStyle, parentStyle }) => {
 
-    const [selected, setSelected] = useState(labels ?
-        (array.filter((item => item.value === defaultValue))[0] ?? array[0]) :
-        (defaultValue ?? array[0]));
+    const [selected, setSelected] = useState(labels ? { label: null, value: null} : null);
+
+    useEffect(() => {
+        setSelected(labels ?
+            (array.filter((item => item.value === defaultValue))[0] ?? array[0]) :
+            (defaultValue ?? array[0]));
+    }, [array, labels, defaultValue])
 
     const handleChange = (value) => {
         const rawValue = labels ? array.filter((item => item.value === value))[0] : value;
@@ -16,10 +20,10 @@ const Select = ({ array, item = '', labels = false, defaultValue, onChange, disa
     };
 
     return (
-        <Listbox disabled={disabled} value={labels ? selected.value : selected} onChange={handleChange}>
+        <Listbox disabled={disabled} value={labels ? selected?.value : selected} onChange={handleChange}>
             <div className={`${parentStyle} relative`}>
                 <Listbox.Button className={`${buttonStyle} relative w-full py-2 pl-3 pr-10 text-left rounded-xl cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm`}>
-                    <span className="block truncate">{`${labels ? selected.label : selected} ${item}`}</span>
+                    <span className="block truncate">{`${labels ? selected?.label : selected} ${item}`}</span>
                     <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                         <CgArrowsExchangeAltV />
                     </span>
@@ -30,11 +34,11 @@ const Select = ({ array, item = '', labels = false, defaultValue, onChange, disa
                         {array.map((e, i) => (
                             <Listbox.Option key={i} className={({ active }) =>
                                 `${active ? `${activeStyle}` : 'text-gray-900'} cursor-pointer select-none relative py-2 pl-10 pr-4`}
-                                value={labels ? e.value : e}>
+                                value={labels ? e?.value : e}>
                                 {({ selected, active }) => (
                                     <>
                                         <span className={`${selected ? 'font-medium' : 'font-normal'} block truncate`}>
-                                            {labels ? e.label : e}
+                                            {labels ? e?.label : e}
                                         </span>
                                         {selected ? (
                                             <span className={`${active ? 'text-amber-600' : 'text-amber-600'} absolute inset-y-0 left-0 flex items-center pl-3`}>

@@ -28,7 +28,6 @@ const Categories = ({ onActive, onCreate, onRefresh, onUpdate }) => {
     };
 
     const handleActive = (item) => {
-        console.log(active);
         onActive(item);
         setActive(item._id);
     };
@@ -130,13 +129,14 @@ const Categories = ({ onActive, onCreate, onRefresh, onUpdate }) => {
                                     className="flex flex-col gap-4 border-4 border-dashed dark:border-gray-800 sm:w-1/2 rounded-xl">
                                     <h4 className="ml-2 font-semibold text-xl dark:text-gray-300">Inactivas</h4>
                                     <div className="flex flex-wrap gap-x-3 gap-y-2">
-                                        {categories.map(({ _id, category, ...other }, i) => {
+                                        {categories.map((item, i) => {
+                                            const { _id, category, ...other } = item;
                                             return (!other.isActive) ?
                                                 <Draggable key={_id} draggableId={_id} index={i}>
                                                     {(provided) => (
                                                         <div key={_id} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
                                                             className="flex items-center cursor-move btn btn-animated w-auto bg-white dark:bg-gray-600 border dark:border-gray-900 rounded-xl group overflow-hidden opacity-60">
-                                                            <p className="p-2 text-sm">
+                                                            <p className="p-2 text-sm" onClick={() => handleActive(item)}>
                                                                 {category}
                                                             </p>
                                                             <button type="button" className="hidden group-hover:block p-1 transition-all">
