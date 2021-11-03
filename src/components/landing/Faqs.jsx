@@ -69,10 +69,10 @@ const Faqs = () => {
         if (faqsContainer.current) {
             const { scrollTop, scrollHeight, clientHeight } = faqsContainer.current;
             if (scrollTop + clientHeight === scrollHeight) {
-                setOverflows(v => ({...v, reached: true }));
+                setOverflows(v => ({ ...v, reached: true }));
                 return;
             }
-            setOverflows(v => ({...v, reached: false }));
+            setOverflows(v => ({ ...v, reached: false }));
         }
     };
 
@@ -88,7 +88,9 @@ const Faqs = () => {
                 <div className="flex flex-col-reverse sm:flex-row gap-4 h-4/5 w-full z-10">
                     <div className="relative sm:w-4/5">
                         <div ref={faqsContainer} onScroll={onScroll} className="h-96 sm:h-full overflow-y-scroll scrollbar-hide">
-                            {faqs?.map((faq) => <Disclosure key={faq.id} {...faq} />)}
+                            {faqs?.map((faq, i) => {
+                                return <Disclosure key={faq?.id ?? i} {...faq} />
+                            })}
                         </div>
 
                         {(overflows?.height && !overflows.reached) && <div className="absolute right-4 bottom-0 flex items-center animate-bounce text-blue-400">
