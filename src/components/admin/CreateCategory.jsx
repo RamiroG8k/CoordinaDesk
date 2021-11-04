@@ -57,17 +57,14 @@ const CreateCategory = ({ close, onCreated, defaultCategory }) => {
                             className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700 dark:text-gray-400" />
                         {errors.category && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
                     </div>
-                    <div>
-                        <label htmlFor="isActive" className="text-sm ml-2 mb-1 dark:text-gray-500">Estado</label>
-                        <Controller control={control} name="isActive" defaultValue={defaultCategory?.isActive ?? true} rules={{ required: true }}
-                            render={({ field: { onChange } }) => (
-                                <Select labels array={[{ label: 'Activa', value: true }, { label: 'Inactiva', value: false }]}
-                                    onChange={({ value }) => onChange(value)} defaultValue={(defaultCategory?.isActive) ?? true}
-                                    activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle="z-10"
-                                    buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700 dark:text-gray-400"
-                                    dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500" />
+
+                    <div className="form-group form-check inline-flex items-center dark:text-gray-500 text-sm ml-2 mb-1">
+                        <Controller control={control} name="isActive" defaultValue={defaultCategory?.isActive ?? true}
+                            render={({ field: { onChange, value } }) => (
+                                <input type="checkbox" id="isActive" checked={value ? true : false}
+                                    className="form-check-input" onChange={onChange} value={value} />
                             )} />
-                        {errors.isActive && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
+                        <label htmlFor="isActive" className="form-check-label ml-2">Categoria activa</label>
                     </div>
                 </fieldset>
             </form>

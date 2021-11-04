@@ -78,22 +78,6 @@ const CreateQuestion = ({ close, selected, onCreated, defaultFaq }) => {
                             className="w-full input rounded-xl border-none bg-blue-100 bg-opacity-60 border dark:bg-gray-600" />
                         {errors.answer && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
                     </div>
-                    <div>
-                        <label htmlFor="isActive" className="text-sm ml-2 mb-1 dark:text-gray-500">Estado</label>
-
-
-                        <Controller control={control} name="isActive" defaultValue={(defaultFaq?.isActive) ?? true}
-                            rules={{ required: true }} render={({ field: { onChange } }) => (
-                                <Select labels array={[{ label: 'Activa', value: true }, { label: 'Inactiva', value: false }]}
-                                    onChange={({ value }) => onChange(value)}
-                                    activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle=""
-                                    buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700 dark:text-gray-400"
-                                    dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500 z-50" />
-                            )} />
-                        {errors.isActive && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
-
-
-                    </div>
                     <div className="flex-grow-0 w-full">
                         <label htmlFor="category" className="text-sm ml-2 mb-1 dark:text-gray-500">Categoria</label>
                         <Controller control={control} name="category" rules={{ required: true }} defaultValue={(defaultFaq?.category ?? selected._id) ?? null}
@@ -104,6 +88,14 @@ const CreateQuestion = ({ close, selected, onCreated, defaultFaq }) => {
                                     dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500 z-50" />
                             )} />
                         {errors.category && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
+                    </div>
+                    <div className="form-group form-check inline-flex items-center dark:text-gray-500 text-sm ml-2 mb-1">
+                        <Controller control={control} name="isActive" defaultValue={defaultFaq?.isActive ?? true}
+                            render={({ field: { onChange, value } }) => (
+                                <input type="checkbox" id="isActive" checked={value ? true : false}
+                                    className="form-check-input" onChange={onChange} value={value} />
+                            )} />
+                        <label htmlFor="isActive" className="form-check-label ml-2">Pregunta activa</label>
                     </div>
                 </fieldset>
             </form>

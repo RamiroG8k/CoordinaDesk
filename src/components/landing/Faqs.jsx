@@ -37,7 +37,7 @@ const Faqs = () => {
     }, [selected]);
 
     const fetchCategories = async () => {
-        await apiInstance.get('/category/all')
+        await apiInstance.get('/category/all', { params: { isActive: true } })
             .then(({ data }) => {
                 const activeCategories = data.filter(c => c.isActive);
 
@@ -49,7 +49,7 @@ const Faqs = () => {
     };
 
     const fetchFaqs = async (id) => {
-        await apiInstance.get(`/faq/category/${id}`)
+        await apiInstance.get(`/faq/category/${id}`, { params: { isActive: true } })
             .then(({ data }) => {
                 setFaqs(data ? faqParser(data) : []);
                 setOverflows(checkOverflow(faqsContainer.current));
