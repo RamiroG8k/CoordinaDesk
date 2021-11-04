@@ -52,10 +52,13 @@ const Categories = ({ onActive, onCreate, onRefresh, onUpdate }) => {
             }).catch(console.log);
     };
 
-    const handleDelete = (item) => {
-        const del = window.confirm(`Esta a punto de eliminar la categoria: ${item.category}`);
-        if (del === true) {
-            deleteById(item._id);
+    const handleDelete = ({ _id: id}) => {
+        const item = categories.filter(e => e._id === id)[0] 
+        if (item.category !== 'CHATBOT') {
+            const del = window.confirm(`Esta a punto de eliminar la categoria: ${item.category}`);
+            if (del === true) {
+                deleteById(item._id);
+            }
         }
     };
 

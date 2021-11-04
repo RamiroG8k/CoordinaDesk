@@ -26,6 +26,7 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
     const fetchTicketDetails = async (id) => {
         await apiInstance.get(`/ticket/id/${id}`)
             .then(({ data }) => {
+                console.log(data);
                 setInfo(data);
             }).catch(({ response: { data: error } }) => {
                 console.log(error);
@@ -167,7 +168,7 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                     <div className="w-full sm:w-1/3 space-y-4">
                         <div>
                             <label className="text-sm ml-2">Estado</label>
-                            <Select array={[ticketStatus[1], ticketStatus[2], ticketStatus[4]]} labels defaultValue={info.status} disabled={disabled}
+                            <Select array={ticketStatus} labels defaultValue={info.status} disabled={disabled}
                                 buttonStyle="w-full rounded-xl bg-blue-100 dark:bg-gray-800 text-gray-500"
                                 dropdownStyle="bg-white dark:bg-gray-600 dark:text-gray-400 z-20"
                                 activeStyle="bg-blue-100 dark:bg-gray-800"
