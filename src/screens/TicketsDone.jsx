@@ -21,17 +21,26 @@ const TicketsDone = () => {
     const fetchTickets = async (page, limit = 10, search) => {
         await apiInstance.get('/ticket/inactive/all',
             { params: { page, limit, status: search, title: search, priority: search } })
-            .then(({ data }) => {
+            .then((response) => {
+                const { data: res } = response;
+                if (response.status === 204) {
+                    setData((actual) => ({
+                        ...actual,
+                        rows: [],
+                        columns: [],
+                    }));
+                    return;
+                }
                 setData({
-                    rows: ticketParser(data.content),
-                    columns: Object.keys(ticketParser(data.content)[0]).slice(1),
+                    rows: ticketParser(res.content),
+                    columns: Object.keys(ticketParser(res.content)[0]).slice(1),
                     actions: ticketActions,
                     pagination: {
-                        total: data.totalElements,
-                        from: data.page > 1 ? (((data.page - 1) * limit) + 1) : 1,
-                        to: (limit * data.page) > data.totalElements ? data.totalElements : (limit * data.page),
-                        current: data.page,
-                        last: data.pages,
+                        total: res.totalElements,
+                        from: res.page > 1 ? (((res.page - 1) * limit) + 1) : 1,
+                        to: (limit * res.page) > res.totalElements ? res.totalElements : (limit * res.page),
+                        current: res.page,
+                        last: res.pages,
                     }
                 });
             }).catch(console.log);

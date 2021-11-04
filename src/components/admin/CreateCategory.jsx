@@ -1,11 +1,10 @@
 // Common
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-// Components
-import { Select } from 'components/shared';
 // Data | Services
 import { apiInstance } from 'services';
 import { toast } from 'react-toastify';
+import { errorMessages } from 'utils/data';
 
 const CreateCategory = ({ close, onCreated, defaultCategory }) => {
     const [loading, setLoading] = useState(false);
@@ -21,7 +20,10 @@ const CreateCategory = ({ close, onCreated, defaultCategory }) => {
                 });
             }).catch(({ response: { data: error } }) => {
                 reset();
-                toast.error(error.message, {
+
+                const { customText } = errorMessages.find((e) => e.message === error.message);
+
+                toast.error(customText, {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 5000,
                     hideProgressBar: false,

@@ -105,7 +105,7 @@ const Faqs = () => {
                         <h5 className="font-medium text-right mb-2 text-blue-600 sm:text-gray-800">
                             Categorias
                         </h5>
-                        <div className="flex sm:flex-col flex-wrap gap-x-6 gap-y-4 justify-center">
+                        <div className="flex sm:flex-col flex-wrap sm:flex-nowrap gap-x-6 gap-y-4 justify-center w-full max-h-full overflow-y-scroll">
                             {categories?.map(({ _id, category }, i) =>
                                 <button key={_id} onClick={() => setSelected(_id)}
                                     className={`${selected === _id ? 'sm:-translate-x-4 font-medium scale-105 text-blue-600 dark:text-blue-700' : 'hover:scale-105 hover:text-blue-600 hover:-translate-x-2'}

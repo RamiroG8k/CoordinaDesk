@@ -34,7 +34,6 @@ apiInstance.interceptors.response.use((response) => {
 }, async (error) => {
     const { response: { data: { status } } } = error;
     if (status === 401) {
-        // TODO: Handle session
         toast.error('Sesion expirada, por favor ingresa tus credenciales de nuevo', {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,

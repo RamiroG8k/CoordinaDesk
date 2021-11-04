@@ -76,20 +76,20 @@ const ticketPriority = [
 
 const errorMessages = [
     // Common
-    { customText: 'ID_NOTFOUND', message: 'ERROR.COMMON.ID_NOTFOUND' },
-    { customText: 'UNIQUE_ID', message: 'ERROR.COMMON.UNIQUE_ID' },
+    { customText: 'No se ha encontrado el elemento', message: 'ERROR.COMMON.ID_NOTFOUND' },
+    { customText: 'Necesita ser unico', message: 'ERROR.COMMON.UNIQUE_ID' },
     { customText: 'No es posible eliminar, aun tiene dependencias por resolver', message: 'ERROR.COMMON.DELETE_HAS_DEPENDENCIES' },
-    { customText: 'UPDATE_HAS_DEPENDENCIES', message: 'ERROR.COMMON.UPDATE_HAS_DEPENDENCIES' },
-    { customText: 'UNIQUE_NAME', message: 'ERROR.COMMON.UNIQUE_NAME' },
-    { customText: 'FIELD_MAY_NOT_BE_EMPTY', message: 'ERROR.COMMON.FIELD_MAY_NOT_BE_EMPTY' },
-    { customText: 'INVALID_PARAM', message: 'ERROR.COMMON.INVALID_PARAM' },
-    { customText: 'OPERATION_NOT_ALLOWED', message: 'ERROR.COMMON.OPERATION_NOT_ALLOWED' },
-    { customText: 'INVALID_QUERY_PARAMS', message: 'ERROR.COMMON.INVALID_QUERY_PARAMS' },
-    { customText: 'CONTACT_SUPPORT', message: 'ERROR.COMMON.CONTACT_SUPPORT' },
-    { customText: 'UNDEFINED_ERROR', message: 'ERROR.COMMON.UNDEFINED' },
-    { customText: 'BAD_REQUEST', message: 'ERROR.COMMON.BAD_REQUEST' },
-    { customText: 'MUST_BE_UNIQUE', message: 'ERROR.COMMON.MUST_BE_UNIQUE' },
-    { customText: 'ID_NOT_MATCH', message: 'ERROR.COMMON.ID_DOES_NOT_MATCH' },
+    { customText: 'La actualizacion tiene dependencias', message: 'ERROR.COMMON.UPDATE_HAS_DEPENDENCIES' },
+    { customText: 'El nombre tiene que ser unico', message: 'ERROR.COMMON.UNIQUE_NAME' },
+    { customText: 'Los campos no deben estar vacios', message: 'ERROR.COMMON.FIELD_MAY_NOT_BE_EMPTY' },
+    { customText: 'Parametro no valido', message: 'ERROR.COMMON.INVALID_PARAM' },
+    { customText: 'Operacion no permitida', message: 'ERROR.COMMON.OPERATION_NOT_ALLOWED' },
+    { customText: 'Peticion invalida', message: 'ERROR.COMMON.INVALID_QUERY_PARAMS' },
+    { customText: 'Contacta con soporte', message: 'ERROR.COMMON.CONTACT_SUPPORT' },
+    { customText: 'Error indefinido', message: 'ERROR.COMMON.UNDEFINED' },
+    { customText: 'Mala peticion', message: 'ERROR.COMMON.BAD_REQUEST' },
+    { customText: 'Error, Debe ser unico', message: 'ERROR.COMMON.MUST_BE_UNIQUE' },
+    { customText: 'No hay coincidencias', message: 'ERROR.COMMON.ID_DOES_NOT_MATCH' },
 
     // Auth
     { customText: 'Credenciales erróneas, por favor intente de nuevo', message: 'ERROR.AUTH.BAD_CREDENTIALS' },

@@ -23,17 +23,26 @@ const Users = () => {
     const fetchUsers = async (page, limit = 10, search) => {
         await apiInstance.get('/user/all/pageable',
             { params: { page, limit, name: search, email: search, role: search } })
-            .then(({ data }) => {
+            .then((response) => {
+                const { data: res } = response;
+                if (response.status === 204) {
+                    setData((actual) => ({
+                        ...actual,
+                        rows: [],
+                        columns: [],
+                    }));
+                    return;
+                }
                 setData({
-                    rows: userParser(data.content),
-                    columns: Object.keys(userParser(data.content)[0]).slice(1),
+                    rows: userParser(res.content),
+                    columns: Object.keys(userParser(res.content)[0]).slice(1),
                     actions: userActions,
                     pagination: {
-                        total: data.totalElements,
-                        from: data.page > 1 ? (((data.page - 1) * limit) + 1) : 1,
-                        to: (limit * data.page) > data.totalElements ? data.totalElements : (limit * data.page),
-                        current: data.page,
-                        last: data.pages,
+                        total: res.totalElements,
+                        from: res.page > 1 ? (((res.page - 1) * limit) + 1) : 1,
+                        to: (limit * res.page) > res.totalElements ? res.totalElements : (limit * res.page),
+                        current: res.page,
+                        last: res.pages,
                     }
                 });
             }).catch(console.log);
