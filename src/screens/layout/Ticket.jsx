@@ -88,7 +88,7 @@ const Ticket = () => {
                     <div className="flex flex-col justify-center w-5/12 text-left py-2 px-4 gap-2">
                         <p className="text-sm sm:text-lg leading-3">Fecha Apertura</p>
                         <div className="leading-4">
-                            <p className="font-medium text-2xl">{`${shortDate(ticket.createdAt)[0]}/${shortDate(ticket.createdAt)[1]}`}</p>
+                            <p className="font-medium text-2xl">{`${shortDate(ticket.createdAt)[0]}/${shortDate(ticket.createdAt)[1] + 1}`}</p>
                             <p>{shortDate(ticket.createdAt)[2]}</p>
                         </div>
                     </div>
@@ -108,7 +108,7 @@ const Ticket = () => {
                     <div className="flex flex-col justify-center w-5/12 text-right py-2 px-4 gap-2">
                         <p className="text-sm sm:text-lg leading-3">Fecha Modificación</p>
                         <div className="leading-4">
-                            <p className="font-medium text-2xl">{`${shortDate(ticket.createdAt)[0]}/${shortDate(ticket.createdAt)[1]}`}</p>
+                            <p className="font-medium text-2xl">{`${shortDate(ticket.createdAt)[0]}/${shortDate(ticket.createdAt)[1] + 1}`}</p>
                             <p>{shortDate(ticket.createdAt)[2]}</p>
                         </div>
                     </div>
