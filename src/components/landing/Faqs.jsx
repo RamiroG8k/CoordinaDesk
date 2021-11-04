@@ -89,7 +89,7 @@ const Faqs = () => {
                     <div className="relative sm:w-4/5">
                         <div ref={faqsContainer} onScroll={onScroll} className="h-96 sm:h-full overflow-y-scroll scrollbar-hide">
                             {faqs?.map((faq, i) => {
-                                return <Disclosure key={faq?.id ?? i} {...faq} />
+                                return <Disclosure key={faq?.id ?? i} {...faq} className="p-3" />
                             })}
                         </div>
 

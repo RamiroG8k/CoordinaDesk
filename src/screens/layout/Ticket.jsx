@@ -115,7 +115,7 @@ const Ticket = () => {
                 </div>
 
                 <div className="flex flex-col rounded-3xl gap-3 w-full h-2/3 p-4 bg-white dark:bg-gray-700">
-                    <Disclosure title={ticket.title} description={ticket.description} color="blue" className="rounded-xl" />
+                    <Disclosure title={ticket.title} description={ticket.description} color="blue" className="p-3 rounded-xl" />
 
                     <div className="flex flex-col w-full h-full overflow-y-scroll scrollbar-hide">
                         <ScrollableFeed>
