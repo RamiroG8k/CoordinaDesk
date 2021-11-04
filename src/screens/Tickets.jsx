@@ -166,7 +166,7 @@ const Tickets = () => {
                     <div className="sm:w-1/3">
                         <label htmlFor="" className="text-sm ml-2 dark:text-gray-400">Usuario</label>
                         {users && <Select labels array={[{ label: 'Todos', value: null }, ...users]}
-                            onChange={({ value }) => setFilters((filters) => ({ ...filters, user: value }))}
+                            onChange={({ value }) => setFilters({ ...filters, user: value })}
                             activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle="z-10"
                             buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-800 dark:text-gray-500 capitalize"
                             dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500" />}
@@ -179,7 +179,7 @@ const Tickets = () => {
                     <div className="sm:w-1/3">
                         <label htmlFor="" className="text-sm ml-2 dark:text-gray-400">Prioridad</label>
                         <Select array={['TODAS', 'LOW', 'MODERATE', 'HIGH']}
-                            onChange={(value) => setFilters((filters) => ({ ...filters, priority: value }))}
+                            onChange={(value) => setFilters({ ...filters, priority: value })}
                             activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle="z-10"
                             buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-800 dark:text-gray-500"
                             dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500" />
