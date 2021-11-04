@@ -62,7 +62,7 @@ const CreateCategory = ({ close, onCreated, defaultCategory }) => {
                         <Controller control={control} name="isActive" defaultValue={defaultCategory?.isActive ?? true} rules={{ required: true }}
                             render={({ field: { onChange } }) => (
                                 <Select labels array={[{ label: 'Activa', value: true }, { label: 'Inactiva', value: false }]}
-                                    onChange={onChange} defaultValue={(defaultCategory?.isActive) ?? true}
+                                    onChange={({ value }) => onChange(value)} defaultValue={(defaultCategory?.isActive) ?? true}
                                     activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle="z-10"
                                     buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700 dark:text-gray-400"
                                     dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500" />

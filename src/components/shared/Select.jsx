@@ -17,6 +17,7 @@ const Select = ({ array, item = '', labels = false, defaultValue, onChange, disa
         const rawValue = labels ? array.filter((item => item.value === value))[0] : value;
         setSelected(rawValue);
         onChange(rawValue);
+        console.log(rawValue);
     };
 
     return (

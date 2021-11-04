@@ -184,18 +184,20 @@ const Categories = ({ onActive, onCreate, onRefresh, onUpdate }) => {
                                                 <Draggable key={_id} draggableId={_id} index={i}>
                                                     {(provided) => (
                                                         <div key={_id} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
-                                                            className="flex cursor-move btn btn-animated w-full h-10 bg-white dark:bg-gray-600 border dark:border-gray-900 rounded-xl group overflow-hidden opacity-60">
+                                                            className="flex justify-between cursor-move btn btn-animated w-full h-10 bg-white dark:bg-gray-600 border dark:border-gray-900 rounded-xl group overflow-hidden opacity-60">
                                                             <p className="p-2 text-sm truncate" onClick={() => handleActive(item)}>
                                                                 {category}
                                                             </p>
-                                                            <button type="button" title="Editar" onClick={() => onUpdate(item)}
-                                                                className="hidden group-hover:block p-1">
-                                                                <HiPencilAlt />
-                                                            </button>
-                                                            <button type="button" title="Eliminar" onClick={() => handleDelete(item)}
-                                                                className="hidden group-hover:block p-1">
-                                                                <HiTrash />
-                                                            </button>
+                                                            <div className="flex">
+                                                                <button type="button" title="Editar" onClick={() => onUpdate(item)}
+                                                                    className="hidden group-hover:block p-1">
+                                                                    <HiPencilAlt />
+                                                                </button>
+                                                                <button type="button" title="Eliminar" onClick={() => handleDelete(item)}
+                                                                    className="hidden group-hover:block p-1">
+                                                                    <HiTrash />
+                                                                </button>
+                                                            </div>
                                                         </div>)}
                                                 </Draggable> : null;
                                         })}
