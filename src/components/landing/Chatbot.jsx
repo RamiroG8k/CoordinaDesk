@@ -12,7 +12,7 @@ import ScrollableFeed from 'react-scrollable-feed';
 const Chatbot = ({ onCreate, ticket }) => {
     const [chat, setChat] = useState([
         { answer: 'Hola soy Deskbot!' },
-        { answer: 'Estoy aqui para ayudar, Por favor pregunta algo para empezar! 🔥' },
+        { answer: 'Estoy aquí para ayudar, Por favor pregunta algo para empezar! 🔥' },
     ]);
     const [question, setQuestion] = useState('');
     const [create, setCreate] = useState({ length: false, wrong: false });
@@ -33,7 +33,7 @@ const Chatbot = ({ onCreate, ticket }) => {
     useEffect(() => {
         setChat([
             { answer: 'Hola soy Deskbot!' },
-            { answer: 'Estoy aqui para ayudar, Por favor pregunta algo para empezar! 🔥' },
+            { answer: 'Estoy aquí para ayudar, Por favor pregunta algo para empezar! 🔥' },
         ]);
         setCreate({ length: false, wrong: false });
     }, [ticket]);
@@ -49,7 +49,7 @@ const Chatbot = ({ onCreate, ticket }) => {
             setChat([...chat, { question }]);
             await apiInstance.post('/chatbot/evaluate', { question })
                 .then(({ data }) => {
-                    setChat([...chat, { question }, data !== '' ? data : { answer: 'Vaya!, parece que no entiendo del todo tu pregunta, intenta de nuevo por favor!' }]);
+                    setChat([...chat, { question }, data !== '' ? data : { answer: 'Vaya!, parece que no entiendo del todo tu pregunta, intenta de nuevo por favor' }]);
                     setCreate({
                         length: chat.length >= 10,
                         wrong: data === '' ? true : false
@@ -80,7 +80,7 @@ const Chatbot = ({ onCreate, ticket }) => {
     return (
         <section className="relative flex flex-col w-screen h-screen items-center bg-white dark:bg-gray-800">
             <div className="flex flex-col justify-center items-center h-1/3 p-4 sm:p-10 text-center w-full sm:max-w-6xl">
-                <h1 className="text-4xl sm:text-6xl font-semibold p-2 sm:p-4 dark:text-gray-300">CoordinaDesk</h1>
+                <h1 className="text-4xl sm:text-6xl font-semibold p-2 sm:p-4 dark:text-gray-300">Coordina Desk</h1>
                 <p className="font-medium text-md sm:text-xl text-gray-600 dark:text-gray-500">Coordina Desk es una plataforma web para apoyar a los estudiantes de ingeniería en computación en la solución de problemas y dudas con ayuda de Deskbot (nuestro chatbot) y de su propio help desk.</p>
             </div>
 
@@ -97,7 +97,7 @@ const Chatbot = ({ onCreate, ticket }) => {
                             <p className="text-2xl">
                                 <BiCommentEdit />
                             </p>
-                            <p className="break-words leading-3 text-xs font-medium">Si aun no te ha resultado util la informacion, puedes crear un ticket para dar seguimiento a tu caso con folio de referencia, Toca aqui!</p>
+                            <p className="break-words leading-3 text-xs font-medium">Si aún no te ha resultado útil la información, puedes crear un ticket para dar seguimiento a tu caso con folio de referencia, Toca aquí!</p>
                         </button>}
                         <div className="flex flex-col h-full w-full bg-gray-50 dark:bg-gray-700 rounded-5xl p-4 overflow-y-scroll scrollbar-hide">
                             <ScrollableFeed>

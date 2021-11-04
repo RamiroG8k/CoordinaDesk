@@ -148,7 +148,7 @@ const TicketsDone = () => {
             </Modal>
 
             <Modal visible={details.visible} onClose={(show) => setDetails({ ...details, visible: show })}
-                size="xl" title={`Detalles de ticket (${details.data?._id})`}>
+                size="5xl" title={`Detalles de ticket (${details.data?._id})`}>
                 {details.data && <TicketDetails id={details.data._id} disabled
                     close={() => setDetails({ ...details, visible: false })} />}
             </Modal>

@@ -169,8 +169,8 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                         <div>
                             <label className="text-sm ml-2">Estado</label>
                             <Select array={ticketStatus} labels defaultValue={info.status} disabled={disabled}
-                                buttonStyle="w-full rounded-xl bg-blue-100 dark:bg-gray-800 text-gray-500"
-                                dropdownStyle="bg-white dark:bg-gray-600 dark:text-gray-400 z-20"
+                                buttonStyle="w-full rounded-xl bg-blue-100 dark:bg-gray-800 text-gray-500 uppercase"
+                                dropdownStyle="bg-white dark:bg-gray-600 dark:text-gray-400 z-20 uppercase"
                                 activeStyle="bg-blue-100 dark:bg-gray-800"
                                 onChange={({ value }) => updateStatus(value)} />
                         </div>

@@ -49,15 +49,6 @@ const ChatbotTools = () => {
         }
     }, [classificationCat])
 
-    const trainNlp = async () => {
-        await apiInstance.post('/nlp/train')
-            .then(({ data }) => {
-                toast.success(`Se ha iniciado a entrenar`, {
-                    position: toast.POSITION.TOP_RIGHT
-                });
-            }).catch(console.log)
-    };
-
     const fetchCategories = async () => {
         await apiInstance.get('/classification-category/all')
             .then(({ data }) => {
@@ -155,24 +146,24 @@ const ChatbotTools = () => {
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');
                 link.href = url;
-                link.setAttribute('download', `currentFile.csv`);
+                link.setAttribute('download', `semestre-actual.csv`);
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
             }).catch(console.log);
     };
 
-    const downloadFileById = async (id) => {
+    const downloadFileById = async (item) => {
         toast.success(`Preparando archivo para descarga`, {
             position: toast.POSITION.TOP_RIGHT
         });
 
-        await apiInstance.get(`/chatbot/files/${id}`, { responseType: 'blob' })
+        await apiInstance.get(`/chatbot/files/${item._id}`, { responseType: 'blob' })
             .then((response) => {
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');
                 link.href = url;
-                link.setAttribute('download', `currentFile.csv`);
+                link.setAttribute('download', `${item.archivo}.csv`);
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -182,6 +173,7 @@ const ChatbotTools = () => {
     const fetchPaginatedFiles = async (page, limit = 10, search) => {
         await apiInstance.get('/chatbot/files/all/pageable')
             .then(({ data }) => {
+                console.log(data);
                 setFiles({
                     rows: fileParser(data.content),
                     columns: Object.keys(fileParser(data.content)[0]).slice(1),
@@ -212,11 +204,11 @@ const ChatbotTools = () => {
                 <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 sm:pt-4 space-y-4">
                     <div className="space-y-1">
                         <h4 className="text-xl font-medium">Concurrencia de datos</h4>
-                        <p className="leading-4 text-sm">De manera automatica 1 vez cada 30 de Julio y 30 de Diciembre se genera de manera automatica el archivo con los datos del semestre actual.</p>
+                        <p className="leading-4 text-sm">De manera automática 1 vez cada 30 de Julio y 30 de Diciembre se genera de manera automática el archivo con los datos del semestre actual.</p>
                     </div>
                     <div className="space-y-1">
                         <h4 className="text-lg font-medium">Generar archivo</h4>
-                        <p className="leading-4 text-sm">Que si se genera un archivo con el boton de generar, son los datos del semestre actual.</p>
+                        <p className="leading-4 text-sm">Si se genera un archivo con el botón de generar, son los datos del semestre actual.</p>
                     </div>
                     <div className="border w-full rounded-full dark:border-gray-800 mt-4" />
                     <div className="text-sm space-y-2 mt-2 text-justify">
@@ -226,44 +218,40 @@ const ChatbotTools = () => {
                     </div>
                 </div>
             </Modal>
-            <Modal visible={create} onClose={setCreate} size="md" title="Crear categoria de clasificacion">
+            <Modal visible={create} onClose={setCreate} size="md" title="Crear categoría de clasificación">
                 <CreateClassification onCreated={refreshHandler} defaultClass={classification}
                     close={() => setCreate(false)} />
             </Modal>
             <section className="flex flex-col gap-8">
-                <div className="flex flex-col sm:flex-row gap-6">
-                    <div className="h-96 bg-white w-full sm:w-1/3 shadow-md dark:bg-gray-700 rounded-4xl p-4 sm:p-6 flex flex-col gap-2 items-center">
-                        <div className="flex relative w-full h-full justify-center items-center">
-                            <div ref={chatbotContainer} className="absolute z-0" />
-                        </div>
-                        <div className="space-y-2 z-10">
-                            <button type="button" onClick={() => trainNlp()}
-                                className="btn btn-animated bg-blue-300 border-2 border-blue-500 py-1 rounded-2xl">
-                                <p className="text-white text-xl">Reentrenar</p>
-                            </button>
-                            <button type="button" onClick={() => classify()}
-                                className="btn btn-animated border-2 border-blue-200 py-1 rounded-xl">
-                                <p className="text-blue-300 text-sm">Reclasificar</p>
-                            </button>
-                            <button type="button" onClick={() => getFile()}
-                                className="btn btn-animated border-2 border-blue-200 py-1 rounded-xl">
-                                <p className="text-blue-300 text-sm">Obtener archivo</p>
-                            </button>
-                        </div>
+                <div className="flex flex-col sm:flex-row h-96 bg-white w-full shadow-md dark:bg-gray-700 rounded-4xl p-4 sm:p-6 gap-2 items-center">
+                    <div className="flex relative w-full sm:w-1/2 h-full justify-center items-center">
+                        <div ref={chatbotContainer} className="absolute z-0" />
                     </div>
-                    <div className="h-96 relative bg-white w-full sm:w-2/3 shadow-md dark:bg-gray-700 rounded-4xl p-4 sm:p-10 flex flex-col">
-                        <h3 className="font-semibold text-2xl">Desk bot</h3>
-                        <p>Breve descripcionde de deskbot, sus funciones....</p>
-                        <button onClick={() => setInfo(true)} className="absolute top-2 right-2 sm:top-10 sm:right-10 h-auto transition rounded-full">
+                    <div className="relative flex flex-col w-full h-full sm:w-1/2" >
+                        <button onClick={() => setInfo(true)} className="absolute right-0 top-0 h-auto transition rounded-full z-10">
                             <p className="p-2 text-3xl text-gray-500 dark:text-gray-400 active:bg-transparent">
                                 <RiQuestionLine />
                             </p>
                         </button>
+                        <div className="flex flex-col items-center justify-around h-full w-full z-0">
+                            <div>
+                                <h3 className="text-4xl font-semibold">Desk bot</h3>
+                                <div className="border w-full rounded-full dark:border-gray-800 my-2" />
+                            </div>
+                            <button type="button" onClick={() => classify()}
+                                className="btn btn-animated border-2 border-blue-200 py-2 rounded-2xl hover:bg-blue-300 group sm:w-2/3">
+                                <p className="text-blue-300 text-lg group-hover:text-white">Reclasificar</p>
+                            </button>
+                            <button type="button" onClick={() => getFile()}
+                                className="btn btn-animated border-2 border-blue-200 py-2 rounded-2xl hover:bg-blue-300 group sm:w-2/3">
+                                <p className="text-blue-300 text-lg group-hover:text-white">Obtener archivo</p>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div className="flex flex-col w-full bg-white shadow-md dark:bg-gray-700 rounded-4xl p-4 sm:p-10 gap-4">
                     <div className="flex justify-between items-center w-full">
-                        <h3 className="font-semibold text-2xl">Categorias de clasificacion</h3>
+                        <h3 className="font-semibold text-2xl">Categorías de clasificación</h3>
                         <div className="flex items-center gap-2">
                             <button onClick={() => handleCreate()} type="button"
                                 className="flex items-center gap-1 btn btn-animated text-lg bg-blue-200 dark:bg-gray-500 w-auto p-3 sm:px-2 sm:py-1">
@@ -324,18 +312,6 @@ const ChatbotTools = () => {
                 <div className="flex flex-col w-full bg-white shadow-md dark:bg-gray-700 rounded-4xl p-4 sm:p-10 gap-4">
                     <div className="flex justify-between items-center w-full">
                         <h3 className="font-semibold text-2xl">Archivos semestrales</h3>
-                        {/* <div className="flex items-center gap-2">
-                            <button onClick={() => handleCreate()} type="button"
-                                className="flex items-center gap-1 btn btn-animated text-lg bg-blue-200 dark:bg-gray-500 w-auto p-3 sm:px-2 sm:py-1">
-                                <p><HiOutlineBookmark /></p>
-                                <p className="hidden md:block">Crear</p>
-                            </button>
-                            <button type="button" onClick={() => setUpdates(!updates)}
-                                className="flex items-center gap-1 btn btn-animated text-lg border-2 dark:border-gray-900 w-auto p-3 sm:px-2 sm:py-1">
-                                <p><HiOutlineAdjustments /></p>
-                                <p className="hidden md:block">Modificar</p>
-                            </button>
-                        </div> */}
                     </div>
 
                     {files && <div className="w-full flex flex-col gap-8 relative">
@@ -350,19 +326,22 @@ const ChatbotTools = () => {
                                 </thead>}
                                 <tbody className="text-center divide-font-medium space-y-4 text-gray-800 divide-y dark:divide-gray-700">
                                     {files.rows.length ? files.rows.map((row, i) =>
-                                        Object.values(row).slice(1).map((e, j) => {
-                                            return (
-                                                <td key={j} className="py-2 dark:text-gray-500">
-                                                    <p onClick={() => downloadFileById(row._id)}
-                                                    className={`${typeof e !== 'string' && 'text-xl cursor-pointer'} px-2 py-1 text-center flex justify-center`}>
-                                                        {e}
-                                                    </p>
-                                                </td>
-                                            );
-                                        })
+                                        <tr key={i} >
+                                            {Object.values(row).slice(1).map((e, j) => {
+                                                return (
+                                                    <td key={j} className="py-2 dark:text-gray-500">
+                                                        <p onClick={() => downloadFileById(row)}
+                                                            className={`${typeof e !== 'string' && 'text-xl cursor-pointer'} px-2 py-1 text-center flex justify-center`}>
+                                                            {e}
+                                                        </p>
+                                                    </td>
+                                                );
+
+                                            })}
+                                        </tr>
                                     ) : <tr>
                                         <td colSpan={files.columns.length}>
-                                            <p className="text-2xl text-center font-bold text-gray-500 py-4">No hay informacion</p>
+                                            <p className="text-2xl text-center font-bold text-gray-500 py-4">No hay información</p>
                                         </td>
                                     </tr>}
                                 </tbody>
