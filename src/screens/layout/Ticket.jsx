@@ -13,6 +13,7 @@ import { ticketStatus } from 'utils/data';
 
 const Ticket = () => {
     const [loading, setLoading] = useState(true);
+    const [disabled, setDisabled] = useState(false);
     const [ticket, setTicket] = useState(null);
     const [hasEmailUpdates, setHasEmailUpdates] = useState();
     const [data, setData] = useState();
@@ -56,12 +57,13 @@ const Ticket = () => {
     };
 
     const toggleEmailNotifs = async () => {
+        setDisabled(true);
         await apiInstance.patch(`/ticket/id/${id}/email-updates`, { hasEmailUpdates })
             .then(({ data }) => {
-                
             }).catch(({ response: { data: error } }) => {
                 console.log(error);
             });
+        await setDisabled(false);
     };
 
     const handleEmailNotifs = () => {
@@ -142,7 +144,7 @@ const Ticket = () => {
                 {(ticket?.status !== 'FINAL_RESOLVE' && ticket?.status !== 'CLOSED_DUE_TO_INACTIVITY') && <>
                     <div className="flex w-full justify-between px-2">
                         <div className="form-group form-check inline-flex items-center dark:text-gray-500 text-sm ml-2 mb-1">
-                            <input type="checkbox" id="hasEmailUpdates" checked={hasEmailUpdates ? true : false}
+                            <input type="checkbox" id="hasEmailUpdates" checked={hasEmailUpdates ? true : false} disabled={disabled}
                                 className="form-check-input" onChange={() => handleEmailNotifs()} value={hasEmailUpdates} />
                             <label htmlFor="hasEmailUpdates" className="form-check-label ml-2">Recibir notificaciones por email</label>
                         </div>

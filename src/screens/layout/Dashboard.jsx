@@ -37,7 +37,7 @@ const Dashboard = ({ children }) => {
                     className="z-20 h-14 sm:h-20 bg-white dark:bg-gray-700 shadow-md sticky top-0" />
 
                 <div className="flex flex-col w-full transition-width duration-500">
-                    <div className="max-w-screen-lg mx-auto p-5 sm:p-10 w-full">
+                    <div className="max-w-screen-xl mx-auto p-5 sm:p-10 w-full">
                         {children}
                     </div>
                 </div>
