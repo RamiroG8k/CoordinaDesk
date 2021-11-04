@@ -47,6 +47,7 @@ const CreateQuestion = ({ close, selected, onCreated, defaultFaq }) => {
     };
 
     const update = async (body) => {
+        setLoading(!loading);
         await apiInstance.put(`/faq/${defaultFaq._id}`, { ...body, _id: defaultFaq._id })
             .then(({ data }) => {
                 onCreated();
@@ -54,6 +55,7 @@ const CreateQuestion = ({ close, selected, onCreated, defaultFaq }) => {
                     position: toast.POSITION.TOP_RIGHT
                 });
             }).catch(console.log);
+        await setLoading(false);
     };
 
     const requestHandler = (body) => {

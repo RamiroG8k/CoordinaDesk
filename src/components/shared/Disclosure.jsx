@@ -10,7 +10,7 @@ const CustomDisclosure = ({ title, question, answer, description, color, classNa
     return (
         <Disclosure>
             {({ open }) => (<>
-                <Disclosure.Button as="button" className={`${className} flex items-center gap-4 w-full p-3 transition sm:text-lg font-medium text-left focus:outline-none
+                <Disclosure.Button as="button" className={`${className} flex items-center gap-4 w-full transition sm:text-lg font-medium text-left focus:outline-none
                             ${color ? `text-${color}-900 bg-${color}-100 dark:bg-${color}-600 hover:bg-${color}-200` : 'border-b dark:border-gray-600'}`}>
 
                     <div className={`${open ? 'transform rotate-180' : ''} w-5 h-5 ${color ? `text-${color}-500` : 'dark:text-gray-300'}`}>

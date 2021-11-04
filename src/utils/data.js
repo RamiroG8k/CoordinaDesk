@@ -88,7 +88,7 @@ const errorMessages = [
     { customText: 'Contacta con soporte', message: 'ERROR.COMMON.CONTACT_SUPPORT' },
     { customText: 'Error indefinido', message: 'ERROR.COMMON.UNDEFINED' },
     { customText: 'Mala peticion', message: 'ERROR.COMMON.BAD_REQUEST' },
-    { customText: 'Error, Debe ser unico', message: 'ERROR.COMMON.MUST_BE_UNIQUE' },
+    { customText: 'Error, Debe ser unico, se encontro una coincidencia', message: 'ERROR.COMMON.MUST_BE_UNIQUE' },
     { customText: 'No hay coincidencias', message: 'ERROR.COMMON.ID_DOES_NOT_MATCH' },
 
     // Auth
@@ -111,4 +111,18 @@ const errorMessages = [
     { customText: 'INVALID_POSITION', message: 'ERROR.FAQ.INVALID_POSITION' },
 ];
 
-export { sections, socials, ticketActions, userActions, ticketStatus, ticketPriority, errorMessages };
+const CHART_COLORS = {
+    purple: '#A5B4FC',
+    purpleB: '#818CF8',
+    blue: '#DBEAFE',
+    charcoal: '#9E9CAB',
+    littleBoy: '#60A5FA',
+    prussian: '#2C3D55',
+    seaGreen: '#1AFFD5',
+    navy: '#1E3A8A',
+    pink: '#FBCFE8',
+    pinkB: '#F9A8D4',
+    old: '#6A687A',
+}
+
+export { sections, socials, ticketActions, userActions, ticketStatus, ticketPriority, errorMessages, CHART_COLORS };
