@@ -1,7 +1,7 @@
 // Common
 import { useEffect, useRef, useState } from 'react';
 // Components
-import { Disclosure, Modal } from 'components/shared';
+import { Disclosure, Modal, Paginator } from 'components/shared';
 import { CreateClassification } from 'components/admin';
 // Services | Data 
 import { apiInstance } from 'services';
@@ -13,6 +13,7 @@ import ChatbotAnimation from '../assets/loader.json';
 import { toast } from 'react-toastify';
 import { RiQuestionLine } from 'react-icons/ri';
 import { HiOutlineBookmark, HiOutlineAdjustments, HiPencilAlt, HiTrash } from 'react-icons/hi';
+import { FiDownload } from 'react-icons/fi';
 import { Doughnut } from 'react-chartjs-2';
 import { BsArrowDownShort } from 'react-icons/bs';
 
@@ -23,6 +24,7 @@ const ChatbotTools = () => {
     const [classificationCat, setClassificationCat] = useState([]);
     const [infoChart, setInfoChart] = useState({});
     const [overflows, setOverflows] = useState();
+    const [files, setFiles] = useState();
     const [classification, setClassification] = useState();
 
     const classContainer = useRef();
@@ -38,6 +40,7 @@ const ChatbotTools = () => {
         });
 
         fetchCategories();
+        fetchPaginatedFiles();
     }, []);
 
     useEffect(() => {
@@ -95,7 +98,7 @@ const ChatbotTools = () => {
         setCreate(false);
         fetchCategories();
     };
-    
+
     const handleDelete = (item) => {
         const del = window.confirm(`Esta a punto de eliminar la categoria: ${item.category}`);
         if (del === true) {
@@ -157,6 +160,50 @@ const ChatbotTools = () => {
                 link.click();
                 document.body.removeChild(link);
             }).catch(console.log);
+    };
+
+    const downloadFileById = async (id) => {
+        toast.success(`Preparando archivo para descarga`, {
+            position: toast.POSITION.TOP_RIGHT
+        });
+
+        await apiInstance.get(`/chatbot/files/${id}`, { responseType: 'blob' })
+            .then((response) => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', `currentFile.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }).catch(console.log);
+    };
+
+    const fetchPaginatedFiles = async (page, limit = 10, search) => {
+        await apiInstance.get('/chatbot/files/all/pageable')
+            .then(({ data }) => {
+                setFiles({
+                    rows: fileParser(data.content),
+                    columns: Object.keys(fileParser(data.content)[0]).slice(1),
+                    pagination: {
+                        total: data.totalElements,
+                        from: data.page > 1 ? (((data.page - 1) * limit) + 1) : 1,
+                        to: (limit * data.page) > data.totalElements ? data.totalElements : (limit * data.page),
+                        current: data.page,
+                        last: data.pages,
+                    }
+                });
+            }).catch(console.log);
+    };
+
+    const fileParser = (data = []) => {
+        return data.map((file) => (
+            {
+                _id: file._id,
+                archivo: file.name,
+                descargar: <FiDownload />
+            }
+        ));
     };
 
     return (
@@ -272,6 +319,58 @@ const ChatbotTools = () => {
                             </div>}
                         </div>
                     </div>
+                </div>
+
+                <div className="flex flex-col w-full bg-white shadow-md dark:bg-gray-700 rounded-4xl p-4 sm:p-10 gap-4">
+                    <div className="flex justify-between items-center w-full">
+                        <h3 className="font-semibold text-2xl">Archivos semestrales</h3>
+                        {/* <div className="flex items-center gap-2">
+                            <button onClick={() => handleCreate()} type="button"
+                                className="flex items-center gap-1 btn btn-animated text-lg bg-blue-200 dark:bg-gray-500 w-auto p-3 sm:px-2 sm:py-1">
+                                <p><HiOutlineBookmark /></p>
+                                <p className="hidden md:block">Crear</p>
+                            </button>
+                            <button type="button" onClick={() => setUpdates(!updates)}
+                                className="flex items-center gap-1 btn btn-animated text-lg border-2 dark:border-gray-900 w-auto p-3 sm:px-2 sm:py-1">
+                                <p><HiOutlineAdjustments /></p>
+                                <p className="hidden md:block">Modificar</p>
+                            </button>
+                        </div> */}
+                    </div>
+
+                    {files && <div className="w-full flex flex-col gap-8 relative">
+                        <section className="data justify-center align-center w-full shadow rounded-3xl p-2 overflow-x-auto bg-gray-50 dark:bg-gray-800">
+                            <table className="table-auto w-full divide-y dark:divide-gray-600">
+                                {(files.columns.length > 0) && <thead className="text-center">
+                                    <tr className="table-row uppercase">
+                                        {files.columns.map((name, i) =>
+                                            <th key={i} className="text-gray-700 dark:text-gray-400 font-semibold pb-2 px-2">{name}</th>)
+                                        }
+                                    </tr>
+                                </thead>}
+                                <tbody className="text-center divide-font-medium space-y-4 text-gray-800 divide-y dark:divide-gray-700">
+                                    {files.rows.length ? files.rows.map((row, i) =>
+                                        Object.values(row).slice(1).map((e, j) => {
+                                            return (
+                                                <td key={j} className="py-2 dark:text-gray-500">
+                                                    <p onClick={() => downloadFileById(row._id)}
+                                                    className={`${typeof e !== 'string' && 'text-xl cursor-pointer'} px-2 py-1 text-center flex justify-center`}>
+                                                        {e}
+                                                    </p>
+                                                </td>
+                                            );
+                                        })
+                                    ) : <tr>
+                                        <td colSpan={files.columns.length}>
+                                            <p className="text-2xl text-center font-bold text-gray-500 py-4">No hay informacion</p>
+                                        </td>
+                                    </tr>}
+                                </tbody>
+                            </table>
+                        </section >
+                        <Paginator pages={files.pagination}
+                            onChange={(page) => page !== files.pagination.current ? fetchPaginatedFiles(page, 10) : null} />
+                    </div>}
                 </div>
             </section>
         </>
