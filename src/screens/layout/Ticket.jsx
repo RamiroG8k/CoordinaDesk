@@ -17,7 +17,7 @@ const Ticket = () => {
     const [ticket, setTicket] = useState(null);
     const [hasEmailUpdates, setHasEmailUpdates] = useState();
     const [data, setData] = useState();
-    const { id } = useLocation();
+    const { id, udgId } = useLocation();
 
     const notFoundContainer = useRef(null);
 
@@ -36,7 +36,7 @@ const Ticket = () => {
     }, [loading, ticket])
 
     const fetchData = async (ticket) => {
-        await apiInstance.get(`/ticket/id/${ticket}`)
+        await apiInstance.get(`/ticket/id/${ticket}/udgId/${udgId}`)
             .then(({ data }) => {
                 setTicket(data);
                 setHasEmailUpdates(data.hasEmailUpdates);
@@ -141,19 +141,19 @@ const Ticket = () => {
                     </div>
                 </div>
 
-                {(ticket?.status !== 'FINAL_RESOLVE' && ticket?.status !== 'CLOSED_DUE_TO_INACTIVITY') && <>
-                    <div className="flex w-full justify-between px-2">
+                <div className="flex w-full justify-between px-2">
+                    {(ticket?.status !== 'FINAL_RESOLVE' && ticket?.status !== 'CLOSED_DUE_TO_INACTIVITY') &&
                         <div className="form-group form-check inline-flex items-center dark:text-gray-500 text-sm ml-2 mb-1">
                             <input type="checkbox" id="hasEmailUpdates" checked={hasEmailUpdates ? true : false} disabled={disabled}
                                 className="form-check-input" onChange={() => handleEmailNotifs()} value={hasEmailUpdates} />
                             <label htmlFor="hasEmailUpdates" className="form-check-label ml-2">Recibir notificaciones por email</label>
-                        </div>
-                        <Link to="/" className="w-auto btn btn-animated">
-                            <p className="text-blue-500 dark:text-white text-right">Regresar al Inicio</p>
-                        </Link>
-                    </div>
+                        </div>}
+                    <Link to="/" className="w-auto btn btn-animated">
+                        <p className="text-blue-500 dark:text-white text-right">Regresar al Inicio</p>
+                    </Link>
+                </div>
 
-
+                {(ticket?.status !== 'FINAL_RESOLVE' && ticket?.status !== 'CLOSED_DUE_TO_INACTIVITY') &&
                     <div className="flex w-full">
                         <textarea id="answer" rows={2} value={data} onChange={({ target: { value } }) => setData(value)}
                             className="w-full input rounded-xl bg-white border dark:bg-gray-600" maxLength={1000} />
@@ -166,7 +166,7 @@ const Ticket = () => {
                             </button>
                         </div>
                     </div>
-                </>}
+                }
             </div>}
 
             {((!loading && !ticket) && (ticket?.status !== 'FINAL_RESOLVE' && ticket?.status !== 'CLOSED_DUE_TO_INACTIVITY')) &&

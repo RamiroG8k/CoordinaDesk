@@ -26,7 +26,6 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
     const fetchTicketDetails = async (id) => {
         await apiInstance.get(`/ticket/id/${id}`)
             .then(({ data }) => {
-                console.log(data);
                 setInfo(data);
             }).catch(({ response: { data: error } }) => {
                 console.log(error);

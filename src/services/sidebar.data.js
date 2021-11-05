@@ -35,14 +35,14 @@ const sections = [
         icon: <FiLayers/>,
         type: 'link',
         path: '/faqs',
-        roles: ['COORDINATOR'],
+        roles: ['COORDINATOR', 'ASSISTANT'],
     },
     {
         title: 'Chatbot',
         icon: <AiOutlineRobot/>,
         type: 'link',
         path: '/chatbot',
-        roles: ['COORDINATOR'],
+        roles: ['COORDINATOR', 'ASSISTANT'],
     },
 ];
 
