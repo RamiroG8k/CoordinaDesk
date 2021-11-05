@@ -16,6 +16,7 @@ import { HiOutlineBookmark, HiOutlineAdjustments, HiPencilAlt, HiTrash } from 'r
 import { FiDownload } from 'react-icons/fi';
 import { Doughnut } from 'react-chartjs-2';
 import { BsArrowDownShort } from 'react-icons/bs';
+import { CgDanger } from 'react-icons/cg';
 
 const ChatbotTools = () => {
     const [info, setInfo] = useState(false);
@@ -26,6 +27,8 @@ const ChatbotTools = () => {
     const [overflows, setOverflows] = useState();
     const [files, setFiles] = useState();
     const [classification, setClassification] = useState();
+    const [confirm, setConfirm] = useState({ display: false, category: null });
+    const [loading, setLoading] = useState(false);
 
     const classContainer = useRef();
     const chatbotContainer = useRef(null);
@@ -91,13 +94,15 @@ const ChatbotTools = () => {
     };
 
     const handleDelete = (item) => {
-        const del = window.confirm(`Esta a punto de eliminar la categoria: ${item.category}`);
-        if (del === true) {
-            deleteById(item._id);
-        }
+        // const del = window.confirm(`Esta a punto de eliminar la categoria: ${item.category}`);
+        // if (del === true) {
+        //     deleteById(item._id);
+        // }
+        setConfirm({ display: true, category: item });
     };
 
     const deleteById = async (id) => {
+        setLoading(true);
         await apiInstance.delete(`/classification-category/${id}`)
             .then(() => {
                 toast.success(`Se ha eliminado la categoria`, {
@@ -115,6 +120,8 @@ const ChatbotTools = () => {
                     draggable: true,
                 });
             });
+        await setLoading(false);
+        await setConfirm({ display: false, category: null });
     };
 
     const handleCreate = () => {
@@ -173,7 +180,6 @@ const ChatbotTools = () => {
     const fetchPaginatedFiles = async (page, limit = 10, search) => {
         await apiInstance.get('/chatbot/files/all/pageable')
             .then(({ data }) => {
-                console.log(data);
                 setFiles({
                     rows: fileParser(data.content),
                     columns: Object.keys(fileParser(data.content)[0]).slice(1),
@@ -200,6 +206,41 @@ const ChatbotTools = () => {
 
     return (
         <>
+            <Modal visible={confirm.display} onClose={() => setConfirm({ ...confirm, display: false })} size="md" title="Eliminar categoría">
+                <>
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 sm:pt-4 space-y-4">
+                        <div className="flex gap-6">
+                            <div className="flex justify-center items-center bg-red-200 rounded-full h-12 w-12">
+                                <p className="text-4xl text-red-400">
+                                    <CgDanger />
+                                </p>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <h5 className="text-lg leading-5">Estas a punto de eliminar la categoría: </h5>
+                                <p className="leading-6 font-medium">
+                                    {confirm.category?.category}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="bg-gray-100 dark:bg-gray-900 px-4 py-3 sm:px-6 flex flex-col sm:flex-row-reverse gap-2">
+                        <button disabled={loading} onClick={() => deleteById(confirm.category._id)}
+                            className="w-full inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-red-400 dark:bg-red-600  hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 sm:w-auto transition" >
+                            {loading && <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>}
+                            <p className="text-white text-base sm:text-sm font-medium">
+                                {loading ? 'Eliminando...' : 'Eliminar'}
+                            </p>
+                        </button>
+                        <button type="button" onClick={() => setConfirm({ ...confirm, display: false })}
+                            className="w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-800 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:w-auto transition" >
+                            <p className="text-gray-700 dark:text-white text-base sm:text-sm font-medium">Cerrar</p>
+                        </button>
+                    </div>
+                </>
+            </Modal>
             <Modal visible={info} onClose={setInfo} size="md" title="Informacion chatbot">
                 <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 sm:pt-4 space-y-4">
                     <div className="space-y-1">
@@ -275,7 +316,7 @@ const ChatbotTools = () => {
                             {updates ? <>
                                 {classificationCat.map((item, i) => {
                                     return (
-                                        <div className="w-full bg-blue-100 rounded-xl px-4 py-1 mb-2 group flex justify-between">
+                                        <div key={i} className="w-full bg-blue-100 rounded-xl px-4 py-1 mb-2 group flex justify-between">
                                             <span className="sm:text-lg font-medium text-left dark:text-gray-300">{item.category}</span>
                                             <div className="flex">
                                                 <button type="button" title="Editar" onClick={() => handleUpdate(item)}

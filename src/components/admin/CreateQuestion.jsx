@@ -82,13 +82,13 @@ const CreateQuestion = ({ close, selected, onCreated, defaultFaq }) => {
                     </div>
                     <div className="flex-grow-0 w-full">
                         <label htmlFor="category" className="text-sm ml-2 mb-1 dark:text-gray-500">Categoria</label>
-                        <Controller control={control} name="category" rules={{ required: true }} defaultValue={(defaultFaq?.category ?? selected._id) ?? null}
+                        {categories.length > 0 && <Controller control={control} name="category" rules={{ required: true }} defaultValue={(defaultFaq?.category ?? selected._id) ?? null}
                             render={({ field: { onChange } }) => (
                                 <Select labels array={categories} onChange={onChange} defaultValue={(defaultFaq?.category ?? selected._id) ?? null}
                                     activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle=""
                                     buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700 dark:text-gray-400"
                                     dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500 z-50" />
-                            )} />
+                            )} />}
                         {errors.category && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
                     </div>
                     <div className="form-group form-check inline-flex items-center dark:text-gray-500 text-sm ml-2 mb-1">

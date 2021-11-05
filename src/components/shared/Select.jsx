@@ -24,9 +24,8 @@ const Select = ({ array, item = '', labels = false, defaultValue, onChange, disa
         <Listbox disabled={disabled} value={labels ? selected?.value : selected} onChange={handleChange}>
             <div className={`${parentStyle} relative`}>
                 <Listbox.Button className={`${buttonStyle} relative w-full py-2 pl-3 pr-10 text-left rounded-xl cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm`}>
-                    <span className="block truncate">
+                    <span className="block">
                         {`${selected ? (labels ? selected?.label : selected) : 'Seleccionar'} ${item}`}
-                        {/* {`${labels ? (selected?.label ?? 'Seleccionar') : (selected ?? 'Seleccionar')} ${item}`} */}
                     </span>
                     <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                         <CgArrowsExchangeAltV />
@@ -41,7 +40,7 @@ const Select = ({ array, item = '', labels = false, defaultValue, onChange, disa
                                 value={labels ? e?.value : e}>
                                 {({ selected, active }) => (
                                     <>
-                                        <span className={`${selected ? 'font-medium' : 'font-normal'} block truncate`}>
+                                        <span className={`${selected ? 'font-medium' : 'font-normal'} block`}>
                                             {labels ? e?.label : e}
                                         </span>
                                         {selected ? (

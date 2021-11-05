@@ -7,7 +7,7 @@ import { Select } from 'components/shared';
 import { apiInstance } from 'services';
 import { toast } from 'react-toastify';
 
-const CreateUser = ({ close }) => {
+const CreateUser = ({ close, onCreate }) => {
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, control, reset, formState: { errors } } = useForm();
 
@@ -15,12 +15,12 @@ const CreateUser = ({ close }) => {
         setLoading(!loading);
         await apiInstance.post('/user', body)
             .then(({ data }) => {
-                close(false);
+                onCreate();
                 toast.success('Usuario creado satisfactoriamente', {
                     position: toast.POSITION.TOP_RIGHT
                 });
+                close();
             }).catch(({ response: { data: error } }) => {
-                // close(false);
                 reset();
                 toast.error(error.message, {
                     position: toast.POSITION.TOP_RIGHT,
@@ -68,7 +68,7 @@ const CreateUser = ({ close }) => {
                         {loading ? 'Creando...' : 'Crear'}
                     </p>
                 </button>
-                <button type="button" onClick={() => close(false)}
+                <button type="button" onClick={() => close()}
                     className="w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-800 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:w-auto transition" >
                     <p className="text-gray-700 dark:text-white text-base sm:text-sm font-medium">Cerrar</p>
                 </button>

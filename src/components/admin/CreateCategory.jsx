@@ -42,7 +42,17 @@ const CreateCategory = ({ close, onCreated, defaultCategory }) => {
                 toast.success('Categoria modificada satisfactoriamente', {
                     position: toast.POSITION.TOP_RIGHT
                 });
-            }).catch(console.log);
+            }).catch(({ response: { data: error } }) => {
+                const { customText } = errorMessages.find((e) => e.message === error.message);
+
+                toast.error(customText, {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+            });
         await setLoading(false);
     };
 

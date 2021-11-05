@@ -118,7 +118,7 @@ const Users = () => {
     return (
         <section className="space-y-6">
             <Modal visible={create} onClose={setCreate} size="xl" title="Crear usuario">
-                <CreateUser close={setCreate} />
+                <CreateUser close={() => setCreate(false)} onCreate={() => fetchUsers()}/>
             </Modal>
             <Modal visible={show} onClose={setShow}
                 size="md" title="Detalles de usuario">

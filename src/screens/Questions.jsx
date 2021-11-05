@@ -1,13 +1,18 @@
 // Common
 import { useEffect, useState } from 'react';
+// Components
+import { Switch, Modal } from 'components/shared';
 // Data | Services
-import { HiPencilAlt, HiTrash } from 'react-icons/hi';
 import { apiInstance } from 'services';
+// Others
 import { toast } from 'react-toastify';
-import { Switch } from 'components/shared';
+import { HiPencilAlt, HiTrash } from 'react-icons/hi';
+import { CgDanger } from 'react-icons/cg';
 
 const Questions = ({ selected, onCreate, onRefresh, onUpdate }) => {
     const { _id: category } = selected ?? {};
+    const [confirm, setConfirm] = useState({ display: false, question: null });
+    const [loading, setLoading] = useState(false);
     const [faqs, setFaqs] = useState([]);
 
     useEffect(() => {
@@ -24,14 +29,16 @@ const Questions = ({ selected, onCreate, onRefresh, onUpdate }) => {
     };
 
     const handleDelete = (item) => {
-        console.table(item);
-        const del = window.confirm(`Esta a punto de eliminar la pregunta: ${item.question}`);
-        if (del === true) {
-            deleteById(item._id);
-        }
+        setConfirm({ display: true, question: item });
+
+        // const del = window.confirm(`Esta a punto de eliminar la pregunta: ${item.question}`);
+        // if (del === true) {
+        //     deleteById(item._id);
+        // }
     };
 
     const deleteById = async (id) => {
+        setLoading(true);
         await apiInstance.delete(`/faq/${id}`)
             .then(() => {
                 toast.success(`Se ha eliminado la pregunta`, {
@@ -39,6 +46,8 @@ const Questions = ({ selected, onCreate, onRefresh, onUpdate }) => {
                 });
                 fetchQuestionsById(category);
             }).catch(console.log);
+        await setLoading(false);
+        await setConfirm({ display: false, category: null });
     };
 
     const statusHandler = async (body) => {
@@ -53,6 +62,41 @@ const Questions = ({ selected, onCreate, onRefresh, onUpdate }) => {
 
     return (
         <>
+            <Modal visible={confirm.display} onClose={() => setConfirm({ ...confirm, display: false })} size="md" title="Eliminar categoría">
+                <>
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 sm:pt-4 space-y-4">
+                        <div className="flex gap-6">
+                            <div className="flex justify-center items-center bg-red-200 rounded-full h-12 w-12">
+                                <p className="text-4xl text-red-400">
+                                    <CgDanger />
+                                </p>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <h5 className="text-lg leading-5">Estas a punto de eliminar la pregunta: </h5>
+                                <p className="leading-6 font-medium">
+                                    {confirm.question?.question}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="bg-gray-100 dark:bg-gray-900 px-4 py-3 sm:px-6 flex flex-col sm:flex-row-reverse gap-2">
+                        <button disabled={loading} onClick={() => deleteById(confirm.question._id)}
+                            className="w-full inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-red-400 dark:bg-red-600  hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 sm:w-auto transition" >
+                            {loading && <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>}
+                            <p className="text-white text-base sm:text-sm font-medium">
+                                {loading ? 'Eliminando...' : 'Eliminar'}
+                            </p>
+                        </button>
+                        <button type="button" onClick={() => setConfirm({ ...confirm, display: false })}
+                            className="w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-800 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:w-auto transition" >
+                            <p className="text-gray-700 dark:text-white text-base sm:text-sm font-medium">Cerrar</p>
+                        </button>
+                    </div>
+                </>
+            </Modal>
             <div className="flex relative w-full">
                 <h1 className="text-3xl sm:text-5xl text-center font-bold text-gray-400 w-full">Preguntas</h1>
             </div>
