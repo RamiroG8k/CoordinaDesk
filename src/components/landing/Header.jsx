@@ -13,12 +13,19 @@ const LandingNavbar = ({ onCreate, className }) => {
         <header className={`${className} bg-opacity-10 backdrop-filter backdrop-blur-md flex w-full h-16 px-8 py-4 justify-between items-center`}>
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a className="flex justify-center" href="#" >
-                <img className="block lg:hidden h-14 w-14" alt="logo"src={LogoSquare} />
+                <img className="block lg:hidden h-14 w-14" alt="logo" src={LogoSquare} />
                 <div className="hidden lg:block">
                     <img className="dark:hidden h-10 w-auto" alt="logo" src={LogoLarge} />
                     <img className="hidden dark:block h-10 w-auto" alt="logo" src={LogoLargeDark} />
                 </div>
             </a>
+            <Link to="/login"
+                className="sm:hidden bg-blue-200 dark:bg-blue-900 hover:scale-105 hover:font-medium transform transition px-3 py-1 rounded-xl">
+                <div className="flex items-center gap-1 text-lg text-gray-700 dark:text-white">
+                    <p>Login</p>
+                    <BiUserCircle />
+                </div>
+            </Link>
             <div className="hidden sm:flex gap-6 items-center">
                 {sections.map(({ name, goTo }) =>
                     <a href={goTo} key={name}
