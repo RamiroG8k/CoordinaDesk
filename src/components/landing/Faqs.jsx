@@ -101,8 +101,8 @@ const Faqs = () => {
                         </div>}
                     </div>
 
-                    <div className="flex flex-col sm:gap-4 h-full w-full sm:w-1/5 items-center sm:items-end sm:justify-end border-b-2 sm:border-0 pb-10">
-                        <h5 className="font-medium text-right mb-2 text-blue-600 sm:text-gray-800">
+                    <div className="flex flex-col sm:gap-4 h-full w-full sm:w-1/5 items-center sm:items-end sm:justify-end border-b-2 sm:border-0 pb-10 sm:pr-5">
+                        <h5 className="font-medium text-right mb-2 text-blue-600 sm:text-gray-800 dark:text-white">
                             Categorias
                         </h5>
                         <div className="flex sm:flex-col flex-wrap sm:flex-nowrap gap-x-6 gap-y-4 justify-center w-full max-h-full overflow-y-scroll">

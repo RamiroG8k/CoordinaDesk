@@ -43,7 +43,7 @@ const CreateTicket = ({ close, onCreate }) => {
                     <div className="col-span-2">
                         <label htmlFor="description" className="dark:text-gray-500 text-sm ml-2 mb-1">Descripción</label>
                         <textarea id="description" {...register('description', { required: true })}
-                            rows="3" maxLength={1000}
+                            rows="3" maxLength={50000}
                             className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700" />
                         {errors.description && <span className="ml-2 text-xs text-red-400">Este campo es obligatorio</span>}
                     </div>

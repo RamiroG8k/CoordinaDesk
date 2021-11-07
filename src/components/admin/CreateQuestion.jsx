@@ -18,6 +18,8 @@ const CreateQuestion = ({ close, selected, onCreated, defaultFaq }) => {
     }, [])
 
     const create = async (body) => {
+        console.log(body);
+        return;
         setLoading(!loading);
         await apiInstance.post('/faq', body)
             .then(({ data }) => {
@@ -76,15 +78,16 @@ const CreateQuestion = ({ close, selected, onCreated, defaultFaq }) => {
                     <div>
                         <label htmlFor="answer" className="text-sm ml-2 mb-1 dark:text-gray-500">Respuesta</label>
                         <textarea id="answer" rows={3} {...register('answer', { required: true })} defaultValue={defaultFaq?.answer}
-                            type="text" autoComplete="off" maxLength={1000}
-                            className="w-full input rounded-xl border-none bg-blue-100 bg-opacity-60 border dark:bg-gray-600" />
+                            type="text" autoComplete="off" maxLength={100000}
+                            className="w-full input rounded-xl border-none bg-blue-100 bg-opacity-60 border dark:bg-gray-700 dark:text-gray-400" />
                         {errors.answer && <span className="ml-2 text-xs text-red-400">Este campo es requerido</span>}
                     </div>
                     <div className="flex-grow-0 w-full">
                         <label htmlFor="category" className="text-sm ml-2 mb-1 dark:text-gray-500">Categoria</label>
-                        {categories.length > 0 && <Controller control={control} name="category" rules={{ required: true }} defaultValue={(defaultFaq?.category ?? selected._id) ?? null}
+                        {categories.length > 0 && <Controller control={control} name="category"
+                            rules={{ required: true }} defaultValue={(defaultFaq?.category ?? selected._id) ?? null}
                             render={({ field: { onChange } }) => (
-                                <Select labels array={categories} onChange={onChange} defaultValue={(defaultFaq?.category ?? selected._id) ?? null}
+                                <Select labels array={categories} onChange={({value}) => onChange(value)} defaultValue={(defaultFaq?.category ?? selected._id) ?? null}
                                     activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle=""
                                     buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700 dark:text-gray-400"
                                     dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500 z-50" />

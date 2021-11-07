@@ -74,8 +74,8 @@ const Landing = () => {
             <Chatbot onCreate={setShow} ticket={ticket} />
             <Concept className="" />
             <Faqs />
-            <About className="" />
-            <Tracking />
+            <About className="z-10" />
+            <Tracking className="z-0" />
             <Footer />
             <ScrollToTop />
             <Modal visible={show} onClose={handleModalClose} size={ticket ? 'xs' : 'xl'} title={ticket ? 'Informacion de ticket' : 'Crear ticket'}>

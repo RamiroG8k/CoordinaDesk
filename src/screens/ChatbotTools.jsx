@@ -371,7 +371,7 @@ const ChatbotTools = () => {
                                             {Object.values(row).slice(1).map((e, j) => {
                                                 return (
                                                     <td key={j} className="py-2 dark:text-gray-500">
-                                                        <p onClick={() => downloadFileById(row)}
+                                                        <p onClick={() => typeof e !== 'string' && downloadFileById(row)}
                                                             className={`${typeof e !== 'string' && 'text-xl cursor-pointer'} px-2 py-1 text-center flex justify-center`}>
                                                             {e}
                                                         </p>
