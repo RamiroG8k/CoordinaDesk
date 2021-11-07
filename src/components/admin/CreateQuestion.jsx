@@ -18,8 +18,6 @@ const CreateQuestion = ({ close, selected, onCreated, defaultFaq }) => {
     }, [])
 
     const create = async (body) => {
-        console.log(body);
-        return;
         setLoading(!loading);
         await apiInstance.post('/faq', body)
             .then(({ data }) => {

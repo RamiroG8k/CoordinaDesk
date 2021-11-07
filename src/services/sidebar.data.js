@@ -1,14 +1,7 @@
-import { FiUsers, FiHome, FiInbox, FiLayers } from 'react-icons/fi';
+import { FiUsers, FiInbox, FiLayers } from 'react-icons/fi';
 import { AiOutlineRobot } from 'react-icons/ai';
 
 const sections = [
-    // {
-    //     title: 'Inicio',
-    //     icon: <FiHome/>,
-    //     type: 'link',
-    //     path: '/home',
-    //     roles: ['COORDINATOR', 'ASSISTANT'],
-    // },
     {
         title: 'Usuarios',
         icon: <FiUsers/>,

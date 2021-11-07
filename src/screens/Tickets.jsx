@@ -13,13 +13,12 @@ import { RiQuestionLine } from 'react-icons/ri';
 
 const Tickets = () => {
     const [tickets, setTickets] = useState();
-    const [filteredTickets, setFilteredTickets] = useState();
     const [users, setUsers] = useState();
     const [details, setDetails] = useState({ data: null, visible: false });
-    const [filters, setFilters] = useState({ user: null, priority: null })
+    const [filters, setFilters] = useState({ users: null, priorities: null })
     const [modal, setModal] = useState(false);
 
-    const { todo, inProgress, done } = filteredTickets ?? { todo: [], inProgress: [], done: [] };
+    const { todo, inProgress, done } = tickets ?? { todo: [], inProgress: [], done: [] };
 
     const droppables = [
         { id: 'todo', title: 'Por hacer', array: todo },
@@ -55,15 +54,16 @@ const Tickets = () => {
     };
 
     const fetchTickets = async () => {
-        await apiInstance.get('/ticket/dashboard', { params: { user: filters.user } })
-            .then(async ({ data }) => {
-                setTickets(data);
-                setFilteredTickets(data);
-
-                if (filters.priority) {
-                    filterByPriority(data, filters.priority);
-                }
-            }).catch(console.log);
+        await apiInstance.get('/ticket/dashboard', {
+            params: {
+                user: filters?.users ? filters.users.map(e => e.value) : null
+            }
+        }).then(async ({ data }) => {
+            setTickets(data);
+            if (filters.priorities) {
+                filterByPriority(data, filters.priorities);
+            }
+        }).catch(console.log);
     };
 
     const fetchUsers = async () => {
@@ -96,18 +96,17 @@ const Tickets = () => {
         }
     };
 
-    const filterByPriority = (data, lvl) => {
-        if (ticketPriority.filter((e) => e.priority === lvl).length > 0) {
-            setFilteredTickets(
+    const filterByPriority = (data, lvls) => {
+        if (ticketPriority.filter(({ priority }) => lvls.includes(priority)).length > 0) {
+            setTickets(
                 {
-                    todo: data.todo.filter(e => e.priority === lvl),
-                    inProgress: data.inProgress.filter(e => e.priority === lvl),
-                    done: data.done.filter(e => e.priority === lvl),
+                    todo: data.todo.filter(({ priority }) => lvls.includes(priority)),
+                    inProgress: data.inProgress.filter(({ priority }) => lvls.includes(priority)),
+                    done: data.done.filter(({ priority }) => lvls.includes(priority)),
                 }
             );
             return;
         }
-        setFilteredTickets({ ...data });
     };
 
     return (
@@ -165,8 +164,8 @@ const Tickets = () => {
                 <div className="flex justify-between sm:justify-around items-center gap-4 col-span-3 bg-white dark:bg-gray-700 rounded-2xl p-4">
                     <div className="sm:w-1/3">
                         <label htmlFor="" className="text-sm ml-2 dark:text-gray-400">Usuario</label>
-                        {users && <Select labels array={[{ label: 'Todos', value: null }, ...users]}
-                            onChange={({ value }) => setFilters({ ...filters, user: value })}
+                        {users && <Select labels array={users} multiple
+                            onChange={(value) => setFilters({ ...filters, users: value })}
                             activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle="z-10"
                             buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-800 dark:text-gray-500 capitalize"
                             dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500" />}
@@ -178,8 +177,8 @@ const Tickets = () => {
                     </button>
                     <div className="sm:w-1/3">
                         <label htmlFor="" className="text-sm ml-2 dark:text-gray-400">Prioridad</label>
-                        <Select array={['TODAS', 'LOW', 'MODERATE', 'HIGH']}
-                            onChange={(value) => setFilters({ ...filters, priority: value })}
+                        <Select array={['LOW', 'MODERATE', 'HIGH']} multiple
+                            onChange={(value) => setFilters({ ...filters, priorities: value })}
                             activeStyle="bg-blue-100 dark:bg-gray-800" parentStyle="z-10"
                             buttonStyle="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-800 dark:text-gray-500"
                             dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500" />
