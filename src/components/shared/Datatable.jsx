@@ -33,7 +33,7 @@ const DataTable = ({ popoverTitle, onSearch, data = [], onEvent, onUpdate, place
             <div className="flex w-full justify-between items-center header gap-4 sm:gap-10">
                 <div className="search relative w-full sm:w-1/2">
                     <input type="text" placeholder={placeholder ?? 'Search by name'} value={term} onChange={v => setTerm(v.target.value)}
-                    onKeyPress={keyPressed} onKeyUp={(e) => keyReleased(e.target.value)}
+                        onKeyPress={keyPressed} onKeyUp={(e) => keyReleased(e.target.value)}
                         className="input border-0 rounded-xl input-primary placeholder-font-bold px-10 bg-gray-50 dark:bg-gray-800 dark:text-gray-400 shadow" />
                     <p className="absolute left-4 text-brand-200 top-1/3 dark:text-gray-500">
                         <BsSearch />
@@ -41,7 +41,7 @@ const DataTable = ({ popoverTitle, onSearch, data = [], onEvent, onUpdate, place
                 </div>
                 <div className="limit w-1/4">
                     <Select array={[10, 20, 30, 50, 100]} item="(limite)"
-                        value={limit} onChange={handleLimit}
+                        onChange={(v) => handleLimit(v)}
                         activeStyle="bg-blue-100 dark:bg-gray-800"
                         buttonStyle="bg-gray-50 shadow dark:bg-gray-800 dark:text-gray-400"
                         dropdownStyle="bg-white dark:bg-gray-700 dark:text-gray-500"
@@ -60,7 +60,7 @@ const DataTable = ({ popoverTitle, onSearch, data = [], onEvent, onUpdate, place
                     </thead>}
                     <tbody className="text-center divide-font-medium space-y-4 text-gray-800 divide-y dark:divide-gray-700">
                         {rows.length ? rows.map((row, i) => {
-                            const newActions = actions.length > 1 ? (row.status ? [actions[0], actions[1]] : [actions[0], actions[2]]) : actions;
+                            const newActions = actions.length > 1 ? (row.status ? [actions[0], actions[1]] : [actions[0], actions[2], actions[3]]) : actions;
 
                             return (
                                 <Popover key={i} buttonAs="tr" actions={newActions}

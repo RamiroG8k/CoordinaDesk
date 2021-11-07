@@ -1,4 +1,4 @@
-import { BsTrash, BsEnvelope, BsFileEarmarkText } from 'react-icons/bs';
+import { BsTrash, BsEnvelope, BsFileEarmarkText, BsFillXSquareFill } from 'react-icons/bs';
 import { FaFacebookF } from 'react-icons/fa';
 
 const sections = [
@@ -40,6 +40,12 @@ const userActions = [
         action: 'deactivate',
         description: 'Deshabilitar usuario',
         icon: <BsTrash />,
+    },
+    {
+        name: 'Eliminar',
+        action: 'delete',
+        description: 'Eliminar usuario',
+        icon: <BsFillXSquareFill />,
     },
     {
         name: 'Reenviar email',

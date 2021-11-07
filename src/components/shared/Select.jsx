@@ -16,7 +16,7 @@ const Select = ({ array, item = '', labels = false, multiple = false, defaultVal
 
     useEffect(() => {
         labelHandler();
-        setLabel((value) => (selected?.length > 0) ? value : 'Seleccionar')
+        setLabel((value) => ((multiple && (selected?.length > 0)) || (!multiple && selected)) ? (value) : 'Seleccionar')
     }, [selected])
 
     const handleChange = (value) => {
@@ -30,12 +30,10 @@ const Select = ({ array, item = '', labels = false, multiple = false, defaultVal
 
             if (isInside) {
                 // Toggle if found in array
-                console.log('FOUND');
                 rawValue = labels ? selected.filter((item => item.value !== value)) :
                     selected.filter((item => item !== value));
             } else {
                 // Handle if it is not in selected Array > Both objects and values
-                console.log('NEW ITEM');
                 const aux = labels ? array.filter((item => item.value === value))[0] :
                     array.filter((item => item === value))[0];
                 // Push if not
@@ -52,7 +50,6 @@ const Select = ({ array, item = '', labels = false, multiple = false, defaultVal
     const labelHandler = () => {
         if ((multiple && (selected?.length > 0)) || (!multiple && selected)) {
             let label;
-
             if (multiple) {
                 label = (selected.length > 1) ? `${(selected.length)} Seleccionados` : (labels ? selected[0].label : selected[0]);
                 setLabel(label);
