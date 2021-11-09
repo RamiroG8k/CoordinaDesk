@@ -6,6 +6,7 @@ import { Select } from 'components/shared';
 // Services
 import { apiInstance } from 'services';
 import { toast } from 'react-toastify';
+import { errorMessages } from 'utils/data';
 
 const CreateUser = ({ close, onCreate }) => {
     const [loading, setLoading] = useState(false);
@@ -21,8 +22,10 @@ const CreateUser = ({ close, onCreate }) => {
                 });
                 close();
             }).catch(({ response: { data: error } }) => {
+                const { customText } = errorMessages.find((e) => e.message === error.message);
                 reset();
-                toast.error(error.message, {
+                
+                toast.error(customText, {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 5000,
                     hideProgressBar: false,

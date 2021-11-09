@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import LogoLarge from 'assets/images/Logo-Large.png';
 import LogoSquare from 'assets/images/Logo-Square.png';
 import LogoLargeDark from 'assets/images/Logo-Large-Dark.png';
+import { errorMessages } from 'utils/data';
 
 const Activate = ({ history }) => {
     const { id, token } = useParams();
@@ -28,8 +29,21 @@ const Activate = ({ history }) => {
                 toast.success(`Se ha activado correctamente su cuenta, intente iniciar con su correo y contraseña`, {
                     position: toast.POSITION.TOP_RIGHT
                 });
-            }).catch(({ response: { data: error } }) => {
-                toast.error(error.message, {
+            }).catch(({ response }) => {
+                const { data: error } = response;
+                if (response.status === 404) {
+                    toast.error('Usuario no encontrado, Por favor contacta con un Coordinador', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        pauseOnHover: true,
+                        draggable: true,
+                    });
+                    return;
+                }   
+                const { customText } = errorMessages.find((e) => e.message === error.message);
+
+                toast.error(customText, {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 5000,
                     hideProgressBar: false,

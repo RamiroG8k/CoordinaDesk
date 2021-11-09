@@ -101,7 +101,7 @@ const Faqs = () => {
                         </div>}
                     </div>
 
-                    <div className="flex flex-col sm:gap-4 h-full w-full sm:w-1/5 items-center sm:items-end sm:justify-end border-b-2 sm:border-0 pb-10 sm:pr-5">
+                    <div className="flex flex-col sm:gap-4 h-full w-full sm:w-1/5 items-center sm:items-end sm:justify-end border-b-2 sm:border-0 pb-10 sm:pr-5 scrollbar-hide">
                         <h5 className="font-medium text-right mb-2 text-blue-600 sm:text-gray-800 dark:text-white">
                             Categorias
                         </h5>

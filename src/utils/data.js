@@ -92,7 +92,7 @@ const errorMessages = [
     { customText: 'Operacion no permitida', message: 'ERROR.COMMON.OPERATION_NOT_ALLOWED' },
     { customText: 'Peticion invalida', message: 'ERROR.COMMON.INVALID_QUERY_PARAMS' },
     { customText: 'Contacta con soporte', message: 'ERROR.COMMON.CONTACT_SUPPORT' },
-    { customText: 'Error indefinido', message: 'ERROR.COMMON.UNDEFINED' },
+    { customText: 'No encontrado, Por favor contacta con un Coordinador', message: 'ERROR.COMMON.UNDEFINED' },
     { customText: 'Mala peticion', message: 'ERROR.COMMON.BAD_REQUEST' },
     { customText: 'Error, Debe ser unico, se encontro una coincidencia', message: 'ERROR.COMMON.MUST_BE_UNIQUE' },
     { customText: 'No hay coincidencias', message: 'ERROR.COMMON.ID_DOES_NOT_MATCH' },
@@ -101,20 +101,20 @@ const errorMessages = [
     { customText: 'Credenciales erróneas, por favor intente de nuevo', message: 'ERROR.AUTH.BAD_CREDENTIALS' },
 
     // User
-    { customText: 'EMAIL_ALREADY_USE', message: 'ERROR.USER.EMAIL_ALREADY_IN_USE' },
+    { customText: 'Email ya en uso, intente de nuevo', message: 'ERROR.USER.EMAIL_ALREADY_IN_USE' },
     { customText: 'Usuario no encontrado, por favor revisa tus credenciales e intenta de nuevo', message: 'ERROR.USER.NOT_FOUND' },
-    { customText: 'USER_IS_ACTIVE', message: 'ERROR.USER.USER_IS_ACTIVE' },
-    { customText: 'USER_IS_DELETED', message: 'ERROR.USER.USER_IS_DELETED' },
+    { customText: 'Error, Usuario activo', message: 'ERROR.USER.USER_IS_ACTIVE' },
+    { customText: 'Usuario ya eliminado', message: 'ERROR.USER.USER_IS_DELETED' },
 
     // MONGOOSE
     { customText: 'MONGOOSE_ERROR', message: 'ERROR.MONGOOSE' },
 
     // TICKET
-    { customText: 'INVALID_STATUS', message: 'ERROR.TICKET.INVALID_STATUS' },
-    { customText: 'INVALID_PRIORITY', message: 'ERROR.TICKET.INVALID_PRIORITY' },
+    { customText: 'Estatus invalido', message: 'ERROR.TICKET.INVALID_STATUS' },
+    { customText: 'Prioridad invalida', message: 'ERROR.TICKET.INVALID_PRIORITY' },
 
     // FAQ
-    { customText: 'INVALID_POSITION', message: 'ERROR.FAQ.INVALID_POSITION' },
+    { customText: 'Position invalida', message: 'ERROR.FAQ.INVALID_POSITION' },
 ];
 
 const CHART_COLORS = {
