@@ -177,8 +177,8 @@ const ChatbotTools = () => {
             }).catch(console.log);
     };
 
-    const fetchPaginatedFiles = async (page, limit = 10, search) => {
-        await apiInstance.get('/chatbot/files/all/pageable')
+    const fetchPaginatedFiles = async (page, limit = 10) => {
+        await apiInstance.get('/chatbot/files/all/pageable', { params: { page, limit } })
             .then(({ data }) => {
                 setFiles({
                     rows: fileParser(data.content),
@@ -389,7 +389,7 @@ const ChatbotTools = () => {
                             </table>
                         </section >
                         <Paginator pages={files.pagination}
-                            onChange={(page) => page !== files.pagination.current ? fetchPaginatedFiles(page, 10) : null} />
+                            onChange={(page) => page !== files.pagination.current ? fetchPaginatedFiles(page) : null} />
                     </div>}
                 </div>
             </section>
