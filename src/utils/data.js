@@ -84,7 +84,7 @@ const errorMessages = [
     // Common
     { customText: 'No se ha encontrado el elemento', message: 'ERROR.COMMON.ID_NOTFOUND' },
     { customText: 'Necesita ser unico', message: 'ERROR.COMMON.UNIQUE_ID' },
-    { customText: 'No es posible eliminar, aun tiene dependencias por resolver', message: 'ERROR.COMMON.DELETE_HAS_DEPENDENCIES' },
+    { customText: 'No es posible inhabilitar, aun tiene dependencias por resolver', message: 'ERROR.COMMON.DELETE_HAS_DEPENDENCIES' },
     { customText: 'La actualizacion tiene dependencias', message: 'ERROR.COMMON.UPDATE_HAS_DEPENDENCIES' },
     { customText: 'El nombre tiene que ser unico', message: 'ERROR.COMMON.UNIQUE_NAME' },
     { customText: 'Los campos no deben estar vacios', message: 'ERROR.COMMON.FIELD_MAY_NOT_BE_EMPTY' },

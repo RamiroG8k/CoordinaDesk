@@ -8,12 +8,14 @@ import { apiInstance } from 'services';
 import { toast } from 'react-toastify';
 import { HiPencilAlt, HiTrash } from 'react-icons/hi';
 import { CgDanger } from 'react-icons/cg';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const Questions = ({ selected, onCreate, onRefresh, onUpdate }) => {
     const { _id: category } = selected ?? {};
     const [confirm, setConfirm] = useState({ display: false, question: null });
     const [loading, setLoading] = useState(false);
-    const [faqs, setFaqs] = useState([]);
+    const [activeFaqs, setActiveFaqs] = useState([]);
+    const [inactiveFaqs, setInactiveFaqs] = useState([]);
 
     useEffect(() => {
         if (category) {
@@ -24,17 +26,15 @@ const Questions = ({ selected, onCreate, onRefresh, onUpdate }) => {
     const fetchQuestionsById = async (id) => {
         await apiInstance.get(`/faq/category/${id}`)
             .then(({ data }) => {
-                setFaqs(data ?? []);
+                setActiveFaqs(sortByPosition(data.filter(f => f.isActive)) ?? []);
+                setInactiveFaqs(sortByPosition(data.filter(f => !f.isActive)) ?? []);
             }).catch(console.log);
     };
 
-    const handleDelete = (item) => {
-        setConfirm({ display: true, question: item });
-
-        // const del = window.confirm(`Esta a punto de eliminar la pregunta: ${item.question}`);
-        // if (del === true) {
-        //     deleteById(item._id);
-        // }
+    const sortByPosition = (array) => {
+        return array.sort((a, b) => {
+            return a.order > b.order ? 1 : -1;
+        });
     };
 
     const deleteById = async (id) => {
@@ -58,6 +58,26 @@ const Questions = ({ selected, onCreate, onRefresh, onUpdate }) => {
                 toast.success('Pregunta modificada satisfactoriamente', {
                     position: toast.POSITION.TOP_RIGHT
                 });
+            }).catch(console.log);
+    };
+
+    const onDragEnd = (result) => {
+        if (!result.destination) return;
+
+        const items = Array.from(activeFaqs);
+        const [reorderedItem] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reorderedItem);
+        items.map((e, index) => e.position = index + 1);
+        
+        reorderItem(result.draggableId, (result.destination.index));
+        setActiveFaqs(items);
+    };
+
+    const reorderItem = async (id, position) => {
+        await apiInstance.patch(`/faq/${id}/reorder/${position}`)
+            .then(({ data }) => {
+                console.log(data);
+                fetchQuestionsById(category);
             }).catch(console.log);
     };
 
@@ -107,45 +127,59 @@ const Questions = ({ selected, onCreate, onRefresh, onUpdate }) => {
                 <p className="p-2 text-center w-full">Nueva pregunta</p>
             </button>
 
-            <div className="flex flex-col gap-2">
+            <div className="space-y-2">
                 <h4 className="ml-2 font-semibold text-2xl dark:text-gray-300">Activas</h4>
-                {(faqs.length > 0) && faqs.map((item) => {
-                    const { _id, question, answer, ...other } = item;
-                    return other.isActive ? (
-                        <div key={_id}
-                            className="flex justify-between items-center btn bg-blue-100 dark:bg-gray-600 rounded-xl group overflow-hidden">
-                            <p className="p-3">
-                                {question}
-                            </p>
-                            <div className="flex items-center gap-1">
-                                {(selected.category !== 'CHATBOT') &&
-                                    <div className="flex items-center h-full">
-                                        <label htmlFor="" className="hidden group-hover:block text-xs">
-                                            {other.isActive ? 'Deshabilitar' : 'Habilitar'}
-                                        </label>
-                                        <Switch value={item.isActive} onChange={() => statusHandler(item)}
-                                            className="hidden group-hover:flex p-2" title="Habilitar" />
-                                    </div>}
-                                <button type="button" title="Editar" onClick={() => onUpdate(item)}
-                                    className="hidden group-hover:block p-2 text-2xl">
-                                    <HiPencilAlt />
-                                </button>
-                                <button type="button" title="Eliminar" onClick={() => handleDelete(item)}
-                                    className="hidden group-hover:block p-2 text-2xl">
-                                    <HiTrash />
-                                </button>
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId="faqs">
+                        {(provided) => (
+                            <div {...provided.droppableProps} ref={provided.innerRef} className="flex flex-col gap-2">
+                                {(activeFaqs.length > 0) && activeFaqs.map((item, i) => {
+                                    const { _id, question, answer, ...other } = item;
+                                    return other.isActive ? (
+                                        <Draggable key={_id} draggableId={_id} index={i}>
+                                            {(provided) => (<>
+                                                <div key={_id} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
+                                                    className="flex justify-between items-center btn bg-blue-100 dark:bg-gray-600 rounded-xl group overflow-hidden">
+                                                    <p className="px-3 py-2">
+                                                        {question}
+                                                    </p>
+                                                    <div className="flex items-center gap-1">
+                                                        {(selected.category !== 'CHATBOT') &&
+                                                            <div className="flex items-center h-full">
+                                                                <label htmlFor="" className="hidden group-hover:block text-xs">
+                                                                    {other.isActive ? 'Deshabilitar' : 'Habilitar'}
+                                                                </label>
+                                                                <Switch value={item.isActive} onChange={() => statusHandler(item)}
+                                                                    className="hidden group-hover:flex p-2" title="Habilitar" />
+                                                            </div>}
+                                                        <button type="button" title="Editar" onClick={() => onUpdate(item)}
+                                                            className="hidden group-hover:block p-2 text-2xl">
+                                                            <HiPencilAlt />
+                                                        </button>
+                                                        <button type="button" title="Eliminar" onClick={() => setConfirm({ display: true, question: item })}
+                                                            className="hidden group-hover:block p-2 text-2xl">
+                                                            <HiTrash />
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </>)}
+                                        </Draggable>) : null;
+                                })}
+                                {provided.placeholder}
                             </div>
-                        </div>) : null;
-                })}
+                        )}
+                    </Droppable>
+                </DragDropContext>
             </div>
+
             <div className="flex flex-col gap-2">
                 <h4 className="ml-2 font-semibold text-2xl dark:text-gray-300">Inactivas</h4>
-                {(faqs.length > 0) && faqs.map((item) => {
+                {(inactiveFaqs.length > 0) && inactiveFaqs.map((item) => {
                     const { _id, question, answer, ...other } = item;
                     return (!other.isActive) ? (
                         <div key={_id}
                             className="flex justify-between items-center btn bg-blue-100 dark:bg-gray-600 rounded-xl group overflow-hidden opacity-60">
-                            <p className="p-3">
+                            <p className="px-3 py-2">
                                 {question}
                             </p>
                             <div className="flex items-center gap-1">
@@ -161,7 +195,7 @@ const Questions = ({ selected, onCreate, onRefresh, onUpdate }) => {
                                     className="hidden group-hover:block p-2 text-2xl">
                                     <HiPencilAlt />
                                 </button>
-                                <button type="button" title="Eliminar" onClick={() => handleDelete(item)}
+                                <button type="button" title="Eliminar" onClick={() => setConfirm({ display: true, question: item })}
                                     className="hidden group-hover:block p-2 text-2xl">
                                     <HiTrash />
                                 </button>

@@ -4,7 +4,7 @@ import { AiOutlineRobot } from 'react-icons/ai';
 const sections = [
     {
         title: 'Usuarios',
-        icon: <FiUsers/>,
+        icon: <FiUsers />,
         type: 'sub',
         path: '/users',
         roles: ['COORDINATOR'],
@@ -14,25 +14,26 @@ const sections = [
     },
     {
         title: 'Tickets',
-        icon: <FiInbox/>,
+        icon: <FiInbox />,
         type: 'sub',
         path: '/tickets',
         roles: ['COORDINATOR', 'ASSISTANT'],
         children: [
             { path: '/tickets', title: 'Todos', type: 'link' },
+            { path: '/high-classifications', title: 'Clasificaciones prioritarias', type: 'link', roles: ['COORDINATOR'] },
             { path: '/tickets/inactive', title: 'Inactivos', type: 'link' },
         ],
     },
     {
         title: 'Preguntas frecuentes',
-        icon: <FiLayers/>,
+        icon: <FiLayers />,
         type: 'link',
         path: '/faqs',
         roles: ['COORDINATOR', 'ASSISTANT'],
     },
     {
         title: 'Chatbot',
-        icon: <AiOutlineRobot/>,
+        icon: <AiOutlineRobot />,
         type: 'link',
         path: '/chatbot',
         roles: ['COORDINATOR', 'ASSISTANT'],

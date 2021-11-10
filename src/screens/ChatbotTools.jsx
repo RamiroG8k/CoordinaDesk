@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 // Components
 import { Disclosure, Modal, Paginator } from 'components/shared';
-import { CreateClassification } from 'components/admin';
+import { CreateClassification, HighClassifications } from 'components/admin';
 // Services | Data 
 import { apiInstance } from 'services';
 import { CHART_COLORS, errorMessages } from 'utils/data';
@@ -274,18 +274,18 @@ const ChatbotTools = () => {
                                 <RiQuestionLine />
                             </p>
                         </button>
-                        <div className="flex flex-col items-center justify-around h-full w-full z-0">
+                        <div className="flex flex-col items-center justify-center gap-2 sm:gap-4 h-full w-full z-0">
                             <div>
                                 <h3 className="text-4xl font-semibold">Desk bot</h3>
                                 <div className="border w-full rounded-full dark:border-gray-800 my-2" />
                             </div>
                             <button type="button" onClick={() => classify()}
-                                className="btn btn-animated border-2 border-blue-200 py-2 rounded-2xl hover:bg-blue-300 group sm:w-2/3">
-                                <p className="text-blue-300 text-lg group-hover:text-white">Reclasificar</p>
+                                className="btn btn-animated border-2 border-blue-300 py-1 sm:py-2 rounded-xl sm:rounded-2xl hover:bg-blue-300 group sm:w-2/3">
+                                <p className="text-blue-400 sm:text-lg group-hover:text-white">Reclasificar</p>
                             </button>
                             <button type="button" onClick={() => getFile()}
-                                className="btn btn-animated border-2 border-blue-200 py-2 rounded-2xl hover:bg-blue-300 group sm:w-2/3">
-                                <p className="text-blue-300 text-lg group-hover:text-white">Obtener archivo</p>
+                                className="btn btn-animated border-2 border-blue-300 py-1 sm:py-2 rounded-xl sm:rounded-2xl hover:bg-blue-300 group sm:w-2/3">
+                                <p className="text-blue-400 sm:text-lg group-hover:text-white">Obtener archivo</p>
                             </button>
                         </div>
                     </div>
@@ -295,7 +295,7 @@ const ChatbotTools = () => {
                         <h3 className="font-semibold text-2xl">Categorías de clasificación</h3>
                         <div className="flex items-center gap-2">
                             <button onClick={() => handleCreate()} type="button"
-                                className="flex items-center gap-1 btn btn-animated text-lg bg-blue-200 dark:bg-gray-500 w-auto p-3 sm:px-2 sm:py-1">
+                                className="flex items-center gap-1 btn btn-animated sm:text-lg bg-blue-200 dark:bg-gray-500 w-auto p-3 sm:px-2 sm:py-1">
                                 <p><HiOutlineBookmark /></p>
                                 <p className="hidden md:block">Crear</p>
                             </button>

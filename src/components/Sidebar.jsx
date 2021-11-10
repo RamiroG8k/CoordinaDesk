@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Disclosure } from '@headlessui/react';
 import { IoIosArrowUp, IoIosArrowForward } from 'react-icons/io';
-import { CgLogOut} from 'react-icons/cg';
+import { CgLogOut } from 'react-icons/cg';
 // Data
 import { SidebarSections, apiInstance } from 'services';
 import { removeCredentials } from 'utils';
@@ -64,18 +64,19 @@ const Sidebar = ({ status, className, visible, toggleView }) => {
                                     </Link>
                                 </Disclosure.Button>
 
-                                {rest.children && rest.children.map(({ title, type, path }, j) =>
-                                    <Disclosure.Panel key={j} className="text-sm">
-                                        <Link to={() => type === 'link' ? path : '#'}
-                                            className="flex items-center w-full h-8 px-6 gap-2 text-gray-800 dark:text-gray-400 hover:font-medium hover:text-md">
-                                            {(status === 'max' || hover) && <p className="text-md">{`-  ${title}`}</p>}
-                                        </Link>
-                                    </Disclosure.Panel>
-                                )}
+                                {rest.children && rest.children.map(({ title, type, path, ...other }, j) => {
+                                    return other.roles?.includes(actualRole) || !other.roles ?
+                                        (<Disclosure.Panel key={j} className="text-sm">
+                                            <Link to={() => type === 'link' ? path : '#'}
+                                                className="flex items-center w-full h-8 px-6 gap-2 text-gray-800 dark:text-gray-400 hover:font-medium hover:text-md">
+                                                {(status === 'max' || hover) && <p className="text-md">{`-  ${title}`}</p>}
+                                            </Link>
+                                        </Disclosure.Panel>)
+                                        : null;
+                                })}
                             </>}
                         </Disclosure>) : null
-                }
-                )}
+                })}
             </section>
 
             <section className="flex justify-center items-center w-full h-16 bg-blue-50 dark:bg-gray-800 rounded-2xl">
