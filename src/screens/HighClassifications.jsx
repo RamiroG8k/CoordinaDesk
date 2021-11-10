@@ -9,13 +9,15 @@ import { errorMessages } from 'utils/data';
 import { toast } from 'react-toastify';
 import { HiPencilAlt, HiTrash } from 'react-icons/hi';
 import { CgDanger } from 'react-icons/cg';
+import { RiQuestionLine } from 'react-icons/ri';
 
 const HighClassifications = () => {
     const [selected, setSelected] = useState();
+    const [info, setInfo] = useState(false);
     const [loading, setLoading] = useState();
     const [confirm, setConfirm] = useState({ display: false, priority: null });
     const [classifications, setClassifications] = useState([]);
-    const [keyword, setKeyword] = useState();
+    const [keyword, setKeyword] = useState('');
 
     useEffect(() => {
         fetchClassifications();
@@ -35,6 +37,7 @@ const HighClassifications = () => {
                 toast.success(`Se ha creado la prioridad correctamente`, {
                     position: toast.POSITION.TOP_RIGHT
                 });
+                clear();
                 fetchClassifications();
             }).catch(({ response: { data: error } }) => {
                 const { customText } = errorMessages.find((e) => e.message === error.message);
@@ -57,6 +60,7 @@ const HighClassifications = () => {
                 toast.success(`Se ha modificado la prioridad correctamente`, {
                     position: toast.POSITION.TOP_RIGHT
                 });
+                clear();
                 fetchClassifications();
             }).catch(({ response: { data: error } }) => {
                 const { customText } = errorMessages.find((e) => e.message === error.message);
@@ -93,14 +97,14 @@ const HighClassifications = () => {
                     draggable: true,
                 });
             });
-            await setLoading(false);
-        };
+        await setLoading(false);
+    };
 
     const handleUpdate = (item) => {
         setSelected(item._id);
         setKeyword(item.keyword);
     };
-    
+
     const clear = () => {
         setKeyword('');
         setSelected(null);
@@ -108,6 +112,20 @@ const HighClassifications = () => {
 
     return (
         <>
+            <Modal visible={info} onClose={setInfo} size="md" title="Informacion Clasificaciones">
+                <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 sm:pt-4 space-y-4">
+                    <div className="space-y-1">
+                        <h4 className="text-xl font-medium">Clasificaciones prioritarias</h4>
+                        <p className="leading-4 text-sm">Las clasificaciones de alta prioridad son aquellas con las que hay mayor probabilidad que un ticket, al momento de su creación, sea clasificado con una prioridad alta(HIGH) y por ende este sea asignado a un usuario con rol COORDINATOR</p>
+                    </div>
+                    <div className="border w-full rounded-full dark:border-gray-800 mt-4" />
+                    <div className="text-sm space-y-2 mt-2 text-justify">
+                        <p className="leading-4">
+                            <span className="font-medium">Esta información solo está disponible para un usuario con rol COORDINATOR</span>
+                        </p>
+                    </div>
+                </div>
+            </Modal>
             <Modal visible={confirm.display} onClose={() => setConfirm({ ...confirm, display: false })} size="md" title="Eliminar prioridad">
                 <>
                     <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 sm:pt-4 space-y-4">
@@ -144,7 +162,14 @@ const HighClassifications = () => {
                 </>
             </Modal>
             <div className="bg-white shadow-lg dark:bg-gray-700 w-full rounded-4xl p-4 sm:p-10 flex flex-col justify-center items-center space-y-4" >
-                <h1 className="text-4xl sm:text-5xl text-center font-bold text-gray-400 mb-4">Clasificaciones Prioritarias</h1>
+                <div className="relative w-full">
+                    <h1 className="text-4xl sm:text-5xl text-center font-bold text-gray-400 mb-4">Clasificaciones Prioritarias</h1>
+                    <button onClick={() => setInfo(true)} className="absolute right-0 top-0 h-auto transition hover:bg-blue-100 rounded-full">
+                        <p className="p-2 text-3xl text-gray-500 dark:text-gray-400 active:bg-transparent">
+                            <RiQuestionLine />
+                        </p>
+                    </button>
+                </div>
                 <div className="w-full">
                     <label htmlFor="keyword" className="dark:text-gray-500 text-sm ml-2 mb-1">Palabra clave</label>
                     <div className="flex flex-col sm:flex-row gap-4">

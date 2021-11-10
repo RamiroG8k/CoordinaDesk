@@ -57,11 +57,20 @@ const Faqs = () => {
     };
 
     const faqParser = (data) => {
-        return data.map(e => {
-            if (e.isActive) {
-                return { id: e._id, question: e.question, answer: e.answer };
-            };
-            return null;
+        return sortByPosition(
+            data.map(e => {
+                if (e.isActive) {
+                    return { id: e._id, question: e.question, answer: e.answer, order: e.order };
+                };
+                return null;
+            })
+        );
+    };
+
+
+    const sortByPosition = (array) => {
+        return array.sort((a, b) => {
+            return a.order > b.order ? 1 : -1;
         });
     };
 
@@ -105,7 +114,7 @@ const Faqs = () => {
                         <h5 className="font-medium text-right mb-2 text-blue-600 sm:text-gray-800 dark:text-white">
                             Categorias
                         </h5>
-                        <div className="flex sm:flex-col flex-wrap sm:flex-nowrap gap-x-6 gap-y-4 justify-center w-full max-h-full overflow-y-scroll">
+                        <div className="flex sm:flex-col flex-wrap sm:flex-nowrap gap-x-6 gap-y-4 justify-center w-full max-h-full overflow-y-scroll scrollbar-hide">
                             {categories?.map(({ _id, category }, i) =>
                                 <button key={_id} onClick={() => setSelected(_id)}
                                     className={`${selected === _id ? 'sm:-translate-x-4 font-medium scale-105 text-blue-600 dark:text-blue-700' : 'hover:scale-105 hover:text-blue-600 hover:-translate-x-2'}

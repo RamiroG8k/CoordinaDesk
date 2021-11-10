@@ -26,8 +26,8 @@ const Questions = ({ selected, onCreate, onRefresh, onUpdate }) => {
     const fetchQuestionsById = async (id) => {
         await apiInstance.get(`/faq/category/${id}`)
             .then(({ data }) => {
-                setActiveFaqs(sortByPosition(data.filter(f => f.isActive)) ?? []);
-                setInactiveFaqs(sortByPosition(data.filter(f => !f.isActive)) ?? []);
+                setActiveFaqs(data ? sortByPosition(data.filter(f => f.isActive)) : []);
+                setInactiveFaqs(data ? sortByPosition(data.filter(f => !f.isActive)) : []);
             }).catch(console.log);
     };
 
@@ -76,7 +76,6 @@ const Questions = ({ selected, onCreate, onRefresh, onUpdate }) => {
     const reorderItem = async (id, position) => {
         await apiInstance.patch(`/faq/${id}/reorder/${position}`)
             .then(({ data }) => {
-                console.log(data);
                 fetchQuestionsById(category);
             }).catch(console.log);
     };
