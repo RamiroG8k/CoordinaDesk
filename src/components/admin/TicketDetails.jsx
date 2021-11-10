@@ -44,7 +44,7 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
     const updateStatus = async (status) => {
         await apiInstance.patch(`/ticket/id/${id}/change-status`, { status })
             .then(({ data }) => {
-                setInfo(data);
+                setInfo((prev) => ({ ...prev, status: data.status }));
                 onUpdate();
             }).catch(({ response: { data: error } }) => {
                 console.log(error);

@@ -12,7 +12,7 @@ const Select = ({ array, item = '', labels = false, multiple = false, defaultVal
         setSelected(labels ?
             (array.filter((item => item.value === defaultValue))[0] ?? (multiple ? [] : null)) :
             (defaultValue ?? (multiple ? [] : null)));
-    }, []);
+    }, [defaultValue]);
 
     useEffect(() => {
         labelHandler();

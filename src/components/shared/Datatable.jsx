@@ -40,7 +40,7 @@ const DataTable = ({ popoverTitle, onSearch, data = [], onEvent, onUpdate, place
                     </p>
                 </div>
                 <div className="limit w-1/4">
-                    <Select array={[10, 20, 30, 50, 100]} item="(límite)"
+                    <Select array={[10, 20, 30, 50, 100]} item="(límite)" defaultValue={10}
                         onChange={(v) => handleLimit(v)}
                         activeStyle="bg-blue-100 dark:bg-gray-800"
                         buttonStyle="bg-gray-50 shadow dark:bg-gray-800 dark:text-gray-400"
