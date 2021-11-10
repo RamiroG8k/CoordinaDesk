@@ -32,7 +32,7 @@ const userActions = [
     {
         name: 'Detalles',
         action: 'details',
-        description: 'Informacion general de usuario',
+        description: 'Información general de usuario',
         icon: <BsFileEarmarkText />,
     },
     {
@@ -50,7 +50,7 @@ const userActions = [
     {
         name: 'Reenviar email',
         action: 'resend-email',
-        description: 'Mandar correo de activacion',
+        description: 'Mandar correo de activación',
         icon: <BsEnvelope />,
     }
 ];
@@ -59,19 +59,19 @@ const ticketActions = [
     {
         name: 'Detalles',
         action: 'details',
-        description: 'Informacion general de usuario',
+        description: 'Información general de ticket',
         icon: <BsFileEarmarkText />,
     },
 ];
 
 const ticketStatus = [
-    { label: 'Esperando Asignación', value: 'WAITING_ASIGNATION' },
-    { label: 'Asignado', value: 'ASIGNED' },
-    { label: 'En progreso', value: 'IN_PROGRESS' },
-    { label: 'Esperando respuesta', value: 'WAITING_RESPONSE' },
-    { label: 'Resuelto', value: 'RESOLVE' },
-    { label: 'Finalizado', value: 'FINAL_RESOLVE' },
-    { label: 'Cerrado por inactividad', value: 'CLOSED_DUE_TO_INACTIVITY' },
+    { label: 'Esperando Asignación', value: 'WAITING_ASIGNATION', visible: false },
+    { label: 'Asignado', value: 'ASIGNED', visible: true },
+    { label: 'En progreso', value: 'IN_PROGRESS', visible: true },
+    { label: 'Esperando respuesta', value: 'WAITING_RESPONSE', visible: true },
+    { label: 'Resuelto', value: 'RESOLVE', visible: true },
+    { label: 'Finalizado', value: 'FINAL_RESOLVE', visible: true },
+    { label: 'Cerrado por inactividad', value: 'CLOSED_DUE_TO_INACTIVITY', visible: false },
 ];
 
 const ticketPriority = [

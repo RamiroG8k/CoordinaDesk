@@ -207,7 +207,7 @@ const HighClassifications = () => {
                             return (
                                 <div key={i} className={`${item._id === selected && 'border-blue-400 dark:border-blue-400 text-blue-500 dark:text-blue-300'} 
                                 w-full bg-blue-100 rounded-xl px-4 py-1 mb-2 group flex justify-between border dark:border-gray-900`}>
-                                    <span className="sm:text-lg font-medium text-left dark:text-gray-300">{item.keyword}</span>
+                                    <span className="sm:text-lg font-medium text-left dark:text-gray-300 truncate">{item.keyword}</span>
                                     {/* Item, on click set selected, handle action */}
                                     <div className="flex">
                                         <button type="button" title="Editar" onClick={() => handleUpdate(item)}

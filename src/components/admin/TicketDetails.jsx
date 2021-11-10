@@ -1,5 +1,5 @@
 // Common
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 // Components
 import { Select } from 'components/shared';
 // Others
@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import ScrollableFeed from 'react-scrollable-feed';
 
 const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
-    const [info, setInfo] = useState(null);
+    const [info, setInfo] = useState();
     const [users, setUsers] = useState([]);
     const [data, setData] = useState('');
     const [deactivate, setDeactivate] = useState(false);
@@ -44,13 +44,14 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
     const updateStatus = async (status) => {
         await apiInstance.patch(`/ticket/id/${id}/change-status`, { status })
             .then(({ data }) => {
+                setInfo(data);
                 onUpdate();
             }).catch(({ response: { data: error } }) => {
                 console.log(error);
             });
     };
 
-    const reasingUser = async (user) => {
+    const reasignUser = async (user) => {
         await apiInstance.patch(`/ticket/id/${id}/reasign-user/${user}`)
             .then(({ data }) => {
                 onUpdate();
@@ -64,7 +65,7 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
         await apiInstance.post(`ticket/id/${id}/user/${user}/answer`, { data })
             .then(({ data }) => {
                 setData('');
-                fetchTicketDetails(id);
+                setInfo(data);
                 toast.success('Respuesta asignada correctamente', {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 5000,
@@ -141,28 +142,29 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                                 <div className="border w-full rounded-full dark:border-gray-800 my-2" />
                             </ScrollableFeed>
                         </div>
-                        {!disabled && <div className="w-full h-1/3">
-                            <label htmlFor="answer" className="text-gray-500 text-sm ml-2 mb-1">Agregar una respuesta</label>
-                            <div className="flex">
-                                <textarea id="answer" rows={2} value={data} disabled={disabled || info.status === 'FINAL_RESOLVE'}
-                                    onChange={({ target: { value } }) => setData(value)} maxLength={1000}
-                                    className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-600" />
-                                <div className="flex flex-col gap-2 w-auto px-2">
-                                    <button onClick={() => ticketUpdate()} disabled={!data || disabled || info.status === 'FINAL_RESOLVE'}
-                                        className="btn p-1 bg-blue-400 rounded-lg disabled:opacity-40">
-                                        <p className="text-white text-xs">
-                                            Guardar
-                                        </p>
-                                    </button>
-                                    <button onClick={() => close()}
-                                        className="btn p-1 border-2 border-gray-200 rounded-lg">
-                                        <p className="text-xs">
-                                            Cancelar
-                                        </p>
-                                    </button>
+                        {((!disabled && (info.status !== 'WAITING_ASIGNATION' && info.status !== 'ASIGNED' && info.status !== 'FINAL_RESOLVE')))
+                            && <div className="w-full h-1/3">
+                                <label htmlFor="answer" className="text-gray-500 text-sm ml-2 mb-1">Agregar una respuesta</label>
+                                <div className="flex">
+                                    <textarea id="answer" rows={2} value={data} disabled={disabled || info.status === 'FINAL_RESOLVE'}
+                                        onChange={({ target: { value } }) => setData(value)} maxLength={1000}
+                                        className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-600" />
+                                    <div className="flex flex-col gap-2 w-auto px-2">
+                                        <button onClick={() => ticketUpdate()} disabled={!data || disabled || info.status === 'FINAL_RESOLVE'}
+                                            className="btn p-1 bg-blue-400 rounded-lg disabled:opacity-40">
+                                            <p className="text-white text-xs">
+                                                Guardar
+                                            </p>
+                                        </button>
+                                        <button onClick={() => close()}
+                                            className="btn p-1 border-2 border-gray-200 rounded-lg">
+                                            <p className="text-xs">
+                                                Cancelar
+                                            </p>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>}
+                            </div>}
                     </div>
                     <div className="w-full sm:w-1/3 space-y-4">
                         <div>
@@ -178,7 +180,7 @@ const TicketDetails = ({ id, onUpdate, close, disabled = false }) => {
                             {(users.length > 0) && <Select array={users} labels defaultValue={info.user} disabled={disabled}
                                 buttonStyle="w-full rounded-xl bg-blue-100 dark:bg-gray-800 text-gray-500"
                                 dropdownStyle="bg-white dark:bg-gray-800 text-gray-500 z-20"
-                                onChange={({ value }) => reasingUser(value)}
+                                onChange={({ value }) => reasignUser(value)}
                             />}
                         </div>
                         <div>

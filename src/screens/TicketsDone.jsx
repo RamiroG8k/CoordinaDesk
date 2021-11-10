@@ -86,37 +86,37 @@ const TicketsDone = () => {
 
     return (
         <section className="space-y-6">
-            <Modal visible={info} onClose={setInfo} size="md" title="Informacion">
+            <Modal visible={info} onClose={setInfo} size="lg" title="Información">
                 <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 sm:pt-4">
                     <h4 className="font-medium text-xl mb-2">Filtrar por status</h4>
                     <ul className="space-y-4">
                         <li className="leading-5">
                             <span className="font-medium">ESPERANDO ASIGNACIÓN: </span>
-                            Se debera de introducir 'WAITING_ASIGNATION' en la Búsqueda
+                            Se deberá de introducir 'WAITING_ASIGNATION' en la Búsqueda
                         </li>
                         <li className="leading-5">
                             <span className="font-medium">ASIGNADO: </span>
-                            Se debera de introducir 'ASIGNED' en la Búsqueda
+                            Se deberá de introducir 'ASIGNED' en la Búsqueda
                         </li>
                         <li className="leading-5">
                             <span className="font-medium">EN PROGRESO: </span>
-                            Se debera de introducir 'IN_PROGRESS' en la Búsqueda
+                            Se deberá de introducir 'IN_PROGRESS' en la Búsqueda
                         </li>
                         <li className="leading-5">
                             <span className="font-medium">ESPERANDO RESPUESTA: </span>
-                            Se debera de introducir 'WAITING_RESPONSE' en la Búsqueda
+                            Se deberá de introducir 'WAITING_RESPONSE' en la Búsqueda
                         </li>
                         <li className="leading-5">
                             <span className="font-medium">RESUELTO: </span>
-                            Se debera de introducir 'RESOLVE' en la Búsqueda
+                            Se deberá de introducir 'RESOLVE' en la Búsqueda
                         </li>
                         <li className="leading-5">
                             <span className="font-medium">FINALIZADO: </span>
-                            Se debera de introducir 'FINAL_RESOLVE' en la Búsqueda
+                            Se deberá de introducir 'FINAL_RESOLVE' en la Búsqueda
                         </li>
                         <li className="leading-5">
                             <span className="font-medium">CERRADO POR INACTIVIDAD: </span>
-                            Se debera de introducir 'CLOSED_DUE_TO_INACTIVITY' en la Búsqueda
+                            Se deberá de introducir 'CLOSED_DUE_TO_INACTIVITY' en la Búsqueda
                         </li>
                     </ul>
                     <div className="border w-full rounded-full dark:border-gray-800 mt-4" />
@@ -124,15 +124,15 @@ const TicketsDone = () => {
                         <h4 className="font-medium text-xl mb-2">Filtrar por prioridad</h4>
                         <li className="leading-5">
                             <span className="font-medium text-green-500">Baja: </span>
-                            Se debera de introducir 'LOW' en la Búsqueda
+                            Se deberá de introducir 'LOW' en la Búsqueda
                         </li>
                         <li className="leading-5">
                             <span className="font-medium text-yellow-500">Media: </span>
-                            Se debera de introducir 'MODERATE' en la Búsqueda
+                            Se deberá de introducir 'MODERATE' en la Búsqueda
                         </li>
                         <li className="leading-5">
                             <span className="font-medium text-red-500">Alta: </span>
-                            Se debera de introducir 'HIGH' en la Búsqueda
+                            Se deberá de introducir 'HIGH' en la Búsqueda
                         </li>
                     </ul>
                     <div className="border w-full rounded-full dark:border-gray-800" />

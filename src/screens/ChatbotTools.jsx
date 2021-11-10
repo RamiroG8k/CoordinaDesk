@@ -105,7 +105,7 @@ const ChatbotTools = () => {
         setLoading(true);
         await apiInstance.delete(`/classification-category/${id}`)
             .then(() => {
-                toast.success(`Se ha eliminado la categoria`, {
+                toast.success(`Se ha eliminado la categoría`, {
                     position: toast.POSITION.TOP_RIGHT
                 });
                 fetchCategories();
@@ -241,7 +241,7 @@ const ChatbotTools = () => {
                     </div>
                 </>
             </Modal>
-            <Modal visible={info} onClose={setInfo} size="md" title="Informacion chatbot">
+            <Modal visible={info} onClose={setInfo} size="md" title="Información chatbot">
                 <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 sm:pt-4 space-y-4">
                     <div className="space-y-1">
                         <h4 className="text-xl font-medium">Concurrencia de datos</h4>
@@ -254,12 +254,12 @@ const ChatbotTools = () => {
                     <div className="border w-full rounded-full dark:border-gray-800 mt-4" />
                     <div className="text-sm space-y-2 mt-2 text-justify">
                         <p className="leading-4">
-                            <span className="font-medium">La grafica solo muestra los datos del semestre actual</span>
+                            <span className="font-medium">La gráfica solo muestra los datos del semestre actual</span>
                         </p>
                     </div>
                 </div>
             </Modal>
-            <Modal visible={create} onClose={setCreate} size="md" title="Crear categoría de clasificación">
+            <Modal visible={create} onClose={setCreate} size="lg" title={`${classification ? 'Modificar' : 'Crear' } categoría de clasificación`}>
                 <CreateClassification onCreated={refreshHandler} defaultClass={classification}
                     close={() => setCreate(false)} />
             </Modal>

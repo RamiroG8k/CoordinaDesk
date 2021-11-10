@@ -132,20 +132,20 @@ const Categories = ({ onActive, onCreate, onRefresh, onUpdate }) => {
                     </div>
                 </>
             </Modal>
-            <Modal visible={info} onClose={setInfo} size="md" title="Informacion chatbot">
+            <Modal visible={info} onClose={setInfo} size="md" title="Información chatbot">
                 <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 sm:pt-4 space-y-4">
                     <div className="space-y-1">
-                        <h4 className="text-xl font-medium">Categoria <span className="font-semibold">'CHATBOT'</span></h4>
+                        <h4 className="text-xl font-medium">Categoría <span className="font-semibold">'CHATBOT'</span></h4>
                         <p className="leading-4 text-sm">Esta categoria solo puede estar en estado 'Inactivo', para pasar desapercibida en la Landing page</p>
                     </div>
                     <div className="space-y-1">
                         <h4 className="text-lg font-medium">Preguntas y respuestas en <span className="font-semibold">'CHATBOT'</span></h4>
-                        <p className="leading-4 text-sm">No es posible inhabilitar / habilitar las preguntas ya que...</p>
+                        <p className="leading-4 text-sm">No es posible inhabilitar / habilitar las preguntas ya que por defecto estas no aparecen en la landing page, el estado de inhabilitado no surte efecto</p>
                     </div>
                     <div className="border w-full rounded-full dark:border-gray-800 mt-4" />
                     <div className="text-sm space-y-2 mt-2 text-justify">
                         <p className="leading-4">
-                            <span className="font-medium">Boton de entrenamiento: </span> Este boton es solo para uso en caso de no ver reflejados los cambios en el chatbot.
+                            <span className="font-medium">Botón de entrenamiento: </span> Este boton es solo para uso en caso de no ver reflejados los cambios en el chatbot.
                         </p>
                     </div>
                 </div>

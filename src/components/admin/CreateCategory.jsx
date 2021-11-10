@@ -15,7 +15,7 @@ const CreateCategory = ({ close, onCreated, defaultCategory }) => {
         await apiInstance.post('/category', body)
             .then(({ data }) => {
                 onCreated();
-                toast.success('Categoria creada satisfactoriamente', {
+                toast.success('Categoría creada satisfactoriamente', {
                     position: toast.POSITION.TOP_RIGHT
                 });
             }).catch(({ response: { data: error } }) => {
@@ -39,7 +39,7 @@ const CreateCategory = ({ close, onCreated, defaultCategory }) => {
         await apiInstance.put(`/category/${defaultCategory._id}`, { ...body, _id: defaultCategory._id })
             .then(({ data }) => {
                 onCreated();
-                toast.success('Categoria modificada satisfactoriamente', {
+                toast.success('Categoría modificada satisfactoriamente', {
                     position: toast.POSITION.TOP_RIGHT
                 });
             }).catch(({ response: { data: error } }) => {
@@ -78,7 +78,7 @@ const CreateCategory = ({ close, onCreated, defaultCategory }) => {
                                 <input type="checkbox" id="isActive" checked={value ? true : false}
                                     className="form-check-input" onChange={onChange} value={value} />
                             )} />
-                        <label htmlFor="isActive" className="form-check-label ml-2">Categoria activa</label>
+                        <label htmlFor="isActive" className="form-check-label ml-2">Categoría activa</label>
                     </div>
                 </fieldset>
             </form>

@@ -15,7 +15,7 @@ const CreateClassification = ({ close, onCreated, defaultClass }) => {
         await apiInstance.post('/classification-category', body)
             .then(({ data }) => {
                 onCreated();
-                toast.success('Categoria de clasificacion creada satisfactoriamente', {
+                toast.success('Categoría de clasificación creada satisfactoriamente', {
                     position: toast.POSITION.TOP_RIGHT
                 });
             }).catch(({ response: { data: error } }) => {
@@ -36,7 +36,7 @@ const CreateClassification = ({ close, onCreated, defaultClass }) => {
         await apiInstance.put(`/classification-category/${defaultClass._id}`, { ...body, _id: defaultClass._id })
             .then(({ data }) => {
                 onCreated();
-                toast.success('Clasificacion modificada satisfactoriamente', {
+                toast.success('Clasificación modificada satisfactoriamente', {
                     position: toast.POSITION.TOP_RIGHT
                 });
             }).catch(console.log);
@@ -52,7 +52,7 @@ const CreateClassification = ({ close, onCreated, defaultClass }) => {
             <form id="createQuestion" onSubmit={handleSubmit(requestHandler)} className="p-4 sm:p-6 sm:pt-4">
                 <fieldset disabled={loading} className="space-y-3 w-full">
                     <div>
-                        <label htmlFor="category" className="text-sm ml-2 mb-1 dark:text-gray-500">Categoria</label>
+                        <label htmlFor="category" className="text-sm ml-2 mb-1 dark:text-gray-500">Categoría</label>
                         <input id="category" {...register('category', { required: true })} defaultValue={defaultClass?.category}
                             type="text" autoComplete="off" maxLength={200}
                             className="input rounded-xl bg-blue-100 bg-opacity-60 dark:bg-gray-700 dark:text-gray-400" />

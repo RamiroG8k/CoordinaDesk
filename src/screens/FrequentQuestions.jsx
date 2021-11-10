@@ -37,7 +37,7 @@ const FrequentQuestions = () => {
     return (
         <>
             <Modal visible={create.visible} size="2xl" onClose={() => setCreate({ ...create, visible: false })} 
-                title={`${category || faq ? 'Modificar' : 'Crear' } ${create.type === 'c' ? 'categoria' : 'pregunta'}`}>
+                title={`${category || faq ? 'Modificar' : 'Crear' } ${create.type === 'c' ? 'categoría' : 'pregunta'}`}>
                 {create.type === 'c' ?
                     <CreateCategory onCreated={refreshHandler} defaultCategory={category}
                         close={() => setCreate({ ...create, visible: false })} /> :

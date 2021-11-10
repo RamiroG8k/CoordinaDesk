@@ -28,7 +28,7 @@ const Users = () => {
     const fetchUsers = async (page, limit, search) => {
         setRegsLimit(limit);
         await apiInstance.get('/user/all/pageable',
-            { params: { page, limit: regsLimit, name: search, email: search, role: search } })
+            { params: { page, limit, name: search, email: search, role: search } })
             .then((response) => {
                 const { data: res } = response;
                 if (response.status === 204) {
@@ -135,7 +135,7 @@ const Users = () => {
     const reSendEmailUser = async ({ _id, email }) => {
         await apiInstance.put('/user/resend-email', { _id, email })
             .then(({ data }) => {
-                toast.success(`Se ha enviado un nuevo correo al usuario con el correo: ${email}`, {
+                toast.success(`Se ha enviado un nuevo correo al usuario con dirección: ${email}`, {
                     position: toast.POSITION.TOP_RIGHT
                 });
             }).catch(({ response: { data: error } }) => {

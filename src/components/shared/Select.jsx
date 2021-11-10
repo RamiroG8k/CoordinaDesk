@@ -76,7 +76,7 @@ const Select = ({ array, item = '', labels = false, multiple = false, defaultVal
                     <Listbox.Options className={`${dropdownStyle} absolute w-full py-1 mt-1 overflow-auto text-base rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm`}>
                         {array.map((e, i) => {
                             const isActive = multiple ? selected?.includes(e) : e === selected;
-                            return (
+                            return (labels && (e?.visible || !('visible' in e))) || !labels ? (
                                 <Listbox.Option key={i} value={labels ? e?.value : e} className={({ active }) => `${(active || isActive) ? `${activeStyle}` : 'text-gray-900'}
                                 cursor-pointer select-none relative py-2 pl-10 pr-4`}>
                                     <>
@@ -90,7 +90,7 @@ const Select = ({ array, item = '', labels = false, multiple = false, defaultVal
                                         ) : null}
                                     </>
                                 </Listbox.Option>
-                            );
+                            ) : null;
                         })}
                     </Listbox.Options>
                 </Transition>
