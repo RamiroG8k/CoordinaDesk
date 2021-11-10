@@ -51,6 +51,7 @@ const Questions = ({ selected, onCreate, onRefresh, onUpdate }) => {
     };
 
     const statusHandler = async (body) => {
+        body.category = selected._id;
         await apiInstance.put(`/faq/${body._id}`, { ...body, isActive: !body.isActive })
             .then(({ data }) => {
                 fetchQuestionsById(category);

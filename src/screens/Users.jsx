@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 const Users = () => {
     const [data, setData] = useState();
     const [create, setCreate] = useState(false);
-    const [confirm, setConfirm] = useState({ display: false, user: null });
+    const [confirm, setConfirm] = useState({ display: false, user: null, action: null });
     const [loading, setLoading] = useState(false);
     const [user, setUser] = useState();
     const [show, setShow] = useState(false);
@@ -74,10 +74,11 @@ const Users = () => {
                 setUser(item._id);
                 break;
             case 'deactivate':
-                deactivateUser(item._id);
+                setConfirm({ display: true, user: item, action: 'deactivate' });
+                // deactivateUser(item._id);
                 break;
             case 'delete':
-                setConfirm({ display: true, user: item });
+                setConfirm({ display: true, user: item, action: 'delete' });
                 // deleteUser(item._id);
                 break;
             case 'resend-email':
@@ -160,7 +161,7 @@ const Users = () => {
                                 </p>
                             </div>
                             <div className="flex flex-col gap-2">
-                                <h5 className="text-lg leading-5">Estas a punto de eliminar el usuario: </h5>
+                                <h5 className="text-lg leading-5">Estas a punto de {confirm.action === 'delete' ? 'eliminar' : 'desactivar' } el usuario: </h5>
                                 <p className="leading-6 font-medium">
                                     {confirm.user?.nombre}
                                 </p>
