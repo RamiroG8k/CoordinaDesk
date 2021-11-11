@@ -7,6 +7,9 @@ import { Modal } from 'components/shared';
 import lottie from 'lottie-web';
 import TrackingAnimation from '../../assets/working.json';
 import { MdSecurity } from 'react-icons/md';
+// Animate
+import Aos from 'aos';
+import 'aos/dist/aos.css';
 
 const Tracking = ({ className }) => {
     const [id, setId] = useState('');
@@ -24,6 +27,7 @@ const Tracking = ({ className }) => {
             autoplay: true,
             animationData: TrackingAnimation
         });
+        Aos.init({ duration: 2500 });
     }, []);
 
     const infoHandler = () => {
@@ -70,7 +74,7 @@ const Tracking = ({ className }) => {
                 </>
             </Modal>
             <section id="tracking" className={`${className} relative flex flex-col sm:flex-row w-screen h-full sm:h-screen bg-white dark:bg-gray-800 sm:px-20 xl:px-36 overflow-hidden z-10`}>
-                <div className="flex flex-col w-full sm:w-1/3 h-full items-start p-4 sm:pt-20">
+                <div data-aos="fade-right" className="flex flex-col w-full sm:w-1/3 h-full items-start p-4 sm:pt-20">
                     <div className="my-4 sm:my-8 text-center sm:text-left">
                         <h3 className="text-3xl sm:text-5xl font-semibold leading-tight dark:text-white">Haz tu <span className="text-blue-300 dark:text-blue-800">seguimiento</span> fácil</h3>
                         <p className="text-xl font-medium my-4 dark:text-gray-500">
@@ -85,7 +89,7 @@ const Tracking = ({ className }) => {
                     </button>
                 </div>
                 <div className="flex w-full sm:w-2/3 h-80 sm:h-full justify-center items-center z-0">
-                    <div ref={writerContainer} className="absolute sm:w-2/3" />
+                    <div data-aos="zoom-in-left" ref={writerContainer} className="absolute sm:w-2/3" />
                     <div className="sm:w-96 sm:h-96 bg-blue-50 dark:bg-blue-800 rounded-full" />
                 </div>
             </section>

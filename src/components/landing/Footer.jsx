@@ -41,22 +41,22 @@ const Footer = () => {
             <div className="flex flex-col gap-4 text-center sm:text-left sm:grid grid-cols-3">
                 <div className="">
                     <div className="border border-blue-200 dark:border-gray-700 my-2" />
-                    <p>2021 CoordinaDesk. All rights reserved</p>
+                    <p className="text-sm">2021 CoordinaDesk. Todos los derechos reservados</p>
                 </div>
 
                 <div className="flex justify-center">
                     <button onClick={scrollToTop}
                         className="flex items-center gap-2 rounded-lg text-lg font-medium text-gray-700 px-4 hover:bg-white hover:scale-105 transition transform">
-                        <p>To the Top</p>
+                        <p>Ir al Inicio</p>
                         <BiUpArrowAlt />
                     </button>
                 </div>
 
                 <div className="terms">
                     <div className="border border-blue-200 dark:border-gray-700 my-2" />
-                    <div className="flex justify-between">
-                        <p>Terms of service</p>
-                        <p>Privacy Policy</p>
+                    <div className="flex justify-between text-sm">
+                        <p>Terminos de Servicio</p>
+                        <p>Politicas de privacidad</p>
                     </div>
                 </div>
             </div>

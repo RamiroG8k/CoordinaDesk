@@ -9,6 +9,9 @@ import { FiSend } from 'react-icons/fi';
 import { BiBot, BiCommentEdit } from 'react-icons/bi';
 import ScrollableFeed from 'react-scrollable-feed';
 
+import Aos from 'aos';
+import 'aos/dist/aos.css';
+
 const Chatbot = ({ onCreate, ticket }) => {
     const [chat, setChat] = useState([
         { answer: 'Hola soy Deskbot!' },
@@ -27,7 +30,7 @@ const Chatbot = ({ onCreate, ticket }) => {
             autoplay: true,
             animationData: ChatbotAnimation
         });
-
+        Aos.init({ duration: 2000 });
     }, []);
 
     useEffect(() => {
@@ -79,7 +82,7 @@ const Chatbot = ({ onCreate, ticket }) => {
 
     return (
         <section className="relative flex flex-col w-screen h-screen items-center bg-white dark:bg-gray-800">
-            <div className="flex flex-col justify-center items-center h-1/3 p-4 sm:p-10 text-center w-full sm:max-w-6xl">
+            <div data-aos="fade-in" className="flex flex-col justify-center items-center h-1/3 p-4 sm:p-10 text-center w-full sm:max-w-6xl">
                 <h1 className="text-4xl sm:text-6xl font-semibold p-2 sm:p-4 dark:text-gray-300">Coordina Desk</h1>
                 <p className="font-medium text-md sm:text-xl text-gray-600 dark:text-gray-500">Coordina Desk es una plataforma web para apoyar a los estudiantes de ingeniería en computación en la solución de problemas y dudas con ayuda de Deskbot (nuestro chatbot) y de su propio help desk.</p>
             </div>

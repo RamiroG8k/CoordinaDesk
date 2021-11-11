@@ -9,6 +9,9 @@ import { checkOverflow } from 'utils';
 import { BsArrowDownShort } from 'react-icons/bs';
 import lottie from 'lottie-web';
 import QuestionAnimation from '../../assets/question.json';
+// Animate
+import Aos from 'aos';
+import 'aos/dist/aos.css';
 
 const Faqs = () => {
     const [categories, setCategories] = useState([]);
@@ -28,6 +31,7 @@ const Faqs = () => {
             autoplay: true,
             animationData: QuestionAnimation
         });
+        Aos.init({ duration: 1500 });
     }, []);
 
     useEffect(() => {
@@ -88,7 +92,7 @@ const Faqs = () => {
 
     return (
         <section id="faqs" className="flex justify-end items-center w-screen sm:h-screen p-4 sm:p-0 sm:bg-gradient-to-r from-blue-100 dark:from-gray-900 to-gray-50 dark:to-gray-900">
-            <div className="relative flex flex-grow-0 flex-col h-full sm:h-4/5 w-full sm:w-4/5 bg-gray-50 dark:bg-gray-900 sm:dark:bg-gray-800 sm:bg-white rounded-2xl p-6 sm:px-12 py-10">
+            <div data-aos="fade-left" className="relative flex flex-grow-0 flex-col h-full sm:h-4/5 w-full sm:w-4/5 bg-gray-50 dark:bg-gray-900 sm:dark:bg-gray-800 sm:bg-white rounded-2xl p-6 sm:px-12 py-10">
                 <div className="flex flex-col w-auto h-1/5 gap-3 z-10 mb-4">
                     <h2 className="w-60 text-4xl font-semibold dark:text-white">Preguntas <span className="text-blue-400">Frecuentes</span></h2>
                     <p className="dark:text-gray-500">Necesitas respuestas?,  Encuentralas aqui.</p>
