@@ -156,7 +156,7 @@ const Ticket = () => {
                 {(ticket?.status !== 'FINAL_RESOLVE' && ticket?.status !== 'CLOSED_DUE_TO_INACTIVITY') &&
                     <div className="flex w-full">
                         <textarea id="answer" rows={2} value={data} onChange={({ target: { value } }) => setData(value)}
-                            className="w-full input rounded-xl bg-white border dark:bg-gray-600" maxLength={1000} />
+                            className="w-full input rounded-xl bg-white border dark:bg-gray-600" maxLength={50000} />
                         <div className="flex flex-col gap-2 w-auto px-2">
                             <button onClick={() => answerAsStudent()} disabled={!data}
                                 className="btn px-2 py-1 bg-blue-400 dark:bg-blue-600 rounded-xl disabled:opacity-40">

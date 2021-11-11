@@ -68,7 +68,7 @@ const ticketStatus = [
     { label: 'Esperando Asignación', value: 'WAITING_ASIGNATION', visible: false },
     { label: 'Asignado', value: 'ASIGNED', visible: true },
     { label: 'En progreso', value: 'IN_PROGRESS', visible: true },
-    { label: 'Esperando respuesta', value: 'WAITING_RESPONSE', visible: true },
+    { label: 'Esperando respuesta', value: 'WAITING_RESPONSE', visible: false },
     { label: 'Resuelto', value: 'RESOLVE', visible: true },
     { label: 'Finalizado', value: 'FINAL_RESOLVE', visible: true },
     { label: 'Cerrado por inactividad', value: 'CLOSED_DUE_TO_INACTIVITY', visible: false },
