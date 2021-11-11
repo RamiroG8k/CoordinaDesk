@@ -40,7 +40,7 @@ const Tracking = ({ className }) => {
 
     return (
         <>
-            <Modal visible={display} onClose={setDisplay} size="md" title="Eliminar categoría">
+            <Modal visible={display} onClose={setDisplay} size="md" title="Confirmar codigo de alumno">
                 <>
                     <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 sm:pt-4 space-y-4">
                         <div className="flex gap-6">
